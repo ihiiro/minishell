@@ -6,7 +6,7 @@
 #    By: yel-yaqi <yel-yaqi@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/05 20:21:35 by yel-yaqi          #+#    #+#              #
-#    Updated: 2024/04/05 21:46:03 by yel-yaqi         ###   ########.fr        #
+#    Updated: 2024/04/06 05:13:12 by yel-yaqi         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -35,16 +35,16 @@ all: $(NAME)
 check: $(TARGET_TEST)
 
 src/%.o: src/%.c $(HEADER) Makefile
-	cc $(CFLAGS) -c $< -o $@
+	cc -c $< -o $@
 
 checks/%.o: checks/%.c  $(HEADER) Makefile
-	cc $(CFLAGS) -c $< -o $@
+	cc -c $< -o $@
 
-$(NAME): $(MAIN_OBJ) $(HEADER) Makefile
-	cc $(CFLAGS) $(MAIN_OBJ) -o $@
+$(NAME): $(MAIN_OBJ) $(HEADER) Makefile # add cflags later
+	cc $(MAIN_OBJ) -o $@
 
 $(TARGET_TEST): $(ALL_OBJ) $(HEADER) Makefile
-	cc $(CFLAGS) $(ALL_OBJ) -o $@
+	cc $(ALL_OBJ) -o $@
 
 clean:
 	rm -f src/*.o

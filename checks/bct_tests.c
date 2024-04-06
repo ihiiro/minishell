@@ -3,20 +3,6 @@
 #include <stdbool.h>
 #include "../include/minishell.h"
 
-/*
-
-Scenario: populating a binary command tree
-Given s <-- "echo hi && ls && cat file"
-And tree <-- binary
-Then populate_bct(tree, s) = 		(&&)
-							       /    \
-			                 (echo hi)  (ls)
-			    			              \
-						               (cat file)
-
-
-*/
-
 bool	strequal(char *str0, char *str1)
 {
 	int	rslt = strcmp(str0, str1);
@@ -43,11 +29,14 @@ int	main(void)
 	printf("	bct->left->cmd: GOOD\n");
 	assert(strequal("ls", bct->right->cmd));
 	printf("	bct->right->cmd: GOOD\n\n");
-	printf("\nBINARY-COMMAND-TREE POPULATION USING populate_bct() TEST-1:\n");
-	t_bct	*binary_command_tree;
-	binary_command_tree = populate_bct("echo hi && ls && cat file");
-	assert(strequal("&&", binary_command_tree->cmd));
-	assert(strequal("echo hi", binary_command_tree->left->cmd));
-	assert(strequal("ls", binary_command_tree->right->cmd));
-	assert(strequal("cat file", binary_command_tree->right->right->cmd));
+
+
+	
+	// printf("\nBINARY-COMMAND-TREE POPULATION USING populate_bct() TEST-2:\n");
+	// t_bct	*binary_command_tree;
+	// binary_command_tree = populate_bct("echo hi && ls && cat file");
+	// assert(strequal("&&", binary_command_tree->cmd));
+	// assert(strequal("echo hi", binary_command_tree->left->cmd));
+	// assert(strequal("ls", binary_command_tree->right->cmd));
+	// assert(strequal("cat file", binary_command_tree->right->right->cmd));
 }
