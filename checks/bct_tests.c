@@ -12,7 +12,6 @@ bool	strequal(char *str0, char *str1)
 		return (true);
 }
 
-// "echo hi && ls -a -l && ls .gitignore | wc -l"
 
 int	main(void)
 {
@@ -34,8 +33,21 @@ int	main(void)
 
 
 
-	printf("\n#1 PRIORITIZED TOKEN-LIST:\n");
-	t_token	*token = malloc(sizeof(t_token));
+	printf("\n#1 PRIORITIZED TOKEN-LIST (using prioritize()):\n");
+	t_token	*word_list = malloc(sizeof(t_token) * 11);
+	word_list->word = "echo";
+	word_list->next->word = "hi";
+	word_list->next->next->word = "&&";
+	word_list->next->next->next->word = "ls";
+	word_list->next->next->next->next->word = "-a";
+	word_list->next->next->next->next->next->word = "-l";
+	word_list->next->next->next->next->next->next->word = "&&";
+	word_list->next->next->next->next->next->next->next->word = "ls";
+	word_list->next->next->next->next->next->next->next->next->word = ".gitignore";
+	word_list->next->next->next->next->next->next->next->next->next->word = "|";
+	word_list->next->next->next->next->next->next->next->next->next->next->word = "wc";
+	word_list->next->next->next->next->next->next->next->next->next->next->next->word = "-l";
+	t_token	*token = prioritize(word_list);
 	assert(strequal("|", token->word));
 	assert(strequal("&&", token->next->word));
 	assert(strequal("echo", token->next->next->word));
@@ -47,4 +59,5 @@ int	main(void)
 	assert(strequal(".gitignore", token->next->next->next->next->next->next->next->next->word));
 	assert(strequal("wc", token->next->next->next->next->next->next->next->next->next->word));
 	assert(strequal("-l", token->next->next->next->next->next->next->next->next->next->next->word));
+	printf("	GOOD\n\n");
 }
