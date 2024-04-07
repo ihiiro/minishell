@@ -12,9 +12,11 @@ bool	strequal(char *str0, char *str1)
 		return (true);
 }
 
+// "echo hi && ls -a -l && ls .gitignore | wc -l"
+
 int	main(void)
 {
-	printf("\nBINARY-COMMAND-TREE POPULATION TEST-0:\n");
+	printf("\n#0 BINARY-COMMAND-TREE MANUAL POPULATION:\n");
 	t_bct	*bct = malloc(sizeof(t_bct));
 	t_bct	*left_child_node = malloc(sizeof(t_bct));
 	t_bct	*right_child_node = malloc(sizeof(t_bct));
@@ -31,12 +33,18 @@ int	main(void)
 	printf("	bct->right->cmd: GOOD\n\n");
 
 
-	
-	// printf("\nBINARY-COMMAND-TREE POPULATION USING populate_bct() TEST-2:\n");
-	// t_bct	*binary_command_tree;
-	// binary_command_tree = populate_bct("echo hi && ls && cat file");
-	// assert(strequal("&&", binary_command_tree->cmd));
-	// assert(strequal("echo hi", binary_command_tree->left->cmd));
-	// assert(strequal("ls", binary_command_tree->right->cmd));
-	// assert(strequal("cat file", binary_command_tree->right->right->cmd));
+
+	printf("\n#1 PRIORITIZED TOKEN-LIST:\n");
+	t_token	*token = malloc(sizeof(t_token));
+	assert(strequal("|", token->word));
+	assert(strequal("&&", token->next->word));
+	assert(strequal("echo", token->next->next->word));
+	assert(strequal("hi", token->next->next->next->word));
+	assert(strequal("ls", token->next->next->next->next->word));
+	assert(strequal("-a", token->next->next->next->next->next->word));
+	assert(strequal("-l", token->next->next->next->next->next->next->word));
+	assert(strequal("ls", token->next->next->next->next->next->next->next->word));
+	assert(strequal(".gitignore", token->next->next->next->next->next->next->next->next->word));
+	assert(strequal("wc", token->next->next->next->next->next->next->next->next->next->word));
+	assert(strequal("-l", token->next->next->next->next->next->next->next->next->next->next->word));
 }
