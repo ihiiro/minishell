@@ -1,44 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parse_engine.c                                     :+:      :+:    :+:   */
+/*   strdup.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yel-yaqi <yel-yaqi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/07 00:56:13 by yel-yaqi          #+#    #+#             */
-/*   Updated: 2024/04/18 12:48:26 by yel-yaqi         ###   ########.fr       */
+/*   Created: 2023/11/19 18:07:03 by yel-yaqi          #+#    #+#             */
+/*   Updated: 2024/04/18 13:28:06 by yel-yaqi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/minishell.h"
+#include <stdlib.h>
+#include <stddef.h>
 
-/*
-
-()
-&&
-||
-<
->
-<<
->>
-|
-
-(a * b) + (c * d)
-(echo hi && echo sup) || (echo bye && echo die)
-
-
-*/
-
-#include <stdio.h>
-t_token	*prioritize(t_token *token_list)
+char	*ft_strdup(const char *s1)
 {
-	// t_token	*ptr;
+	char	*dup;
+	size_t	len;
+	size_t	i;
 
-	// ptr = token_list;
-	// while (ptr)
-	// {
-	// 	printf("%s|%d\n", ptr->word, ptr->type);
-	// 	ptr = ptr->next;
-	// }
-	return (token_list);
+	len = 0;
+	while (*(s1 + len))
+		len++;
+	dup = (char *)malloc(sizeof(char) * (len + 1));
+	if (!dup)
+		return (NULL);
+	i = 0;
+	while (i < len)
+	{
+		*(dup + i) = *(s1 + i);
+		i++;
+	}
+	*(dup + i) = '\0';
+	return (dup);
 }

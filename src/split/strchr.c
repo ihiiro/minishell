@@ -1,44 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parse_engine.c                                     :+:      :+:    :+:   */
+/*   strchr.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yel-yaqi <yel-yaqi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/07 00:56:13 by yel-yaqi          #+#    #+#             */
-/*   Updated: 2024/04/18 12:48:26 by yel-yaqi         ###   ########.fr       */
+/*   Created: 2023/11/18 18:11:10 by yel-yaqi          #+#    #+#             */
+/*   Updated: 2024/04/18 13:30:22 by yel-yaqi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/minishell.h"
+#include <stdlib.h>
 
-/*
-
-()
-&&
-||
-<
->
-<<
->>
-|
-
-(a * b) + (c * d)
-(echo hi && echo sup) || (echo bye && echo die)
-
-
-*/
-
-#include <stdio.h>
-t_token	*prioritize(t_token *token_list)
+char	*ft_strchr(const char *s, int c)
 {
-	// t_token	*ptr;
-
-	// ptr = token_list;
-	// while (ptr)
-	// {
-	// 	printf("%s|%d\n", ptr->word, ptr->type);
-	// 	ptr = ptr->next;
-	// }
-	return (token_list);
+	while (*s)
+	{
+		if (*s == (char)c)
+			return ((char *)s);
+		s++;
+	}
+	if ((char)c == '\0')
+		return ((char *)s);
+	return (NULL);
 }

@@ -32,32 +32,10 @@ int	main(void)
 	printf("	bct->right->cmd: GOOD\n\n");
 
 
+	printf("\n#1 WORD SPLITTER:\n");
+	char	*line = "echo && ls || cat .gitignore | less";
 
-	printf("\n#1 PRIORITIZED TOKEN-LIST (using prioritize()):\n");
-	t_token	*word_list = malloc(sizeof(t_token) * 11);
-	word_list->word = "echo";
-	word_list->next->word = "hi";
-	word_list->next->next->word = "&&";
-	word_list->next->next->next->word = "ls";
-	word_list->next->next->next->next->word = "-a";
-	word_list->next->next->next->next->next->word = "-l";
-	word_list->next->next->next->next->next->next->word = "&&";
-	word_list->next->next->next->next->next->next->next->word = "ls";
-	word_list->next->next->next->next->next->next->next->next->word = ".gitignore";
-	word_list->next->next->next->next->next->next->next->next->next->word = "|";
-	word_list->next->next->next->next->next->next->next->next->next->next->word = "wc";
-	word_list->next->next->next->next->next->next->next->next->next->next->next->word = "-l";
-	t_token	*token = prioritize(word_list);
-	assert(strequal("|", token->word));
-	assert(strequal("&&", token->next->word));
-	assert(strequal("echo", token->next->next->word));
-	assert(strequal("hi", token->next->next->next->word));
-	assert(strequal("ls", token->next->next->next->next->word));
-	assert(strequal("-a", token->next->next->next->next->next->word));
-	assert(strequal("-l", token->next->next->next->next->next->next->word));
-	assert(strequal("ls", token->next->next->next->next->next->next->next->word));
-	assert(strequal(".gitignore", token->next->next->next->next->next->next->next->next->word));
-	assert(strequal("wc", token->next->next->next->next->next->next->next->next->next->word));
-	assert(strequal("-l", token->next->next->next->next->next->next->next->next->next->next->word));
-	printf("	GOOD\n\n");
+	char	**words = ft_split(line, ' ');
+	for (int i = 0; words[i]; i++)
+		printf("word=%s\n", words[i]);
 }

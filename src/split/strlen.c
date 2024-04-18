@@ -1,44 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parse_engine.c                                     :+:      :+:    :+:   */
+/*   strlen.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yel-yaqi <yel-yaqi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/07 00:56:13 by yel-yaqi          #+#    #+#             */
-/*   Updated: 2024/04/18 12:48:26 by yel-yaqi         ###   ########.fr       */
+/*   Created: 2023/11/19 15:03:14 by yel-yaqi          #+#    #+#             */
+/*   Updated: 2024/04/18 13:16:50 by yel-yaqi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/minishell.h"
+#include <stddef.h>
 
-/*
-
-()
-&&
-||
-<
->
-<<
->>
-|
-
-(a * b) + (c * d)
-(echo hi && echo sup) || (echo bye && echo die)
-
-
-*/
-
-#include <stdio.h>
-t_token	*prioritize(t_token *token_list)
+size_t	ft_strlen(const char *s)
 {
-	// t_token	*ptr;
+	size_t	i;
 
-	// ptr = token_list;
-	// while (ptr)
-	// {
-	// 	printf("%s|%d\n", ptr->word, ptr->type);
-	// 	ptr = ptr->next;
-	// }
-	return (token_list);
+	i = 0;
+	while (*(s + i))
+		i++;
+	return (i);
 }

@@ -6,32 +6,32 @@
 #    By: yel-yaqi <yel-yaqi@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/05 20:21:35 by yel-yaqi          #+#    #+#              #
-#    Updated: 2024/04/06 05:13:12 by yel-yaqi         ###   ########.fr        #
+#    Updated: 2024/04/18 13:30:06 by yel-yaqi         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CFLAGS = -Wall -Wextra -Werror
-
 NAME = minishell
-
+ 
 TARGET_TEST = test
-
-TARGET_TEST_SOURCES = checks/bct_tests.c \
-
+TARGET_TEST_SOURCES = checks/bct_tests.c
 MAIN_SOURCES = src/bct.c \
-
+			   src/parse_engine.c \
+			   src/split/split.c \
+			   src/split/strlen.c \
+			   src/split/substr.c \
+			   src/split/strdup.c \
+			   src/split/strlcpy.c \
+			   src/split/strchr.c
 ALL_SOURCES = $(MAIN_SOURCES) $(TARGET_TEST_SOURCES)
 
+MAIN_OBJ = $(MAIN_SOURCES:.c=.o)
+TEST_OBJ = $(TARGET_TEST_SOURCES:.c=.o)
 ALL_OBJ = $(MAIN_OBJ) $(TEST_OBJ)
 
 HEADER = include/minishell.h
 
-MAIN_OBJ = $(MAIN_SOURCES:.c=.o)
-
-TEST_OBJ = $(TARGET_TEST_SOURCES:.c=.o)
-
 all: $(NAME)
-
 check: $(TARGET_TEST)
 
 src/%.o: src/%.c $(HEADER) Makefile
@@ -48,6 +48,7 @@ $(TARGET_TEST): $(ALL_OBJ) $(HEADER) Makefile
 
 clean:
 	rm -f src/*.o
+	rm -f src/split/*.o
 	rm -f checks/*.o
 
 fclean: clean

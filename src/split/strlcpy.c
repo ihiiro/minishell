@@ -1,44 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parse_engine.c                                     :+:      :+:    :+:   */
+/*   strlcpy.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yel-yaqi <yel-yaqi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/07 00:56:13 by yel-yaqi          #+#    #+#             */
-/*   Updated: 2024/04/18 12:48:26 by yel-yaqi         ###   ########.fr       */
+/*   Created: 2023/11/19 17:08:51 by yel-yaqi          #+#    #+#             */
+/*   Updated: 2024/04/18 13:27:05 by yel-yaqi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/minishell.h"
+#include <stddef.h>
 
-/*
-
-()
-&&
-||
-<
->
-<<
->>
-|
-
-(a * b) + (c * d)
-(echo hi && echo sup) || (echo bye && echo die)
-
-
-*/
-
-#include <stdio.h>
-t_token	*prioritize(t_token *token_list)
+size_t	ft_strlcpy(char *dst, const char *src, size_t dstsize)
 {
-	// t_token	*ptr;
+	size_t	len_src;
+	size_t	i;
 
-	// ptr = token_list;
-	// while (ptr)
-	// {
-	// 	printf("%s|%d\n", ptr->word, ptr->type);
-	// 	ptr = ptr->next;
-	// }
-	return (token_list);
+	len_src = 0;
+	while (*(src + len_src))
+		len_src++;
+	if (dstsize == 0)
+		return (len_src);
+	i = 0;
+	while (*src && i < dstsize - 1)
+	{
+		*dst = *src;
+		dst++;
+		src++;
+		i++;
+	}
+	*dst = '\0';
+	return (len_src);
 }
