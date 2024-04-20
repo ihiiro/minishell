@@ -6,7 +6,7 @@
 #    By: yel-yaqi <yel-yaqi@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/05 20:21:35 by yel-yaqi          #+#    #+#              #
-#    Updated: 2024/04/18 13:30:06 by yel-yaqi         ###   ########.fr        #
+#    Updated: 2024/04/20 13:03:19 by yel-yaqi         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,7 @@ NAME = minishell
 TARGET_TEST = test
 TARGET_TEST_SOURCES = checks/bct_tests.c
 MAIN_SOURCES = src/bct.c \
-			   src/parse_engine.c \
+			   src/parser_engine.c \
 			   src/split/split.c \
 			   src/split/strlen.c \
 			   src/split/substr.c \

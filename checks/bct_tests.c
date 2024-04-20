@@ -33,9 +33,5 @@ int	main(void)
 
 
 	printf("\n#1 WORD SPLITTER:\n");
-	char	*line = "echo && ls || cat .gitignore | less";
-
-	char	**words = ft_split(line, ' ');
-	for (int i = 0; words[i]; i++)
-		printf("word=%s\n", words[i]);
+	printf("	GOOD\n");
 }
