@@ -6,14 +6,45 @@
 /*   By: yel-yaqi <yel-yaqi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/07 00:56:13 by yel-yaqi          #+#    #+#             */
-/*   Updated: 2024/04/22 17:41:48 by yel-yaqi         ###   ########.fr       */
+/*   Updated: 2024/04/22 18:56:17 by yel-yaqi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
 #include "../include/minishell.h"
 
-#include <stdio.h>
+static int	operator(char *word)
+{
+	if ((word[0] == '&' && word[1] == '&')
+		|| word[0] == '|'
+		|| word[0] == '>'
+		|| word[0] == '<')
+		return (1);
+	return (0);
+}
+
+static void	classify(t_token *token_list)
+{
+	int	prev_type;
+
+	prev_type = -1;
+	while (token_list)
+	{
+		if (prev_type == -1)
+			token_list->type = COMMAND;
+		else if (operator(token_list->word))
+			token_list->type = OPERATOR;
+		else if (prev_type == COMMAND)
+			token_list->type = ARGUMENT;
+		else if (prev_type == ARGUMENT)
+			token_list->type = ARGUMENT;
+		else if (prev_type == OPERATOR)
+			token_list->type = COMMAND;
+		prev_type = token_list->type;
+		token_list = token_list->next;
+	}
+}
+
 t_token	*tokenize(char **word_list)
 {
 	t_token	*token_list;
@@ -26,9 +57,7 @@ t_token	*tokenize(char **word_list)
 		append(node, &token_list);
 		word_list++;
 	}
-	for (t_token *ptr = token_list; ptr; ptr = ptr->next)
-		printf("%s, ", ptr->word);
-	printf("\n");
+	classify(token_list);
 	return (token_list);
 }
 

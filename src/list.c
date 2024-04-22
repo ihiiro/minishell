@@ -6,12 +6,14 @@
 /*   By: yel-yaqi <yel-yaqi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 16:54:39 by yel-yaqi          #+#    #+#             */
-/*   Updated: 2024/04/22 17:40:38 by yel-yaqi         ###   ########.fr       */
+/*   Updated: 2024/04/22 18:22:04 by yel-yaqi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
 #include "../include/minishell.h"
+
+// NOTE: clearing function!!
 
 void	append(t_token *node, t_token **list)
 {
@@ -36,7 +38,7 @@ t_token	*init_node(char *word)
 	node = malloc(sizeof(t_token));
 	node->next = NULL;
 	node->prev = NULL;
-	// node->type = classify(word);
+	node->type = -1;
 	node->word = word;
 	return (node);
 }
