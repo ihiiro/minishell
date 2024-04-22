@@ -6,11 +6,28 @@
 /*   By: yel-yaqi <yel-yaqi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/07 00:56:13 by yel-yaqi          #+#    #+#             */
-/*   Updated: 2024/04/20 15:24:09 by yel-yaqi         ###   ########.fr       */
+/*   Updated: 2024/04/22 16:59:28 by yel-yaqi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <stdlib.h>
 #include "../include/minishell.h"
+
+#include <stdio.h>
+t_token	*tokenize(char **word_list)
+{
+	t_token	*token_list;
+	t_token	*node;
+
+	token_list = NULL;
+	while (*word_list)
+	{
+		node = init_node(*word_list);
+		append(node, token_list);
+		word_list++;
+	}
+	return (token_list);
+}
 
 /*
 

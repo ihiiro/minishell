@@ -6,7 +6,7 @@
 /*   By: yel-yaqi <yel-yaqi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/05 18:48:14 by yel-yaqi          #+#    #+#             */
-/*   Updated: 2024/04/22 16:23:30 by yel-yaqi         ###   ########.fr       */
+/*   Updated: 2024/04/22 16:34:38 by yel-yaqi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,8 +49,14 @@ typedef struct s_token
 	struct s_token	*prev;
 }			t_token;
 
+
+/* minishell */
 t_token	*prioritize(t_token *token_list);
 
+t_token	*tokenize(char **word_list);
+
+
+/* libft */
 char	*ft_substr(char const *s, unsigned int start, size_t len);
 
 char	*ft_strchr(const char *s, int c);

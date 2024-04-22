@@ -31,6 +31,8 @@ int	main(void)
 	assert(strequal("ls", bct->right->cmd));
 	printf("	bct->right->cmd: GOOD\n\n");
 
+
+	printf("\n#1 TOKENIZER TYPE:\n");
 	char	**word_list = ft_split("a -l -a && ( b || c -ba | ( f -l -d -x && g ) ) | d > e", ' ');
 	t_token	*tokens = tokenize(word_list);
 	assert(tokens->type == COMMAND);
@@ -56,5 +58,5 @@ int	main(void)
 	assert(tokens->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->type == COMMAND);
 	assert(tokens->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->type == REDIRECTION_OPERATOR);
 	assert(tokens->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->type == COMMAND);
-
+	printf("	GOOD\n");
 }
