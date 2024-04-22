@@ -6,7 +6,7 @@
 /*   By: yel-yaqi <yel-yaqi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/05 18:48:14 by yel-yaqi          #+#    #+#             */
-/*   Updated: 2024/04/22 15:57:29 by yel-yaqi         ###   ########.fr       */
+/*   Updated: 2024/04/22 16:23:30 by yel-yaqi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,8 @@ typedef struct s_bct
 # define REDIRECTION_OPERATOR 1
 # define COMMAND 2
 # define ARGUMENT 3
+# define PARA_OPEN 4
+# define PARA_CLOSE 5
 
 typedef struct s_token
 {
