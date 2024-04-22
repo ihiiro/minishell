@@ -31,7 +31,30 @@ int	main(void)
 	assert(strequal("ls", bct->right->cmd));
 	printf("	bct->right->cmd: GOOD\n\n");
 
+	char	**word_list = ft_split("a -l -a && ( b || c -ba | ( f -l -d -x && g ) ) | d > e", ' ');
+	t_token	*tokens = tokenize(word_list);
+	assert(tokens->type == COMMAND);
+	assert(tokens->next->type == ARGUMENT);
+	assert(tokens->next->next->type == ARGUMENT);
+	assert(tokens->next->next->next->type == CONTROL_OPERATOR);
+	assert(tokens->next->next->next->next->type == COMMAND);
+	assert(tokens->next->next->next->next->next->type == COMMAND);
+	assert(tokens->next->next->next->next->next->next->type == CONTROL_OPERATOR);
+	assert(tokens->next->next->next->next->next->next->next->type == COMMAND);
+	assert(tokens->next->next->next->next->next->next->next->next->type == ARGUMENT);
+	assert(tokens->next->next->next->next->next->next->next->next->next->type == REDIRECTION_OPERATOR);
+	assert(tokens->next->next->next->next->next->next->next->next->next->next->type == COMMAND);
+	assert(tokens->next->next->next->next->next->next->next->next->next->next->next->type == COMMAND);
+	assert(tokens->next->next->next->next->next->next->next->next->next->next->next->next->type == ARGUMENT);
+	assert(tokens->next->next->next->next->next->next->next->next->next->next->next->next->next->type == ARGUMENT);
+	assert(tokens->next->next->next->next->next->next->next->next->next->next->next->next->next->next->type == ARGUMENT);
+	assert(tokens->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->type == CONTROL_OPERATOR);
+	assert(tokens->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->type == COMMAND);
+	assert(tokens->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->type == COMMAND);
+	assert(tokens->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->type == COMMAND);
+	assert(tokens->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->type == REDIRECTION_OPERATOR);
+	assert(tokens->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->type == COMMAND);
+	assert(tokens->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->type == REDIRECTION_OPERATOR);
+	assert(tokens->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->type == COMMAND);
 
-	printf("\n#1 WORD SPLITTER:\n");
-	printf("	GOOD\n");
 }
