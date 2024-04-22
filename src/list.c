@@ -6,7 +6,7 @@
 /*   By: yel-yaqi <yel-yaqi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 16:54:39 by yel-yaqi          #+#    #+#             */
-/*   Updated: 2024/04/22 17:15:11 by yel-yaqi         ###   ########.fr       */
+/*   Updated: 2024/04/22 17:40:38 by yel-yaqi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,12 +17,16 @@ void	append(t_token *node, t_token **list)
 {
 	t_token	*prev;
 
-	if (!list)
+	if (!*list)
+	{
 		*list = node;
+		(*list)->last = node;
+		return ;
+	}
 	prev = (*list)->last;
-	if (prev)
-		prev->next = node;
 	node->prev = prev;
+	(*list)->last = node;
+	prev->next = node;
 }
 
 t_token	*init_node(char *word)
@@ -32,7 +36,7 @@ t_token	*init_node(char *word)
 	node = malloc(sizeof(t_token));
 	node->next = NULL;
 	node->prev = NULL;
-	node->type = classify(word);
+	// node->type = classify(word);
 	node->word = word;
 	return (node);
 }
