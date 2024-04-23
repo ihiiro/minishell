@@ -6,7 +6,7 @@
 /*   By: yel-yaqi <yel-yaqi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/07 00:56:13 by yel-yaqi          #+#    #+#             */
-/*   Updated: 2024/04/22 18:56:17 by yel-yaqi         ###   ########.fr       */
+/*   Updated: 2024/04/23 12:22:04 by yel-yaqi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,10 +51,15 @@ t_token	*tokenize(char **word_list)
 	t_token	*node;
 
 	token_list = NULL;
-	while (*word_list)
-	{
-		node = init_node(*word_list);
-		append(node, &token_list);
+	// while (*word_list)
+	// {
+		if (multi_token(*word_list))
+			
+		else
+		{
+			node = init_node(*word_list);
+			append(node, &token_list);
+		}
 		word_list++;
 	}
 	classify(token_list);
