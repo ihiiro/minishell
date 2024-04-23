@@ -6,7 +6,7 @@
 /*   By: yel-yaqi <yel-yaqi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/05 18:48:14 by yel-yaqi          #+#    #+#             */
-/*   Updated: 2024/04/22 18:40:58 by yel-yaqi         ###   ########.fr       */
+/*   Updated: 2024/04/23 12:43:53 by yel-yaqi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ typedef struct s_token
 /* minishell */
 t_token	*prioritize(t_token *token_list);
 
-t_token	*tokenize(char **word_list);
+void	tokenize(char **word_list, t_token **token_list);
 
 t_token	*init_node(char *word);
 
