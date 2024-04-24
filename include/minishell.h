@@ -6,7 +6,7 @@
 /*   By: yel-yaqi <yel-yaqi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/05 18:48:14 by yel-yaqi          #+#    #+#             */
-/*   Updated: 2024/04/23 12:43:53 by yel-yaqi         ###   ########.fr       */
+/*   Updated: 2024/04/24 11:17:59 by yel-yaqi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ char	*ft_strchr(const char *s, int c);
 
 char	*ft_strdup(const char *s1);
 
-char	**ft_split(char const *s, char c);
+char	**ft_split(char *str, char *charset);
 
 size_t	ft_strlen(const char *s);
 

@@ -6,77 +6,93 @@
 /*   By: yel-yaqi <yel-yaqi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/19 19:45:54 by yel-yaqi          #+#    #+#             */
-/*   Updated: 2024/04/20 12:25:53 by yel-yaqi         ###   ########.fr       */
+/*   Updated: 2024/04/24 11:17:43 by yel-yaqi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
 #include "../../include/minishell.h"
 
-static int	cnt_substrs(char const *s, char c)
-{
-	int	cnt;
-
-	cnt = 0;
-	while (*s)
-	{
-		while (*s == c)
-			s++;
-		if (*s)
-			cnt++;
-		while (*s && *s != c)
-			s++;
-	}
-	return (cnt);
-}
-
-static char	**free_substrs(char **substrs)
+static int	in_charset(char c, char *charset)
 {
 	int	i;
 
-	i = 0;
-	while (substrs[i])
+	i = -1;
+	while (charset[++i])
 	{
-		free(substrs[i]);
+		if (c == charset[i])
+			return (1);
+	}
+	return (0);
+}
+
+static int	count_substrs(char *str, char *charset)
+{
+	int	count;
+	int	new_string;
+	int	i;
+
+	count = 0;
+	i = -1;
+	new_string = 1;
+	while (str[++i])
+	{
+		if (!in_charset(str[i], charset) && new_string)
+		{
+			count++;
+			new_string = 0;
+		}
+		else if (in_charset(str[i], charset) && !new_string)
+			new_string = 1;
+	}
+	return (count);
+}
+
+static char	*split_strdup(char *str, char *charset)
+{
+	char	*cpy;
+	int		len;
+	int		i;
+	char	*ptr;
+
+	len = 0;
+	i = 0;
+	ptr = str;
+	while (str[len] && !in_charset(str[len], charset))
+		len++;
+	cpy = (char *)malloc(len + 1);
+	while (i < len)
+	{
+		cpy[i] = *ptr;
+		ptr++;
 		i++;
 	}
-	free(substrs);
-	return (NULL);
+	cpy[i] = '\0';
+	return (cpy);
 }
 
-static void	helper(char const *s, int *len, char c)
-{
-	if (ft_strchr(s, c))
-		*len = ft_strchr(s, c) - s;
-	else
-		*len = ft_strlen(s);
-}
-
-char	**ft_split(char const *s, char c)
+char	**ft_split(char *str, char *charset)
 {
 	char	**substrs;
-	int		i;
-	int		len;
+	int		index;
+	int		new_string;
 
-	if (!s)
-		return (NULL);
-	substrs = (char **)malloc((cnt_substrs(s, c) + 1) * sizeof(char *));
-	if (!substrs)
-		return (NULL);
-	i = 0;
-	while (*s)
+	new_string = 1;
+	index = 0;
+	substrs = (char **)malloc(sizeof(char *)
+			* count_substrs(str, charset) + sizeof(char *));
+	while (*str)
 	{
-		while (*s && *s == c)
-			s++;
-		if (*s)
+		if (!in_charset(*str, charset) && new_string)
 		{
-			helper(s, &len, c);
-			substrs[i] = ft_substr(s, 0, len);
-			if (!substrs[i++])
-				return (free_substrs(substrs));
-			s += len;
+			substrs[index] = split_strdup(str, charset);
+			index++;
+			new_string = 0;
 		}
+		else if (in_charset(*str, charset) && !new_string)
+			new_string = 1;
+		str++;
 	}
-	substrs[i] = NULL;
+	substrs[index] = 0;
 	return (substrs);
 }
