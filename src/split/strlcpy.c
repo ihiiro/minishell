@@ -6,11 +6,13 @@
 /*   By: yel-yaqi <yel-yaqi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/19 17:08:51 by yel-yaqi          #+#    #+#             */
-/*   Updated: 2024/04/18 13:27:05 by yel-yaqi         ###   ########.fr       */
+/*   Updated: 2024/04/24 11:23:48 by yel-yaqi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stddef.h>
+
+/* not used anywhere */
 
 size_t	ft_strlcpy(char *dst, const char *src, size_t dstsize)
 {

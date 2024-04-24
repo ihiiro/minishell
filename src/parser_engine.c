@@ -6,21 +6,30 @@
 /*   By: yel-yaqi <yel-yaqi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/07 00:56:13 by yel-yaqi          #+#    #+#             */
-/*   Updated: 2024/04/23 12:58:41 by yel-yaqi         ###   ########.fr       */
+/*   Updated: 2024/04/24 13:19:11 by yel-yaqi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
 #include "../include/minishell.h"
 
-static int	operator(char *word)
+static char	*operator(char *word)
 {
-	if ((word[0] == '&' && word[1] == '&')
-		|| word[0] == '|'
-		|| word[0] == '>'
-		|| word[0] == '<')
-		return (1);
-	return (0);
+	if (word[0] == '&' && word[1] == '&')
+		return (ft_substr("&&", 0, 2));
+	else if (word[0] == '|' && word[1] == '|')
+		return (ft_substr("||", 0, 2));
+	else if (word[0] == '|')
+		return (ft_substr("|", 0, 1));
+	else if (word[0] == '>' && word[1] == '>')
+		return (ft_substr(">>", 0, 2));
+	else if (word[0] == '>')
+		return (ft_substr(">", 0, 1));
+	else if (word[0] == '<' && word[1] == '<')
+		return (ft_substr("<<", 0, 2));
+	else if (word[0] == '<')
+		return (ft_substr("<", 0, 1));
+	return (NULL);
 }
 
 static void	classify(t_token *token_list)
@@ -49,6 +58,41 @@ static void	classify(t_token *token_list)
 	}
 }
 
+static char	*extract(char *str)
+{
+	int	i;
+
+	i = 0;
+	while (str[i] && !operator(&str[i])
+			&& str[i] != '('
+			&& str[i] != ')')
+		i++;
+	return (ft_substr(str, 0, i));
+}
+
+#include <stdio.h>
+static void	append_multi(char *word, t_token **token_list)
+{
+	int		i;
+	char	*str;
+	t_token	*node;
+
+	i = 0;
+	while (word[i])
+	{
+		str = operator(&word[i]);
+		if (word[i] == '(')
+			str = ft_substr("(", 0, 1);
+		else if (word[i] == ')')
+			str = ft_substr(")", 0, 1);
+		else if (!str)
+			str = extract(&word[i]);
+		node = init_node(str);
+		append(node, token_list);
+		i += ft_strlen(str);
+	}
+}
+
 void	tokenize(char **word_list, t_token **token_list)
 {
 	t_token	*node;
@@ -58,14 +102,8 @@ void	tokenize(char **word_list, t_token **token_list)
 		classify(*token_list);
 		return ;
 	}
-	// if (multi_token(*word_list))
-		
-	// else
-	// {
-		node = init_node(*word_list);
-		append(node, token_list);
-		tokenize(word_list + 1, token_list);
-	// }
+	append_multi(*word_list, token_list);
+	tokenize(word_list + 1, token_list);
 }
 
 /*

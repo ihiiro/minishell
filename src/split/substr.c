@@ -6,13 +6,15 @@
 /*   By: yel-yaqi <yel-yaqi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/19 19:38:18 by yel-yaqi          #+#    #+#             */
-/*   Updated: 2024/04/18 13:26:22 by yel-yaqi         ###   ########.fr       */
+/*   Updated: 2024/04/24 11:24:42 by yel-yaqi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stddef.h>
 #include <stdlib.h>
 #include "../../include/minishell.h"
+
+/* not used anywhere */
 
 char	*ft_substr(char const *s, unsigned int start, size_t len)
 {

@@ -6,12 +6,11 @@
 /*   By: yel-yaqi <yel-yaqi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/19 19:45:54 by yel-yaqi          #+#    #+#             */
-/*   Updated: 2024/04/24 11:17:43 by yel-yaqi         ###   ########.fr       */
+/*   Updated: 2024/04/24 11:23:01 by yel-yaqi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
-#include "../../include/minishell.h"
 
 static int	in_charset(char c, char *charset)
 {

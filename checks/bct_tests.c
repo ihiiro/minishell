@@ -33,7 +33,7 @@ int	main(void)
 
 
 	printf("\n#1 TOKENIZER TYPE:\n");
-	char	**word_list = ft_split(" a -l -a && ( b || c -ba | ( f -l	-d -x && g ) 	)  | d > e	", " 	");
+	char	**word_list = ft_split(" a -l -a&&( b||c -ba |( f -l	-d -x && g ) 	)  | d > e	", " 	");
 	t_token	*tokens = NULL;
 	tokenize(word_list, &tokens);
 	assert(tokens->type == COMMAND);

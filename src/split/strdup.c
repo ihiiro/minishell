@@ -6,12 +6,14 @@
 /*   By: yel-yaqi <yel-yaqi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/19 18:07:03 by yel-yaqi          #+#    #+#             */
-/*   Updated: 2024/04/18 13:28:06 by yel-yaqi         ###   ########.fr       */
+/*   Updated: 2024/04/24 11:22:25 by yel-yaqi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
 #include <stddef.h>
+
+/* not used anywhere */
 
 char	*ft_strdup(const char *s1)
 {
