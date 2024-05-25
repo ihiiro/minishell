@@ -12,28 +12,38 @@ bool	strequal(char *str0, char *str1)
 		return (true);
 }
 
+// void	in_order(t_ast* root)
+// {
+// 	if (root == NULL)
+// 		return ;
+// 	printf("%s\n", root->token);
+// 	in_order(root->left);
+// 	in_order(root->right);
+// }
 
 int	main(void)
 {
-	printf("\n#0 BINARY-COMMAND-TREE MANUAL POPULATION:\n");
-	t_bct	*bct = malloc(sizeof(t_bct));
-	t_bct	*left_child_node = malloc(sizeof(t_bct));
-	t_bct	*right_child_node = malloc(sizeof(t_bct));
-	bct->cmd = "&&";
-	bct->left = left_child_node;
-	bct->right = right_child_node;
-	bct->left->cmd = "echo hi";
-	bct->right->cmd = "ls";
-	assert(strequal("&&", bct->cmd));
-	printf("	bct->cmd: GOOD\n");
-	assert(strequal("echo hi", bct->left->cmd));
-	printf("	bct->left->cmd: GOOD\n");
-	assert(strequal("ls", bct->right->cmd));
-	printf("	bct->right->cmd: GOOD\n\n");
+	printf("\n#0 AST MANUAL POPULATION:\n");
+	t_ast	*ast = malloc(sizeof(t_ast));
+	t_ast	*left_child_node = malloc(sizeof(t_ast));
+	t_ast	*right_child_node = malloc(sizeof(t_ast));
+	ast->token = "&&";
+	ast->left = left_child_node;
+	ast->right = right_child_node;
+	ast->left->token = "echo hi";
+	ast->right->token = "ls";
+	assert(strequal("&&", ast->token));
+	printf("	ast->token: GOOD\n");
+	assert(strequal("echo hi", ast->left->token));
+	printf("	ast->left->token: GOOD\n");
+	assert(strequal("ls", ast->right->token));
+	printf("	ast->right->token: GOOD\n\n");
 
+	// in_order(ast);
+	// printf("\n");
 
-	printf("\n#1 TOKENIZER TYPE:\n");
-	char	**word_list = ft_split(" a -l -a&&( b||c -ba |( f -l	-d -x && g ) 	)  | d > e	", " 	");
+	printf("\n#1 TOKENIZER:\n");
+	char	**word_list = ft_split(" a -l -a&&( b||c -ba | ( f -l	-d -x && g ) )  | d > e	", "	 ");
 	t_token	*tokens = NULL;
 	tokenize(word_list, &tokens);
 	assert(tokens->type == COMMAND);

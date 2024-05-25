@@ -6,7 +6,7 @@
 /*   By: yel-yaqi <yel-yaqi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/05 18:48:14 by yel-yaqi          #+#    #+#             */
-/*   Updated: 2024/04/24 11:17:59 by yel-yaqi         ###   ########.fr       */
+/*   Updated: 2024/05/25 15:34:05 by yel-yaqi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,12 +16,12 @@
 
 /* BINARY-COMMAND-TREE */
 
-typedef struct s_bct
+typedef struct s_ast
 {
-	char			*cmd;
-	struct s_bct	*left;
-	struct s_bct	*right;
-}				t_bct;
+	char			*token;
+	struct s_ast	*left;
+	struct s_ast	*right;
+}				t_ast;
 
 /* PARSE ENGINE
 					SYNTAX ANALYZER
@@ -30,7 +30,7 @@ typedef struct s_bct
 						 |
 					 TOKENIZER
 					     |
-					 PRIORITIZER
+					 PARSER
 
  */
 
