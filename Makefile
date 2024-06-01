@@ -6,7 +6,7 @@
 #    By: yel-yaqi <yel-yaqi@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/05 20:21:35 by yel-yaqi          #+#    #+#              #
-#    Updated: 2024/04/22 17:30:11 by yel-yaqi         ###   ########.fr        #
+#    Updated: 2024/05/28 10:42:37 by yel-yaqi         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,8 @@ NAME = minishell
 TARGET_TEST = test
 TARGET_TEST_SOURCES = checks/bct_tests.c
 MAIN_SOURCES = src/bct.c \
-			   src/parser_engine.c \
+			   src/parser_engine/tokenize.c \
+			   src/parser_engine/parse.c \
 			   src/split/split.c \
 			   src/split/strlen.c \
 			   src/split/substr.c \
@@ -50,6 +51,7 @@ $(TARGET_TEST): $(ALL_OBJ) $(HEADER) Makefile
 clean:
 	rm -f src/*.o
 	rm -f src/split/*.o
+	rm -f src/parser_engine/*.o
 	rm -f checks/*.o
 
 fclean: clean

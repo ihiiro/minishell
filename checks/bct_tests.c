@@ -23,26 +23,7 @@ bool	strequal(char *str0, char *str1)
 
 int	main(void)
 {
-	printf("\n#0 AST MANUAL POPULATION:\n");
-	t_ast	*ast = malloc(sizeof(t_ast));
-	t_ast	*left_child_node = malloc(sizeof(t_ast));
-	t_ast	*right_child_node = malloc(sizeof(t_ast));
-	ast->token = "&&";
-	ast->left = left_child_node;
-	ast->right = right_child_node;
-	ast->left->token = "echo hi";
-	ast->right->token = "ls";
-	assert(strequal("&&", ast->token));
-	printf("	ast->token: GOOD\n");
-	assert(strequal("echo hi", ast->left->token));
-	printf("	ast->left->token: GOOD\n");
-	assert(strequal("ls", ast->right->token));
-	printf("	ast->right->token: GOOD\n\n");
-
-	// in_order(ast);
-	// printf("\n");
-
-	printf("\n#1 TOKENIZER:\n");
+	printf("\n#0 TOKENIZER-TYPES:\n");
 	char	**word_list = ft_split(" a -l -a&&( b||c -ba | ( f -l	-d -x && g ) )  | d > e	", "	 ");
 	t_token	*tokens = NULL;
 	tokenize(word_list, &tokens);
@@ -69,5 +50,35 @@ int	main(void)
 	assert(tokens->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->type == COMMAND);
 	assert(tokens->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->type == OPERATOR);
 	assert(tokens->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->type == COMMAND);
+
 	printf("	GOOD\n\n");
+
+	printf("\n#1 TOKENIZER-TOKENS:\n");
+	word_list = ft_split("&& || | > >> << <", " ");
+	tokens = NULL;
+	tokenize(word_list, &tokens);
+	name_tokens(tokens);
+	assert(tokens->name == AND);
+	assert(tokens->next->name == OR);
+	assert(tokens->next->next->name == PIPE);
+	assert(tokens->next->next->next->name == REDIR_OUT);
+	assert(tokens->next->next->next->next->name == REDIR_APP);
+	assert(tokens->next->next->next->next->next->name == HERE_DOC);
+	assert(tokens->next->next->next->next->next->next->name == REDIR_IN);
+
+	printf("	GOOD\n\n");
+
+	// printf("\n#2 PARSER:\n");
+	// word_list = ft_split("(cat file0 | grep selection && echo hi > file1)", " ");
+	// tokens = NULL;
+	// tokenize(word_list, &tokens);
+	// ast = parse(tokens);
+	// assert(strequal(">", ast->token->word));
+	// assert(strequal("|", ast->left->token->word));
+	// assert(strequal("file1", ast->right->token->word));
+	// assert(strequal("file1", ast->right->token->word));
+	// assert(strequal("cat", ast->left->left->token->word));
+	// assert(strequal("&&", ast->left->right->token->word));
+	// assert(strequal("grep", ast->left->right->left->token->word));
+	// assert(strequal("echo", ast->left->right->right->token->word));
 }

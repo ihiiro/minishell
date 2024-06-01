@@ -1,17 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parser_engine.c                                    :+:      :+:    :+:   */
+/*   tokenize.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yel-yaqi <yel-yaqi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/07 00:56:13 by yel-yaqi          #+#    #+#             */
-/*   Updated: 2024/04/25 13:08:49 by yel-yaqi         ###   ########.fr       */
+/*   Updated: 2024/06/01 11:33:43 by yel-yaqi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
-#include "../include/minishell.h"
+#include "../../include/minishell.h"
 
 static char	*operator(char *word)
 {
@@ -26,7 +26,7 @@ static char	*operator(char *word)
 	else if (word[0] == '>')
 		return (ft_substr(">", 0, 1));
 	else if (word[0] == '<' && word[1] == '<')
-		return (ft_substr("<<", 0, 2));
+		return (ft_substr("<<", 0, 2)); // problem here cuz << would be tokenized as command
 	else if (word[0] == '<')
 		return (ft_substr("<", 0, 1));
 	return (NULL);
@@ -70,7 +70,6 @@ static char	*extract(char *str)
 	return (ft_substr(str, 0, i));
 }
 
-#include <stdio.h>
 static void	append_multi(char *word, t_token **token_list)
 {
 	int		i;
@@ -106,40 +105,24 @@ void	tokenize(char **word_list, t_token **token_list)
 	tokenize(word_list + 1, token_list);
 }
 
-/*
-
-()
-&&
-||
-<
->
-<<
->>
-|
-
-(a * b) + (c * d)
-(echo hi && echo sup) || (echo bye && echo die)
-
-a && b || c | d > e
-
-a && ( b || c ) | d > e
-
-a && ( b || c | ( f && g ) ) | d > e
-
-
-
-*/
-
-#include <stdio.h>
-t_token	*prioritize(t_token *token_list)
+void	name_tokens(t_token *tokens)
 {
-	// t_token	*ptr;
-
-	// ptr = token_list;
-	// while (ptr)
-	// {
-	// 	printf("%s|%d\n", ptr->word, ptr->type);
-	// 	ptr = ptr->next;
-	// }
-	return (token_list);
+	while (tokens)
+	{
+		if (tokens->word[0] == '&' && tokens->word[1] == '&')
+			tokens->name = AND;
+		else if (tokens->word[0] == '|' && tokens->word[1] == '|')
+			tokens->name = OR;
+		else if (tokens->word[0] == '|')
+			tokens->name = PIPE;
+		else if (tokens->word[0] == '>' && tokens->word[1] == '>')
+			tokens->name = REDIR_APP;
+		else if (tokens->word[0] == '<' && tokens->word[1] == '<')
+			tokens->name = HERE_DOC;
+		else if (tokens->word[0] == '>')
+			tokens->name = REDIR_OUT;
+		else if (tokens->word[0] == '<')
+			tokens->name = REDIR_IN;
+		tokens = tokens->next;
+	}
 }

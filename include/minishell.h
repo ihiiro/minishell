@@ -6,22 +6,13 @@
 /*   By: yel-yaqi <yel-yaqi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/05 18:48:14 by yel-yaqi          #+#    #+#             */
-/*   Updated: 2024/05/25 15:34:05 by yel-yaqi         ###   ########.fr       */
+/*   Updated: 2024/06/01 11:34:20 by yel-yaqi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
 # include <stddef.h>
-
-/* BINARY-COMMAND-TREE */
-
-typedef struct s_ast
-{
-	char			*token;
-	struct s_ast	*left;
-	struct s_ast	*right;
-}				t_ast;
 
 /* PARSE ENGINE
 					SYNTAX ANALYZER
@@ -34,16 +25,38 @@ typedef struct s_ast
 
  */
 
+# define BACKWARDS 0
+# define FORWARDS 1
+
 # define OPERATOR 0
 # define COMMAND 1
 # define ARGUMENT 2
 # define PARA_OPEN 3
 # define PARA_CLOSE 4
 
+# define AND 0
+# define OR 1
+# define PIPE 2
+# define REDIR_OUT 3
+# define REDIR_IN 4
+# define HERE_DOC 5
+# define REDIR_APP 6
+
+struct s_token;
+
+typedef struct s_ast
+{
+	struct s_token	*token;
+	struct s_ast	*left;
+	struct s_ast	*right;
+}				t_ast;
+
 typedef struct s_token
 {
 	char			*word;
+	int				consumed;
 	int				type;
+	int				name;
 	struct s_token	*next;
 	struct s_token	*prev;
 	struct s_token	*last;
@@ -58,6 +71,8 @@ void	tokenize(char **word_list, t_token **token_list);
 t_token	*init_node(char *word);
 
 void	append(t_token *node, t_token **list);
+
+void	name_tokens(t_token *tokens);
 
 
 /* libft */
