@@ -6,13 +6,10 @@
 /*   By: yel-yaqi <yel-yaqi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 10:40:26 by yel-yaqi          #+#    #+#             */
-/*   Updated: 2024/06/01 11:19:19 by yel-yaqi         ###   ########.fr       */
+/*   Updated: 2024/06/03 14:50:28 by yel-yaqi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <stdlib.h>
 #include "../../include/minishell.h"
 
-t_ast	*parse(t_token *tokens)
-{
-	
-}

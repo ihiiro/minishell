@@ -6,7 +6,7 @@
 /*   By: yel-yaqi <yel-yaqi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/05 18:48:14 by yel-yaqi          #+#    #+#             */
-/*   Updated: 2024/06/01 11:34:20 by yel-yaqi         ###   ########.fr       */
+/*   Updated: 2024/06/02 15:49:11 by yel-yaqi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@
 # define ARGUMENT 2
 # define PARA_OPEN 3
 # define PARA_CLOSE 4
+# define AND_OR 5
 
 # define AND 0
 # define OR 1
@@ -41,6 +42,7 @@
 # define REDIR_IN 4
 # define HERE_DOC 5
 # define REDIR_APP 6
+# define NOT_OP 7
 
 struct s_token;
 
@@ -54,6 +56,8 @@ typedef struct s_ast
 typedef struct s_token
 {
 	char			*word;
+	t_ast			*subtree;
+	int				pipeline;
 	int				consumed;
 	int				type;
 	int				name;
@@ -72,7 +76,9 @@ t_token	*init_node(char *word);
 
 void	append(t_token *node, t_token **list);
 
-void	name_tokens(t_token *tokens);
+void	name_operators(t_token *tokens);
+
+t_ast	*parse(t_token *tokens, t_ast **ast);
 
 
 /* libft */

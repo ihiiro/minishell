@@ -53,11 +53,11 @@ int	main(void)
 
 	printf("	GOOD\n\n");
 
-	printf("\n#1 TOKENIZER-TOKENS:\n");
+	printf("\n#1 TOKENIZER-TOKEN-NAMES:\n");
 	word_list = ft_split("&& || | > >> << <", " ");
 	tokens = NULL;
 	tokenize(word_list, &tokens);
-	name_tokens(tokens);
+	name_operators(tokens);
 	assert(tokens->name == AND);
 	assert(tokens->next->name == OR);
 	assert(tokens->next->next->name == PIPE);
@@ -68,17 +68,10 @@ int	main(void)
 
 	printf("	GOOD\n\n");
 
-	// printf("\n#2 PARSER:\n");
-	// word_list = ft_split("(cat file0 | grep selection && echo hi > file1)", " ");
-	// tokens = NULL;
-	// tokenize(word_list, &tokens);
-	// ast = parse(tokens);
-	// assert(strequal(">", ast->token->word));
-	// assert(strequal("|", ast->left->token->word));
-	// assert(strequal("file1", ast->right->token->word));
-	// assert(strequal("file1", ast->right->token->word));
-	// assert(strequal("cat", ast->left->left->token->word));
-	// assert(strequal("&&", ast->left->right->token->word));
-	// assert(strequal("grep", ast->left->right->left->token->word));
-	// assert(strequal("echo", ast->left->right->right->token->word));
+	printf("\n#2 PARSER-BUILD-PIPELINES:\n");
+	word_list = ft_split("(cat file0 | grep selection && echo hi > file1)", " ");
+	tokens = NULL;
+	tokenize(word_list, &tokens);
+	name_operators(tokens);
+
 }

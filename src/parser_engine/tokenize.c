@@ -6,7 +6,7 @@
 /*   By: yel-yaqi <yel-yaqi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/07 00:56:13 by yel-yaqi          #+#    #+#             */
-/*   Updated: 2024/06/01 11:33:43 by yel-yaqi         ###   ########.fr       */
+/*   Updated: 2024/06/02 11:22:52 by yel-yaqi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ static void	classify(t_token *token_list)
 	prev_type = -1;
 	while (token_list)
 	{
+		token_list->consumed = 0;
 		if (prev_type == -1)
 			token_list->type = COMMAND;
 		else if (operator(token_list->word))
@@ -105,7 +106,7 @@ void	tokenize(char **word_list, t_token **token_list)
 	tokenize(word_list + 1, token_list);
 }
 
-void	name_tokens(t_token *tokens)
+void	name_operators(t_token *tokens)
 {
 	while (tokens)
 	{
@@ -123,6 +124,8 @@ void	name_tokens(t_token *tokens)
 			tokens->name = REDIR_OUT;
 		else if (tokens->word[0] == '<')
 			tokens->name = REDIR_IN;
+		else
+			tokens->name = NOT_OP;
 		tokens = tokens->next;
 	}
 }
