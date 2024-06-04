@@ -6,7 +6,7 @@
 /*   By: yel-yaqi <yel-yaqi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/05 18:48:14 by yel-yaqi          #+#    #+#             */
-/*   Updated: 2024/06/04 12:32:11 by yel-yaqi         ###   ########.fr       */
+/*   Updated: 2024/06/04 14:44:29 by yel-yaqi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@
 # define REDIR_APP 6
 # define NOT_OP 7
 
-struct s_token;
+struct	s_token;
 
 typedef struct s_ast
 {
@@ -66,7 +66,6 @@ typedef struct s_token
 	struct s_token	*last;
 }			t_token;
 
-
 /* minishell */
 t_token	*prioritize(t_token *token_list);
 
@@ -82,7 +81,6 @@ t_ast	*parse(t_token *tokens, t_ast **ast);
 
 int		build_pipelines(t_token *token);
 
-
 /* libft */
 char	*ft_substr(char const *s, unsigned int start, size_t len);
 
@@ -95,6 +93,5 @@ char	**ft_split(char *str, char *charset);
 size_t	ft_strlen(const char *s);
 
 size_t	ft_strlcpy(char *dst, const char *src, size_t dstsize);
-
 
 #endif

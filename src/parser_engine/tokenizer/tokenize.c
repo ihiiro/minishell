@@ -6,12 +6,12 @@
 /*   By: yel-yaqi <yel-yaqi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/07 00:56:13 by yel-yaqi          #+#    #+#             */
-/*   Updated: 2024/06/02 11:22:52 by yel-yaqi         ###   ########.fr       */
+/*   Updated: 2024/06/04 15:12:09 by yel-yaqi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
-#include "../../include/minishell.h"
+#include "../../../include/minishell.h"
 
 static char	*operator(char *word)
 {
@@ -26,7 +26,7 @@ static char	*operator(char *word)
 	else if (word[0] == '>')
 		return (ft_substr(">", 0, 1));
 	else if (word[0] == '<' && word[1] == '<')
-		return (ft_substr("<<", 0, 2)); // problem here cuz << would be tokenized as command
+		return (ft_substr("<<", 0, 2));
 	else if (word[0] == '<')
 		return (ft_substr("<", 0, 1));
 	return (NULL);
@@ -65,8 +65,8 @@ static char	*extract(char *str)
 
 	i = 0;
 	while (str[i] && !operator(&str[i])
-			&& str[i] != '('
-			&& str[i] != ')')
+		&& str[i] != '('
+		&& str[i] != ')')
 		i++;
 	return (ft_substr(str, 0, i));
 }
@@ -104,28 +104,4 @@ void	tokenize(char **word_list, t_token **token_list)
 	}
 	append_multi(*word_list, token_list);
 	tokenize(word_list + 1, token_list);
-}
-
-void	name_operators(t_token *tokens)
-{
-	while (tokens)
-	{
-		if (tokens->word[0] == '&' && tokens->word[1] == '&')
-			tokens->name = AND;
-		else if (tokens->word[0] == '|' && tokens->word[1] == '|')
-			tokens->name = OR;
-		else if (tokens->word[0] == '|')
-			tokens->name = PIPE;
-		else if (tokens->word[0] == '>' && tokens->word[1] == '>')
-			tokens->name = REDIR_APP;
-		else if (tokens->word[0] == '<' && tokens->word[1] == '<')
-			tokens->name = HERE_DOC;
-		else if (tokens->word[0] == '>')
-			tokens->name = REDIR_OUT;
-		else if (tokens->word[0] == '<')
-			tokens->name = REDIR_IN;
-		else
-			tokens->name = NOT_OP;
-		tokens = tokens->next;
-	}
 }
