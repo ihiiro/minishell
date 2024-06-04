@@ -6,7 +6,7 @@
 /*   By: yel-yaqi <yel-yaqi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/05 18:48:14 by yel-yaqi          #+#    #+#             */
-/*   Updated: 2024/06/02 15:49:11 by yel-yaqi         ###   ########.fr       */
+/*   Updated: 2024/06/04 12:32:11 by yel-yaqi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,8 @@ void	append(t_token *node, t_token **list);
 void	name_operators(t_token *tokens);
 
 t_ast	*parse(t_token *tokens, t_ast **ast);
+
+int		build_pipelines(t_token *token);
 
 
 /* libft */
