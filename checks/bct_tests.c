@@ -76,12 +76,9 @@ int	main(void)
 	tokenize(word_list, &tokens);
 	name_operators(tokens);
 	assert(build_pipelines(tokens->last) == 13);
+	
 	printf("	GOOD\n\n");
-
-	printf("\n#2 PARSER-BUILD-&&-||:\n");
-	assert(connect_pipelines(tokens) == 9);
-
+	connect_pipelines(tokens);
 	in_order(tokens->last->prev->prev->prev->subtree);
-	printf("	GOOD\n\n");
 
 }

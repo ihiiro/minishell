@@ -6,7 +6,7 @@
 /*   By: yel-yaqi <yel-yaqi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/05 18:48:14 by yel-yaqi          #+#    #+#             */
-/*   Updated: 2024/06/05 13:18:39 by yel-yaqi         ###   ########.fr       */
+/*   Updated: 2024/06/05 15:55:39 by yel-yaqi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,21 +67,24 @@ typedef struct s_token
 }			t_token;
 
 /* minishell */
-t_token	*prioritize(t_token *token_list);
 
 void	tokenize(char **word_list, t_token **token_list);
-
-t_token	*init_node(char *word);
 
 void	append(t_token *node, t_token **list);
 
 void	name_operators(t_token *tokens);
 
+void	connect_pipelines(t_token *token);
+
+t_token	*init_node(char *word);
+
+t_token	*prioritize(t_token *token_list);
+
+t_token	*search(t_token *from, int name, int direction);
+
 t_ast	*parse(t_token *tokens, t_ast **ast);
 
 int		build_pipelines(t_token *token);
-
-int		connect_pipelines(t_token *token);
 
 /* libft */
 char	*ft_substr(char const *s, unsigned int start, size_t len);

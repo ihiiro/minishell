@@ -6,7 +6,7 @@
 #    By: yel-yaqi <yel-yaqi@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/05 20:21:35 by yel-yaqi          #+#    #+#              #
-#    Updated: 2024/06/04 15:13:30 by yel-yaqi         ###   ########.fr        #
+#    Updated: 2024/06/05 15:40:23 by yel-yaqi         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,7 +18,8 @@ TARGET_TEST_SOURCES = checks/bct_tests.c
 MAIN_SOURCES = src/bct.c \
 			   src/parser_engine/tokenizer/tokenize.c \
 			   src/parser_engine/tokenizer/name_operators.c \
-			   src/parser_engine/parser/parse.c \
+			   src/parser_engine/parser/build_pipelines.c \
+			   src/parser_engine/parser/connect_pipelines.c \
 			   src/split/split.c \
 			   src/split/strlen.c \
 			   src/split/substr.c \
