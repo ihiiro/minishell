@@ -89,6 +89,8 @@ int	main(void)
 		build_pipelines(tokens->last);
 		connect_pipelines(tokens);
 		t_token	*search_token = search(tokens->last, AND, BACKWARDS);
+		if (search(search_token->next, OR, FORWARDS))
+			search_token = search(tokens->last, OR, BACKWARDS);
 		if (!search_token)
 			search_token = search(tokens->last, OR, BACKWARDS);
 		if (!search_token)
