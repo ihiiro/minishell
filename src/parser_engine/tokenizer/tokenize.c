@@ -6,7 +6,7 @@
 /*   By: yel-yaqi <yel-yaqi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/07 00:56:13 by yel-yaqi          #+#    #+#             */
-/*   Updated: 2024/06/05 10:01:22 by yel-yaqi         ###   ########.fr       */
+/*   Updated: 2024/06/05 17:09:19 by yel-yaqi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ static void	classify(t_token *token_list)
 	prev_type = -1;
 	while (token_list)
 	{
-		token_list->consumed = 0;
+		token_list->subtree = NULL;
 		if (prev_type == -1)
 			token_list->type = COMMAND;
 		else if (operator(token_list->word))

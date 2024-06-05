@@ -6,7 +6,7 @@
 /*   By: yel-yaqi <yel-yaqi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 15:39:21 by yel-yaqi          #+#    #+#             */
-/*   Updated: 2024/06/05 15:48:17 by yel-yaqi         ###   ########.fr       */
+/*   Updated: 2024/06/05 17:27:02 by yel-yaqi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,8 @@ static void	build(t_token *token, int *checksum)
 	token->subtree->left = malloc(sizeof(t_ast));
 	token->subtree->token = token;
 	token->subtree->left->token = search(token->prev, NOT_OP, BACKWARDS);
+	token->subtree->left->left = NULL;
+	token->subtree->left->right = NULL;
 	search_token = search(token->next, PIPE, FORWARDS);
 	if (search_token)
 		token->subtree->right = search_token->subtree;
@@ -57,6 +59,8 @@ static void	build(t_token *token, int *checksum)
 	{
 		token->subtree->right = malloc(sizeof(t_ast));
 		token->subtree->right->token = token->next;
+		token->subtree->right->left = NULL;
+		token->subtree->right->right = NULL;
 		*checksum += 1;
 	}
 	*checksum += 2;

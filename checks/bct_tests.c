@@ -1,6 +1,7 @@
 #include <assert.h>
 #include <libc.h>
 #include <stdbool.h>
+#include <readline/readline.h>
 #include "../include/minishell.h"
 
 bool	strequal(char *str0, char *str1)
@@ -19,7 +20,6 @@ void	in_order(t_ast* root)
 	in_order(root->left);
 	in_order(root->right);
 	printf("%s\n", root->token->word);
-
 }
 
 int	main(void)
@@ -76,9 +76,28 @@ int	main(void)
 	tokenize(word_list, &tokens);
 	name_operators(tokens);
 	assert(build_pipelines(tokens->last) == 13);
-	
-	printf("	GOOD\n\n");
-	connect_pipelines(tokens);
-	in_order(tokens->last->prev->prev->prev->subtree);
 
+	printf("	GOOD\n\n");
+
+	printf("PROMPT LOOP\n\n");
+	while (1)
+	{
+		tokens = NULL;
+		word_list = ft_split(readline("test> "), " ");
+		tokenize(word_list, &tokens);
+		name_operators(tokens);
+		build_pipelines(tokens->last);
+		connect_pipelines(tokens);
+		t_token	*search_token = search(tokens->last, AND, BACKWARDS);
+		if (!search_token)
+			search_token = search(tokens->last, OR, BACKWARDS);
+		if (!search_token)
+			search_token = search(tokens, PIPE, FORWARDS);
+		if (!search_token)
+		{
+			printf("NO PIPE\n");
+			continue ;
+		}
+		in_order(search_token->subtree);
+	}
 }

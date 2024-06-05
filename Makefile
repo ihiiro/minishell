@@ -6,7 +6,7 @@
 #    By: yel-yaqi <yel-yaqi@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/05 20:21:35 by yel-yaqi          #+#    #+#              #
-#    Updated: 2024/06/05 15:40:23 by yel-yaqi         ###   ########.fr        #
+#    Updated: 2024/06/05 16:06:44 by yel-yaqi         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -48,7 +48,7 @@ $(NAME): $(MAIN_OBJ) $(HEADER) Makefile # add cflags later
 	cc $(MAIN_OBJ) -o $@
 
 $(TARGET_TEST): $(ALL_OBJ) $(HEADER) Makefile
-	cc $(ALL_OBJ) -o $@
+	cc $(ALL_OBJ) -lreadline -o $@
 
 clean:
 	rm -f src/*.o

@@ -6,7 +6,7 @@
 /*   By: yel-yaqi <yel-yaqi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 10:40:26 by yel-yaqi          #+#    #+#             */
-/*   Updated: 2024/06/05 15:55:16 by yel-yaqi         ###   ########.fr       */
+/*   Updated: 2024/06/05 17:35:58 by yel-yaqi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,8 @@ static void	connect_left(t_token *token, t_token *left_child,
 	{
 		token->subtree->left = malloc(sizeof(t_ast));
 		token->subtree->left->token = left_child;
+		token->subtree->left->left = NULL;
+		token->subtree->left->right = NULL;
 	}
 }
 
@@ -40,6 +42,8 @@ static void	connect_right(t_token *token)
 	{
 		token->subtree->right = malloc(sizeof(t_ast));
 		token->subtree->right->token = token->next;
+		token->subtree->right->right = NULL;
+		token->subtree->right->left = NULL;
 	}
 }
 
