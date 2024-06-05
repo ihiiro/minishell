@@ -6,7 +6,7 @@
 /*   By: yel-yaqi <yel-yaqi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 10:40:26 by yel-yaqi          #+#    #+#             */
-/*   Updated: 2024/06/04 15:06:58 by yel-yaqi         ###   ########.fr       */
+/*   Updated: 2024/06/05 13:17:53 by yel-yaqi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,54 @@ int	build_pipelines(t_token *token)
 		if (token->name == PIPE)
 			build(token, &checksum);
 		token = token->prev;
+	}
+	return (checksum);
+}
+
+int	connect_pipelines(t_token *token)
+{
+	t_ast	*left_connector_subtree;
+	t_ast	*left_pipeline_subtree;
+	t_token	*left_child;
+	t_token	*search_token;
+	int		checksum;
+
+	left_connector_subtree = NULL;
+	left_pipeline_subtree = NULL;
+	left_child = NULL;
+	checksum = 0;
+	while (token)
+	{
+		if (token->type == COMMAND)
+			left_child = token;
+		if (token->name == PIPE && !left_pipeline_subtree)
+			left_pipeline_subtree = token->subtree;
+		if (token->name == AND || token->name == OR)
+		{
+			token->subtree = malloc(sizeof(t_ast));
+			token->subtree->token = token;
+			if (left_connector_subtree)
+				token->subtree->left = left_connector_subtree;
+			else if (left_pipeline_subtree)
+				token->subtree->left = left_pipeline_subtree;
+			else
+			{
+				token->subtree->left = malloc(sizeof(t_ast));
+				token->subtree->left->token = left_child;
+			}
+			search_token = search(token->next, PIPE, FORWARDS);
+			if (search_token)
+				token->subtree->right = search_token->subtree;
+			else
+			{
+				token->subtree->right = malloc(sizeof(t_ast));
+				token->subtree->right->token = token->next;
+			}
+			left_connector_subtree = token->subtree;
+			left_pipeline_subtree = NULL;
+			checksum += 3;
+		}
+		token = token->next;
 	}
 	return (checksum);
 }

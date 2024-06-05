@@ -16,9 +16,10 @@ void	in_order(t_ast* root)
 {
 	if (root == NULL)
 		return ;
-	printf("%s\n", root->token->word);
 	in_order(root->left);
 	in_order(root->right);
+	printf("%s\n", root->token->word);
+
 }
 
 int	main(void)
@@ -69,10 +70,18 @@ int	main(void)
 	printf("	GOOD\n\n");
 
 	printf("\n#2 PARSER-BUILD-PIPELINES:\n");
-	word_list = ft_split("cmd arg arg arg | cmd arg | cmd | cmd && cmd || cmd | cmd && cmd | cmd", " ");
+	// simplify redirections before building pipelines (todo)
+	word_list = ft_split("cat arg arg arg | ls arg | grep | wc && awk || cd | echo && less | tr", " ");
 	tokens = NULL;
 	tokenize(word_list, &tokens);
 	name_operators(tokens);
 	assert(build_pipelines(tokens->last) == 13);
 	printf("	GOOD\n\n");
+
+	printf("\n#2 PARSER-BUILD-&&-||:\n");
+	assert(connect_pipelines(tokens) == 9);
+
+	in_order(tokens->last->prev->prev->prev->subtree);
+	printf("	GOOD\n\n");
+
 }
