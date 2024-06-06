@@ -128,6 +128,13 @@ int	main(void)
 	printf("\033[0;32m	GOOD\033[0m\n\n");
 
 	printf("PROMPT LOOP FOR DYNAMIC TESTING:\n\n");
+
+	word_list = ft_split("cat << end", " ");
+	tokens = NULL;
+	tokenize(word_list, &tokens);
+	for (t_token *ptr = tokens; ptr; ptr = ptr->next)
+		printf("%s::%d, ", ptr->word, ptr->type);
+
 	while (1)
 	{
 		tokens = NULL;
