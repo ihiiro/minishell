@@ -97,8 +97,8 @@ int	main(void)
 		build_pipelines(tokens->last);
 		connect_pipelines(tokens);
 		// in_order(fetch_ast(tokens));
-		for (t_token *ptr = tokens; ptr; ptr = ptr->next)
-			printf("%s::%d, ", ptr->word, ptr->type);
-		printf("\n");
+		// for (t_token *ptr = tokens; ptr; ptr = ptr->next)
+		// 	printf("%s::%d, ", ptr->word, ptr->type);
+		// printf("\n");
 	}
 }

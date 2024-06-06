@@ -6,7 +6,7 @@
 /*   By: yel-yaqi <yel-yaqi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/05 18:48:14 by yel-yaqi          #+#    #+#             */
-/*   Updated: 2024/06/06 13:50:42 by yel-yaqi         ###   ########.fr       */
+/*   Updated: 2024/06/06 16:05:55 by yel-yaqi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@
 # define BACKWARDS 0
 # define FORWARDS 1
 
+# define NOTHING_TYPED -1
 # define OPERATOR 0
 # define COMMAND 1
 # define ARGUMENT 2
