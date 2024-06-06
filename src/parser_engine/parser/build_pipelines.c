@@ -6,7 +6,7 @@
 /*   By: yel-yaqi <yel-yaqi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 15:39:21 by yel-yaqi          #+#    #+#             */
-/*   Updated: 2024/06/05 17:27:02 by yel-yaqi         ###   ########.fr       */
+/*   Updated: 2024/06/06 14:07:12 by yel-yaqi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ t_token	*search(t_token *from, int name, int direction)
 {
 	if (direction == FORWARDS)
 	{
-		while (from)
+		while (from && from->type != PARA_CLOSE)
 		{
 			if (name == NOT_OP && from->type == COMMAND)
 				return (from);
@@ -30,7 +30,7 @@ t_token	*search(t_token *from, int name, int direction)
 	}
 	else
 	{
-		while (from)
+		while (from && from->type != PARA_OPEN)
 		{
 			if (name == NOT_OP && from->type == COMMAND)
 				return (from);
@@ -71,7 +71,7 @@ int	build_pipelines(t_token *token)
 	int		checksum;
 
 	checksum = 0;
-	while (token)
+	while (token && token->type != PARA_OPEN)
 	{
 		if (token->name == PIPE)
 			build(token, &checksum);

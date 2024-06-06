@@ -6,7 +6,7 @@
 /*   By: yel-yaqi <yel-yaqi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 10:40:26 by yel-yaqi          #+#    #+#             */
-/*   Updated: 2024/06/05 17:35:58 by yel-yaqi         ###   ########.fr       */
+/*   Updated: 2024/06/06 14:12:19 by yel-yaqi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ void	connect_pipelines(t_token *token)
 	left_connector_subtree = NULL;
 	left_pipeline_subtree = NULL;
 	left_child = NULL;
-	while (token)
+	while (token && token->type != PARA_CLOSE)
 	{
 		if (token->type == COMMAND)
 			left_child = token;

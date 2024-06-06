@@ -83,7 +83,9 @@ int	main(void)
 	printf("\n#3 PARSER-FETCH-AST:\n");
 	assert(fetch_ast(tokens)->token->name == AND);
 	printf("	GOOD\n\n");
-	
+
+
+
 
 	printf("PROMPT LOOP FOR DYNAMIC TESTING:\n\n");
 	while (1)
@@ -94,6 +96,9 @@ int	main(void)
 		name_operators(tokens);
 		build_pipelines(tokens->last);
 		connect_pipelines(tokens);
-		in_order(fetch_ast(tokens));
+		// in_order(fetch_ast(tokens));
+		for (t_token *ptr = tokens; ptr; ptr = ptr->next)
+			printf("%s::%d, ", ptr->word, ptr->type);
+		printf("\n");
 	}
 }
