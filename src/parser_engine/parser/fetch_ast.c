@@ -1,15 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   bct.c                                              :+:      :+:    :+:   */
+/*   fetch_ast.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yel-yaqi <yel-yaqi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/05 18:47:09 by yel-yaqi          #+#    #+#             */
-/*   Updated: 2024/04/06 23:54:03 by yel-yaqi         ###   ########.fr       */
+/*   Created: 2024/06/06 13:42:17 by yel-yaqi          #+#    #+#             */
+/*   Updated: 2024/06/06 13:49:51 by yel-yaqi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "../../../include/minishell.h"
 
-#include "../include/minishell.h"
+t_ast	*fetch_ast(t_token *tokens)
+{
+	t_ast	*root;
 
+	root = NULL;
+	while (tokens)
+	{
+		if (tokens->name == PIPE && !root)
+			root = tokens->subtree;
+		if (tokens->name == AND || tokens->name == OR)
+			root = tokens->subtree;
+		tokens = tokens->next;
+	}
+	return (root);
+}

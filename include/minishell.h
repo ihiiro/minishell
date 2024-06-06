@@ -6,7 +6,7 @@
 /*   By: yel-yaqi <yel-yaqi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/05 18:48:14 by yel-yaqi          #+#    #+#             */
-/*   Updated: 2024/06/05 16:51:47 by yel-yaqi         ###   ########.fr       */
+/*   Updated: 2024/06/06 13:50:42 by yel-yaqi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,8 @@ t_token	*prioritize(t_token *token_list);
 t_token	*search(t_token *from, int name, int direction);
 
 t_ast	*parse(t_token *tokens, t_ast **ast);
+
+t_ast	*fetch_ast(t_token *tokens);
 
 int		build_pipelines(t_token *token);
 

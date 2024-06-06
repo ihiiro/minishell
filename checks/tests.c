@@ -76,10 +76,16 @@ int	main(void)
 	tokenize(word_list, &tokens);
 	name_operators(tokens);
 	assert(build_pipelines(tokens->last) == 13);
+	connect_pipelines(tokens);
 
 	printf("	GOOD\n\n");
 
-	printf("PROMPT LOOP\n\n");
+	printf("\n#3 PARSER-FETCH-AST:\n");
+	assert(fetch_ast(tokens)->token->name == AND);
+	printf("	GOOD\n\n");
+	
+
+	printf("PROMPT LOOP FOR DYNAMIC TESTING:\n\n");
 	while (1)
 	{
 		tokens = NULL;
@@ -88,18 +94,6 @@ int	main(void)
 		name_operators(tokens);
 		build_pipelines(tokens->last);
 		connect_pipelines(tokens);
-		t_token	*search_token = search(tokens->last, AND, BACKWARDS);
-		if (search(search_token->next, OR, FORWARDS))
-			search_token = search(tokens->last, OR, BACKWARDS);
-		if (!search_token)
-			search_token = search(tokens->last, OR, BACKWARDS);
-		if (!search_token)
-			search_token = search(tokens, PIPE, FORWARDS);
-		if (!search_token)
-		{
-			printf("NO PIPE\n");
-			continue ;
-		}
-		in_order(search_token->subtree);
+		in_order(fetch_ast(tokens));
 	}
 }
