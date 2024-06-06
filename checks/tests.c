@@ -4,6 +4,8 @@
 #include <readline/readline.h>
 #include "../include/minishell.h"
 
+#include "../not_mine/print_ast.c"
+
 bool	strequal(char *str0, char *str1)
 {
 	int	rslt = strcmp(str0, str1);
@@ -129,12 +131,6 @@ int	main(void)
 
 	printf("PROMPT LOOP FOR DYNAMIC TESTING:\n\n");
 
-	word_list = ft_split("cat << end", " ");
-	tokens = NULL;
-	tokenize(word_list, &tokens);
-	for (t_token *ptr = tokens; ptr; ptr = ptr->next)
-		printf("%s::%d, ", ptr->word, ptr->type);
-
 	while (1)
 	{
 		tokens = NULL;
@@ -143,9 +139,7 @@ int	main(void)
 		name_operators(tokens);
 		build_pipelines(tokens->last);
 		connect_pipelines(tokens);
-		in_order(fetch_ast(tokens));
-		// for (t_token *ptr = tokens; ptr; ptr = ptr->next)
-		// 	printf("%s::%d, ", ptr->word, ptr->type);
-		// printf("\n");
+		visualize_binary_tree(fetch_ast(tokens));
+		// in_order(fetch_ast(tokens));
 	}
 }
