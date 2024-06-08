@@ -6,7 +6,7 @@
 /*   By: yel-yaqi <yel-yaqi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/05 18:48:14 by yel-yaqi          #+#    #+#             */
-/*   Updated: 2024/06/06 16:05:55 by yel-yaqi         ###   ########.fr       */
+/*   Updated: 2024/06/08 16:18:38 by yel-yaqi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,9 @@ void	tokenize(char **word_list, t_token **token_list);
 
 void	append(t_token *node, t_token **list);
 
-void	name_operators(t_token *tokens);
+void	name_no_redir(t_token *tokens);
+
+void	name_redirections(t_token *tokens);
 
 void	connect_pipelines(t_token *token);
 

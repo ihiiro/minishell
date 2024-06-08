@@ -60,7 +60,8 @@ int	main(void)
 	word_list = ft_split("&& || | > >> << <", " ");
 	tokens = NULL;
 	tokenize(word_list, &tokens);
-	name_operators(tokens);
+	name_no_redir(tokens);
+	name_redirections(tokens);
 	assert(tokens->name == AND);
 	assert(tokens->next->name == OR);
 	assert(tokens->next->next->name == PIPE);
@@ -76,7 +77,7 @@ int	main(void)
 	word_list = ft_split("cat arg arg arg | ls arg | grep | wc && awk || cd | echo && less | tr", " ");
 	tokens = NULL;
 	tokenize(word_list, &tokens);
-	name_operators(tokens);
+	name_no_redir(tokens);
 	assert(build_pipelines(tokens->last) == 13);
 	connect_pipelines(tokens);
 
@@ -86,11 +87,11 @@ int	main(void)
 	assert(fetch_ast(tokens)->token->name == AND);
 	printf("\033[0;32m	GOOD\033[0m\n\n");
 
-	printf("\n#4 AST-VALIDITY ( build_pipelines() + connect_pipelines() + fetch_ast() ):\n\n");
+	printf("\n#4 PARSER-AST-VALIDITY ( build_pipelines() + connect_pipelines() + fetch_ast() ):\n\n");
 	word_list = ft_split("cat file0 | grep matchme && ls -la || cd ../..", " ");
 	tokens = NULL;
 	tokenize(word_list, &tokens);
-	name_operators(tokens);
+	name_no_redir(tokens);
 	build_pipelines(tokens->last);
 	connect_pipelines(tokens);
 	t_ast	*ast = fetch_ast(tokens);
@@ -129,6 +130,21 @@ int	main(void)
 	printf("\n");
 	printf("\033[0;32m	GOOD\033[0m\n\n");
 
+	printf("#5 PARSER-BUILD-REDIRECTIONS ( build_pipelines() ):\n");
+	tokens = NULL;
+	word_list = ft_split("a > b < c", " ");
+	tokenize(word_list, &tokens);
+	name_no_redir(tokens);
+	build_pipelines(tokens->last);
+	ast = fetch_ast(tokens);
+	name_redirections(tokens);
+	assert(ast->token->name == REDIR_OUT);
+	assert(strequal(ast->left->token->word, "a"));
+	assert(ast->right->token->name == REDIR_IN);
+	assert(strequal(ast->right->right->token->word, "c"));
+	assert(strequal(ast->right->left->token->word, "b"));
+	printf("\033[0;32m	GOOD\033[0m\n\n");
+
 	printf("PROMPT LOOP FOR DYNAMIC TESTING:\n\n");
 
 	while (1)
@@ -136,10 +152,11 @@ int	main(void)
 		tokens = NULL;
 		word_list = ft_split(readline("test> "), " ");
 		tokenize(word_list, &tokens);
-		name_operators(tokens);
+		name_no_redir(tokens);
 		build_pipelines(tokens->last);
 		connect_pipelines(tokens);
 		visualize_binary_tree(fetch_ast(tokens));
-		// in_order(fetch_ast(tokens));
+		printf("\n");
+		in_order(fetch_ast(tokens));
 	}
 }
