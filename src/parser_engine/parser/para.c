@@ -6,31 +6,12 @@
 /*   By: yel-yaqi <yel-yaqi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/10 13:07:52 by yel-yaqi          #+#    #+#             */
-/*   Updated: 2024/06/12 17:15:45 by yel-yaqi         ###   ########.fr       */
+/*   Updated: 2024/06/12 18:34:11 by yel-yaqi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
 #include "../../../include/minishell.h"
-
-#include <stdio.h>
-
-// 
-
-// int	flattened(t_token)
-
-void	build_list(t_token *start)
-{
-	t_token	*ptr;
-
-	ptr = start;
-	while (ptr->next)
-		ptr = ptr->next;
-	build_pipelines(ptr);
-	connect_pipelines(start);
-}
-
-// 
 
 static t_token	*find_para_open(t_token *tokens)
 {

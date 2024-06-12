@@ -169,21 +169,20 @@ int	main(void)
 	while (1)
 	{
 		tokens = NULL;
-		word_list = ft_split(readline("test> "), " ");
+		word_list = ft_split(readline("\033[1;34mtest> \033[0m"), " ");
 		tokenize(word_list, &tokens);
 		name_no_redir(tokens);
 		simplify_para(tokens);
 		build_list(tokens);
 		connect_para(tokens);
-		// name_redirections(tokens);
-		// 
+		printf("\033[0;32mflattened list:\033[0m\n");
 		for (t_token *ptr = tokens; ptr; ptr = ptr->next)
 			printf("%s ", ptr->word);
-		// 
 		printf("\n\n");
-		
+		printf("\033[0;32mTree:\033[0m\n");
 		visualize_binary_tree(fetch_ast(tokens));
 		printf("\n");
+		printf("\033[0;32mbottom-top: right-first\033[0m\n");
 		in_order(fetch_ast(tokens));
 	}
 }
