@@ -6,12 +6,31 @@
 /*   By: yel-yaqi <yel-yaqi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/07 00:56:13 by yel-yaqi          #+#    #+#             */
-/*   Updated: 2024/06/12 16:21:34 by yel-yaqi         ###   ########.fr       */
+/*   Updated: 2024/06/12 18:51:15 by yel-yaqi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
 #include "../../../include/minishell.h"
+
+static int	is_operator(char *word)
+{
+	if (word[0] == '&' && word[1] == '&')
+		return (1);
+	else if (word[0] == '|' && word[1] == '|')
+		return (1);
+	else if (word[0] == '|')
+		return (1);
+	else if (word[0] == '>' && word[1] == '>')
+		return (1);
+	else if (word[0] == '>')
+		return (1);
+	else if (word[0] == '<' && word[1] == '<')
+		return (1);
+	else if (word[0] == '<')
+		return (1);
+	return (0);
+}
 
 static char	*operator(char *word)
 {
@@ -44,7 +63,7 @@ static void	classify(t_token *token_list)
 			token_list->type = PARA_OPEN;
 		else if (token_list->word[0] == ')')
 			token_list->type = PARA_CLOSE;
-		else if (operator(token_list->word))
+		else if (is_operator(token_list->word))
 			token_list->type = OPERATOR;
 		else if (prev_type == NOTHING_TYPED)
 			token_list->type = COMMAND;

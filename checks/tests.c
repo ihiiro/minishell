@@ -175,12 +175,13 @@ int	main(void)
 		simplify_para(tokens);
 		build_list(tokens);
 		connect_para(tokens);
+		printf("\033[0;32mTree:\033[0m\n");
+		visualize_binary_tree(fetch_ast(tokens));
+		printf("\n");
 		printf("\033[0;32mflattened list:\033[0m\n");
 		for (t_token *ptr = tokens; ptr; ptr = ptr->next)
 			printf("%s ", ptr->word);
 		printf("\n\n");
-		printf("\033[0;32mTree:\033[0m\n");
-		visualize_binary_tree(fetch_ast(tokens));
 		printf("\n");
 		printf("\033[0;32mbottom-top: right-first\033[0m\n");
 		in_order(fetch_ast(tokens));

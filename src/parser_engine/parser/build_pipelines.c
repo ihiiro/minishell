@@ -6,7 +6,7 @@
 /*   By: yel-yaqi <yel-yaqi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 15:39:21 by yel-yaqi          #+#    #+#             */
-/*   Updated: 2024/06/12 16:21:47 by yel-yaqi         ###   ########.fr       */
+/*   Updated: 2024/06/12 23:43:18 by yel-yaqi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ t_token	*search(t_token *from, int name, int direction)
 	{
 		while (from && from->type != PARA_OPEN)
 		{
-			if (name == NOT_OP && from->type == COMMAND)
+			if (name == NOT_OP && (from->type == COMMAND || from->type == PARA))
 				return (from);
 			else if (from->name == name && name != NOT_OP)
 				return (from);
@@ -42,6 +42,8 @@ t_token	*search(t_token *from, int name, int direction)
 	return (NULL);
 }
 
+#include <stdio.h>
+
 static void	build(t_token *token, int *checksum)
 {
 	t_token	*search_token;
@@ -50,6 +52,8 @@ static void	build(t_token *token, int *checksum)
 	token->subtree->left = malloc(sizeof(t_ast));
 	token->subtree->token = token;
 	token->subtree->left->token = search(token->prev, NOT_OP, BACKWARDS);
+	// printf("==%d==\n", token->prev->type);
+	// printf("==%s==\n", token->subtree->left->token->word);
 	token->subtree->left->left = NULL;
 	token->subtree->left->right = NULL;
 	search_token = search(token->next, PIPE, FORWARDS);
