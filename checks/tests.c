@@ -176,7 +176,10 @@ int	main(void)
 		build_list(tokens);
 		connect_para(tokens);
 		printf("\033[0;32mTree:\033[0m\n");
-		visualize_binary_tree(fetch_ast(tokens));
+		ast = fetch_ast(tokens);
+		if (!ast)
+			ast = tokens->subtree;
+		visualize_binary_tree(ast);
 		printf("\n");
 		printf("\033[0;32mflattened list:\033[0m\n");
 		for (t_token *ptr = tokens; ptr; ptr = ptr->next)
@@ -184,6 +187,6 @@ int	main(void)
 		printf("\n\n");
 		printf("\n");
 		printf("\033[0;32mbottom-top: right-first\033[0m\n");
-		in_order(fetch_ast(tokens));
+		in_order(ast);
 	}
 }
