@@ -145,6 +145,25 @@ int	main(void)
 	assert(strequal(ast->right->left->token->word, "b"));
 	printf("\033[0;32m	GOOD\033[0m\n\n");
 
+	printf("#6 PARSER-SIMPLIFY-PARA:\n");
+	tokens = NULL;
+	word_list = ft_split("a && (c || d)", " ");
+	tokenize(word_list, &tokens);
+	name_no_redir(tokens);
+	simplify_para(tokens);
+	assert(tokens->type == COMMAND);
+	assert(tokens->next->type == OPERATOR);
+	assert(tokens->next->next->type == PARA);
+	assert(tokens->next->next->subtree->token->name == OR);
+	assert(tokens->next->next->subtree->left->token->type == COMMAND);
+	assert(tokens->next->next->subtree->right->token->type == COMMAND);
+	assert(tokens->next->next->next == NULL);
+	build_pipelines(tokens);
+	connect_pipelines(tokens);
+	connect_para(tokens);
+	visualize_binary_tree(fetch_ast(tokens));
+	printf("\033[0;32m	GOOD\033[0m\n\n");
+
 	printf("PROMPT LOOP FOR DYNAMIC TESTING:\n\n");
 
 	while (1)
@@ -153,8 +172,16 @@ int	main(void)
 		word_list = ft_split(readline("test> "), " ");
 		tokenize(word_list, &tokens);
 		name_no_redir(tokens);
-		build_pipelines(tokens->last);
-		connect_pipelines(tokens);
+		simplify_para(tokens);
+		build_list(tokens);
+		connect_para(tokens);
+		// name_redirections(tokens);
+		// 
+		for (t_token *ptr = tokens; ptr; ptr = ptr->next)
+			printf("%s ", ptr->word);
+		// 
+		printf("\n\n");
+		
 		visualize_binary_tree(fetch_ast(tokens));
 		printf("\n");
 		in_order(fetch_ast(tokens));

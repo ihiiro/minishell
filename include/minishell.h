@@ -6,7 +6,7 @@
 /*   By: yel-yaqi <yel-yaqi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/05 18:48:14 by yel-yaqi          #+#    #+#             */
-/*   Updated: 2024/06/08 16:18:38 by yel-yaqi         ###   ########.fr       */
+/*   Updated: 2024/06/12 16:21:31 by yel-yaqi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@
 # define PARA_OPEN 3
 # define PARA_CLOSE 4
 # define AND_OR 5
+# define PARA 6
 
 # define AND 0
 # define OR 1
@@ -58,8 +59,6 @@ typedef struct s_token
 {
 	char			*word;
 	t_ast			*subtree;
-	int				pipeline;
-	int				consumed;
 	int				type;
 	int				name;
 	struct s_token	*next;
@@ -78,6 +77,12 @@ void	name_no_redir(t_token *tokens);
 void	name_redirections(t_token *tokens);
 
 void	connect_pipelines(t_token *token);
+
+void	simplify_para(t_token *tokens);
+
+void	connect_para(t_token *tokens);
+
+void	build_list(t_token *start);
 
 t_token	*init_node(char *word);
 

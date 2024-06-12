@@ -6,7 +6,7 @@
 #    By: yel-yaqi <yel-yaqi@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/05 20:21:35 by yel-yaqi          #+#    #+#              #
-#    Updated: 2024/06/08 20:28:40 by yel-yaqi         ###   ########.fr        #
+#    Updated: 2024/06/11 23:49:15 by yel-yaqi         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,6 +20,7 @@ MAIN_SOURCES = src/parser_engine/tokenizer/tokenize.c \
 			   src/parser_engine/parser/build_pipelines.c \
 			   src/parser_engine/parser/connect_pipelines.c \
 			   src/parser_engine/parser/fetch_ast.c \
+			   src/parser_engine/parser/para.c \
 			   src/split/split.c \
 			   src/split/strlen.c \
 			   src/split/substr.c \
@@ -42,13 +43,13 @@ src/%.o: src/%.c $(HEADER) Makefile
 	cc -c $< -o $@
 
 checks/%.o: checks/%.c  $(HEADER) Makefile
-	cc -c $< -o $@
+	cc -g -c $< -o $@
 
 $(NAME): $(MAIN_OBJ) $(HEADER) Makefile # add cflags later
 	cc $(MAIN_OBJ) -o $@
 
 $(TARGET_TEST): $(ALL_OBJ) $(HEADER) Makefile
-	cc $(ALL_OBJ) -lreadline -o $@
+	cc $(ALL_OBJ) -g -lreadline -o $@
 
 clean:
 	rm -f src/*.o
