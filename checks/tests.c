@@ -172,7 +172,7 @@ int	main(void)
 		word_list = ft_split(readline("\033[1;34mtest> \033[0m"), " ");
 		tokenize(word_list, &tokens);
 		name_no_redir(tokens);
-		simplify_para(tokens);
+		tokens = simplify_para(tokens);
 		build_list(tokens);
 		connect_para(tokens);
 		printf("\033[0;32mTree:\033[0m\n");

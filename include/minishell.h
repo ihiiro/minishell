@@ -6,7 +6,7 @@
 /*   By: yel-yaqi <yel-yaqi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/05 18:48:14 by yel-yaqi          #+#    #+#             */
-/*   Updated: 2024/06/12 23:35:15 by yel-yaqi         ###   ########.fr       */
+/*   Updated: 2024/06/13 00:04:30 by yel-yaqi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,6 @@
 # define AND_OR 5
 # define PARA 6
 
-# define PRE_CURSOR -2
 # define AND 0
 # define OR 1
 # define PIPE 2
@@ -80,8 +79,6 @@ void	name_redirections(t_token *tokens);
 
 void	connect_pipelines(t_token *token);
 
-void	simplify_para(t_token *tokens);
-
 void	connect_para(t_token *tokens);
 
 void	build_list(t_token *start);
@@ -91,6 +88,8 @@ t_token	*init_node(char *word);
 t_token	*prioritize(t_token *token_list);
 
 t_token	*search(t_token *from, int name, int direction);
+
+t_token	*simplify_para(t_token *tokens);
 
 t_ast	*parse(t_token *tokens, t_ast **ast);
 

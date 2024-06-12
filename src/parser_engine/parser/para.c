@@ -6,7 +6,7 @@
 /*   By: yel-yaqi <yel-yaqi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/10 13:07:52 by yel-yaqi          #+#    #+#             */
-/*   Updated: 2024/06/12 23:06:52 by yel-yaqi         ###   ########.fr       */
+/*   Updated: 2024/06/13 00:04:12 by yel-yaqi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ static t_token	*find_para_open(t_token *tokens)
 	return (NULL);
 }
 
-static void	simplify(t_token *para_open)
+static void	simplify(t_token *para_open, t_token **head)
 {
 	t_token	*para;
 	t_token	*skip;
@@ -44,6 +44,8 @@ static void	simplify(t_token *para_open)
 	para->subtree = fetch_ast(para_open);
 	if (para_open->prev)
 		para_open->prev->next = para;
+	else
+		*head = para;
 }
 
 void	connect_para(t_token *tokens)
@@ -83,10 +85,12 @@ static void	point_at_para_subtrees(t_token *para_open)
 	}
 }
 
-void	simplify_para(t_token *tokens)
+t_token	*simplify_para(t_token *tokens)
 {
 	t_token	*para_open;
+	t_token	*head;
 
+	head = tokens;
 	while (tokens)
 	{
 		if (tokens->type == PARA_CLOSE)
@@ -94,9 +98,10 @@ void	simplify_para(t_token *tokens)
 			para_open = find_para_open(tokens);
 			build_pipelines(tokens);
 			connect_pipelines(para_open);
-			simplify(para_open);
+			simplify(para_open, &head);
 			point_at_para_subtrees(para_open);
 		}
 		tokens = tokens->next;
 	}
+	return (head);
 }
