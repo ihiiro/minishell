@@ -161,7 +161,6 @@ int	main(void)
 	build_pipelines(tokens);
 	connect_pipelines(tokens);
 	connect_para(tokens);
-	visualize_binary_tree(fetch_ast(tokens));
 	printf("\033[0;32m	GOOD\033[0m\n\n");
 
 	printf("PROMPT LOOP FOR DYNAMIC TESTING:\n\n");
@@ -177,8 +176,6 @@ int	main(void)
 		connect_para(tokens);
 		printf("\033[0;32mTree:\033[0m\n");
 		ast = fetch_ast(tokens);
-		// if (!ast)
-		// 	ast = tokens->subtree;
 		visualize_binary_tree(ast);
 		printf("\n");
 		printf("\033[0;32mflattened list:\033[0m\n");

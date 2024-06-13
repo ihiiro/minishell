@@ -6,7 +6,7 @@
 /*   By: yel-yaqi <yel-yaqi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/06 13:42:17 by yel-yaqi          #+#    #+#             */
-/*   Updated: 2024/06/13 15:21:55 by yel-yaqi         ###   ########.fr       */
+/*   Updated: 2024/06/13 16:11:10 by yel-yaqi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ t_ast	*fetch_ast(t_token *tokens)
 	}
 	if (!root && start->type == PARA)
 		root = start->subtree;
-	if (!root && start->next->type == PARA)
+	if (!root && start->next && start->next->type == PARA)
 		root = start->next->subtree;
 	return (root);
 }
