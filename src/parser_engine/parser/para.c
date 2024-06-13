@@ -6,7 +6,7 @@
 /*   By: yel-yaqi <yel-yaqi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/10 13:07:52 by yel-yaqi          #+#    #+#             */
-/*   Updated: 2024/06/13 01:48:54 by yel-yaqi         ###   ########.fr       */
+/*   Updated: 2024/06/13 14:55:18 by yel-yaqi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,16 +71,10 @@ static void	point_at_para_subtrees(t_token *para_open)
 	while (para_open && para_open->type != PARA_CLOSE)
 	{
 		if (para_open->subtree && para_open->subtree->left->token->type == PARA)
-		{
-			free(para_open->subtree->left);
 			para_open->subtree->left = para_open->prev->subtree;
-		}
-		else if (para_open->subtree
+		if (para_open->subtree
 			&& para_open->subtree->right->token->type == PARA)
-		{
-			free(para_open->subtree->right);
 			para_open->subtree->right = para_open->next->subtree;
-		}
 		para_open = para_open->next;
 	}
 }

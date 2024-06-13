@@ -177,8 +177,8 @@ int	main(void)
 		connect_para(tokens);
 		printf("\033[0;32mTree:\033[0m\n");
 		ast = fetch_ast(tokens);
-		if (!ast)
-			ast = tokens->subtree;
+		// if (!ast)
+		// 	ast = tokens->subtree;
 		visualize_binary_tree(ast);
 		printf("\n");
 		printf("\033[0;32mflattened list:\033[0m\n");
