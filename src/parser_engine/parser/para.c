@@ -6,7 +6,7 @@
 /*   By: yel-yaqi <yel-yaqi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/10 13:07:52 by yel-yaqi          #+#    #+#             */
-/*   Updated: 2024/06/13 00:04:12 by yel-yaqi         ###   ########.fr       */
+/*   Updated: 2024/06/13 01:44:18 by yel-yaqi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ static void	simplify(t_token *para_open, t_token **head)
 		*head = para;
 }
 
+#include <stdio.h>
 void	connect_para(t_token *tokens)
 {
 	while (tokens)
@@ -57,7 +58,7 @@ void	connect_para(t_token *tokens)
 			free(tokens->subtree->left);
 			tokens->subtree->left = tokens->prev->subtree;
 		}
-		else if (tokens->subtree && tokens->subtree->right->token->type == PARA)
+		if (tokens->subtree && tokens->subtree->right->token->type == PARA)
 		{
 			free(tokens->subtree->right);
 			tokens->subtree->right = tokens->next->subtree;
