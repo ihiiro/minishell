@@ -6,7 +6,7 @@
 /*   By: yel-yaqi <yel-yaqi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/05 18:48:14 by yel-yaqi          #+#    #+#             */
-/*   Updated: 2024/06/13 00:04:30 by yel-yaqi         ###   ########.fr       */
+/*   Updated: 2024/06/13 00:59:59 by yel-yaqi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,6 +96,8 @@ t_ast	*parse(t_token *tokens, t_ast **ast);
 t_ast	*fetch_ast(t_token *tokens);
 
 int		build_pipelines(t_token *token);
+
+int		is_operator(char *word);
 
 /* libft */
 char	*ft_substr(char const *s, unsigned int start, size_t len);

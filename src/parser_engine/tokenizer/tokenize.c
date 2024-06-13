@@ -6,31 +6,12 @@
 /*   By: yel-yaqi <yel-yaqi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/07 00:56:13 by yel-yaqi          #+#    #+#             */
-/*   Updated: 2024/06/12 23:55:31 by yel-yaqi         ###   ########.fr       */
+/*   Updated: 2024/06/13 00:59:14 by yel-yaqi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
 #include "../../../include/minishell.h"
-
-static int	is_operator(char *word)
-{
-	if (word[0] == '&' && word[1] == '&')
-		return (1);
-	else if (word[0] == '|' && word[1] == '|')
-		return (1);
-	else if (word[0] == '|')
-		return (1);
-	else if (word[0] == '>' && word[1] == '>')
-		return (1);
-	else if (word[0] == '>')
-		return (1);
-	else if (word[0] == '<' && word[1] == '<')
-		return (1);
-	else if (word[0] == '<')
-		return (1);
-	return (0);
-}
 
 static char	*operator(char *word)
 {
