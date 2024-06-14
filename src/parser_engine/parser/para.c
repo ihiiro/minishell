@@ -6,7 +6,7 @@
 /*   By: yel-yaqi <yel-yaqi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/10 13:07:52 by yel-yaqi          #+#    #+#             */
-/*   Updated: 2024/06/13 16:58:05 by yel-yaqi         ###   ########.fr       */
+/*   Updated: 2024/06/14 13:52:21 by yel-yaqi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,17 +53,13 @@ void	connect_para(t_token *tokens)
 	while (tokens)
 	{
 		if (tokens->subtree && tokens->subtree->left
+			&& tokens->subtree->left->token
 			&& tokens->subtree->left->token->type == PARA)
-		{
-			free(tokens->subtree->left);
 			tokens->subtree->left = tokens->prev->subtree;
-		}
 		if (tokens->subtree && tokens->subtree->right
+			&& tokens->subtree->right->token
 			&& tokens->subtree->right->token->type == PARA)
-		{
-			free(tokens->subtree->right);
 			tokens->subtree->right = tokens->next->subtree;
-		}
 		tokens = tokens->next;
 	}
 }
@@ -73,9 +69,11 @@ static void	point_at_para_subtrees(t_token *para_open)
 	while (para_open && para_open->type != PARA_CLOSE)
 	{
 		if (para_open->subtree && para_open->subtree->left
+			&& para_open->subtree->left->token
 			&& para_open->subtree->left->token->type == PARA)
 			para_open->subtree->left = para_open->prev->subtree;
 		if (para_open->subtree && para_open->subtree->right
+			&& para_open->subtree->right->token
 			&& para_open->subtree->right->token->type == PARA)
 			para_open->subtree->right = para_open->next->subtree;
 		para_open = para_open->next;

@@ -6,7 +6,7 @@
 /*   By: yel-yaqi <yel-yaqi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/04 15:10:05 by yel-yaqi          #+#    #+#             */
-/*   Updated: 2024/06/08 16:26:47 by yel-yaqi         ###   ########.fr       */
+/*   Updated: 2024/06/14 14:36:05 by yel-yaqi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,9 @@ void	name_no_redir(t_token *tokens)
 			tokens->name = PIPE;
 		else if (tokens->word[0] == '<')
 			tokens->name = PIPE;
+		else if (tokens->prev && tokens->prev->word[0] == '<'
+			&& tokens->prev->word[1] == '<')
+			tokens->name = LIMITER;
 		else
 			tokens->name = NOT_OP;
 		tokens = tokens->next;

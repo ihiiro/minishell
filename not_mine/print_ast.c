@@ -19,7 +19,8 @@ void print_level(t_ast *root, int level, int max_level, int indent_space) {
     }
 
     if (level == 1) {
-        printf("%s", root->token->word);
+		if (root->token)
+			printf("%s", root->token->word);
     } else if (level > 1) {
         int indent = indent_space * (1 << (max_level - level + 1)) - 1;
         print_level(root->left, level - 1, max_level, indent_space);

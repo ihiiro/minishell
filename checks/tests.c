@@ -21,7 +21,8 @@ void	in_order(t_ast* root)
 		return ;
 	in_order(root->left);
 	in_order(root->right);
-	printf("%s\n", root->token->word);
+	if (root->token)
+		printf("%s\n", root->token->word);
 }
 
 int	main(void)

@@ -6,7 +6,7 @@
 /*   By: yel-yaqi <yel-yaqi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/05 18:48:14 by yel-yaqi          #+#    #+#             */
-/*   Updated: 2024/06/13 18:34:30 by yel-yaqi         ###   ########.fr       */
+/*   Updated: 2024/06/14 14:35:59 by yel-yaqi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,6 @@
 # define BACKWARDS 0
 # define FORWARDS 1
 
-# define PRE_CURSOR -2
 # define NOTHING_TYPED -1
 # define OPERATOR 0
 # define COMMAND 1
@@ -38,6 +37,7 @@
 # define AND_OR 5
 # define PARA 6
 
+# define NONE -1
 # define AND 0
 # define OR 1
 # define PIPE 2
@@ -46,6 +46,7 @@
 # define HERE_DOC 5
 # define REDIR_APP 6
 # define NOT_OP 7
+# define LIMITER 8
 
 struct	s_token;
 
