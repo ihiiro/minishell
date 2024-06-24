@@ -6,7 +6,7 @@
 #    By: yel-yaqi <yel-yaqi@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/05 20:21:35 by yel-yaqi          #+#    #+#              #
-#    Updated: 2024/06/13 01:00:10 by yel-yaqi         ###   ########.fr        #
+#    Updated: 2024/06/24 16:35:06 by yel-yaqi         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,6 +29,7 @@ MAIN_SOURCES = src/parser_engine/tokenizer/tokenize.c \
 			   src/split/strdup.c \
 			   src/split/strlcpy.c \
 			   src/split/strchr.c \
+			   src/split/quoted.c \
 			   src/list.c
 ALL_SOURCES = $(MAIN_SOURCES) $(TARGET_TEST_SOURCES)
 

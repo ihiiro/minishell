@@ -6,11 +6,12 @@
 /*   By: yel-yaqi <yel-yaqi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/19 19:45:54 by yel-yaqi          #+#    #+#             */
-/*   Updated: 2024/06/24 13:35:09 by yel-yaqi         ###   ########.fr       */
+/*   Updated: 2024/06/24 16:42:33 by yel-yaqi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
+#include "../../include/minishell.h"
 
 int	in_charset(char c, char *charset)
 {
@@ -23,37 +24,6 @@ int	in_charset(char c, char *charset)
 			return (1);
 	}
 	return (0);
-}
-
-#include <stdio.h>
-
-void	skip_quoted(char *str, int *i)
-{
-	if (str[*i] && str[*i] == '"')
-	{
-		*i += 1;
-		while (str[*i] && str[*i] != '"')
-			*i += 1;
-	}
-	else if (str[*i] && str[*i] == '\'')
-	{
-		*i += 1;
-		while (str[*i] && str[*i] != '\'')
-			*i += 1;
-	}
-}
-
-void	count_quoted_len(char *str, int *len, char *charset)
-{
-	char	quote;
-
-	quote = *str;
-	*len += 1;
-	while (str[*len] && str[*len] != quote)
-		*len += 1;
-	*len += 1;
-	while (str[*len] && !in_charset(str[*len], charset))
-		*len += 1;
 }
 
 static int	count_substrs(char *str, char *charset)
@@ -76,7 +46,6 @@ static int	count_substrs(char *str, char *charset)
 			new_string = 1;
 		skip_quoted(str, &i);
 	}
-	printf("count=%d\n", count);
 	return (count);
 }
 

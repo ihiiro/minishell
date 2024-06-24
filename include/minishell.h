@@ -6,7 +6,7 @@
 /*   By: yel-yaqi <yel-yaqi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/05 18:48:14 by yel-yaqi          #+#    #+#             */
-/*   Updated: 2024/06/14 14:35:59 by yel-yaqi         ###   ########.fr       */
+/*   Updated: 2024/06/24 16:36:20 by yel-yaqi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,10 @@ void	connect_para(t_token *tokens);
 
 void	build_list(t_token *start);
 
+void	skip_quoted(char *str, int *i);
+
+void	count_quoted_len(char *str, int *len, char *charset);
+
 t_token	*init_node(char *word);
 
 t_token	*search(t_token *from, int name, int direction);
@@ -108,5 +112,7 @@ char	**ft_split(char *str, char *charset);
 size_t	ft_strlen(const char *s);
 
 size_t	ft_strlcpy(char *dst, const char *src, size_t dstsize);
+
+int		in_charset(char c, char *charset);
 
 #endif
