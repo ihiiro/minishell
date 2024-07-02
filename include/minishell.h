@@ -12,7 +12,6 @@
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
-# include <stddef.h>
 
 /* PARSE ENGINE
 					SYNTAX ANALYZER
@@ -24,6 +23,18 @@
 					 PARSER
 
  */
+
+# include <stddef.h>
+# include <readline/history.h>
+# include <readline/readline.h>
+# include <stdlib.h>
+# include <stdio.h>
+# include <fcntl.h>
+# include <sys/wait.h>
+# include <unistd.h>
+
+# include "../libft/libft.h"
+# include "builtins.h"
 
 # define BACKWARDS 0
 # define FORWARDS 1
@@ -68,50 +79,40 @@ typedef struct s_token
 	struct s_token	*last;
 }			t_token;
 
+typedef struct s_shell
+{
+	t_envp	*env;
+}		t_shell;
+
 /* minishell */
 
+void	count_quoted_len(char *str, int *len, char *charset);
 void	tokenize(char **word_list, t_token **token_list);
-
 void	append(t_token *node, t_token **list);
-
-void	name_no_redir(t_token *tokens);
-
 void	name_redirections(t_token *tokens);
-
 void	connect_pipelines(t_token *token);
-
+void	skip_quoted(char *str, int *i);
+void	name_no_redir(t_token *tokens);
 void	connect_para(t_token *tokens);
-
 void	build_list(t_token *start);
 
-void	skip_quoted(char *str, int *i);
-
-void	count_quoted_len(char *str, int *len, char *charset);
-
-t_token	*init_node(char *word);
-
 t_token	*search(t_token *from, int name, int direction);
-
 t_token	*simplify_para(t_token *tokens);
+t_token	*init_node(char *word);
 
 t_ast	*fetch_ast(t_token *tokens);
 
 int		build_pipelines(t_token *token);
-
 int		is_operator(char *word);
 
 /* libft */
 char	*ft_substr(char const *s, unsigned int start, size_t len);
-
+char	**ft_split(char *str, char *charset);
 char	*ft_strchr(const char *s, int c);
-
 char	*ft_strdup(const char *s1);
 
-char	**ft_split(char *str, char *charset);
-
-size_t	ft_strlen(const char *s);
-
 size_t	ft_strlcpy(char *dst, const char *src, size_t dstsize);
+size_t	ft_strlen(const char *s);
 
 int		in_charset(char c, char *charset);
 
