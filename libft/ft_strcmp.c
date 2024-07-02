@@ -1,27 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   builtins.c                                         :+:      :+:    :+:   */
+/*   ft_strcmp.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mrezki <mrezki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/07/02 18:09:06 by mrezki            #+#    #+#             */
-/*   Updated: 2024/07/02 18:09:08 by mrezki           ###   ########.fr       */
+/*   Created: 2024/06/30 23:43:05 by mrezki            #+#    #+#             */
+/*   Updated: 2024/06/30 23:43:06 by mrezki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/minishell.h"
+#include "libft.h"
 
-void	check_builtins(char *str)
+int	ft_strcmp(const char *a, const char *b)
 {
-	char	**args;
-	int		i;
+	int	i;
 
-	args = ft_split(str, " \t");
-	if (!args)
-		ft_printf(2, "Error: Allocation failed\n");
-	if (!args[0])
-		return ;
-	if (ft_strncmp(args[0], "echo", 5) == 0)
-		echo_(++args);
+	i = 0;
+	while ((a[i] == b[i]) && a[i] && b[i])
+		i++;
+	return (a[i] - b[i]);
 }

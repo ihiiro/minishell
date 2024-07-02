@@ -29,7 +29,7 @@ SRCS		= ft_isalpha.c ft_isdigit.c ft_isalnum.c \
 		ft_lstlast_bonus.c ft_lstadd_back_bonus.c ft_lstdelone_bonus.c \
 		ft_lstclear_bonus.c ft_lstiter_bonus.c ft_lstmap_bonus.c ft_printf.c \
 		utils.c print_char.c print_int.c print_hex.c get_next_line_bonus.c \
-		get_next_line_utils_bonus.c ft_fd_printf.c atoi_base.c\
+		get_next_line_utils_bonus.c ft_fd_printf.c atoi_base.c ft_strcmp.c\
 
 
 OBJS		= $(SRCS:.c=.o)
@@ -38,16 +38,16 @@ OBJS		= $(SRCS:.c=.o)
 all: $(NAME)
 
 %.o: %.c libft.h
-	$(CC) -c -o $@ $< $(CFLAGS)
+	@$(CC) -c -o $@ $< $(CFLAGS)
 
 $(NAME): $(OBJS)
-	$(AR) rcs $(NAME) $(OBJS)
+	@$(AR) rcs $(NAME) $(OBJS)
 
 clean:
-	$(RM) $(OBJS)
+	@$(RM) $(OBJS)
 
 fclean: clean
-	$(RM) $(NAME) a.out .DS_Store
+	@$(RM) $(NAME) a.out .DS_Store
 
 re: fclean all
 

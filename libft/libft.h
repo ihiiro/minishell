@@ -35,6 +35,7 @@ size_t	ft_strlen(const char *s);
 
 int		ft_strncmp(const char *s1, const char *s2, size_t n);
 int		ft_memcmp(const void *s1, const void *s2, size_t n);
+int		ft_strcmp(const char *a, const char *b);
 int		atoi_base(char *str, int base);
 int		ft_putchar_fd(char c, int fd);
 int		ft_putstr_fd(char *s, int fd);
