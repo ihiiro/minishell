@@ -59,3 +59,4 @@ minishell
 test
 .vscode/
 a.tldr
+.DS_Store
