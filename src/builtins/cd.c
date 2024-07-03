@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mrezki <mrezki@student.42.fr>              +#+  +:+       +#+        */
+/*   By: yel-yaqi <yel-yaqi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/29 18:44:54 by mrezki            #+#    #+#             */
-/*   Updated: 2024/07/02 18:09:11 by mrezki           ###   ########.fr       */
+/*   Updated: 2024/07/02 18:40:24 by yel-yaqi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -289,51 +289,51 @@ int	export_(t_envp *env, char **args)
  * export var====" sets var with "===" in value.
  */
 
-int main(int argc, char *argv[], char *env[])
-{
-	// char *h = getenv("HOME");
-	char *str;
-	char ** tmp;
-	atexit(f);
-	t_envp	*envp;
+// int main(int argc, char *argv[], char *env[])
+// {
+// 	// char *h = getenv("HOME");
+// 	char *str;
+// 	char ** tmp;
+// 	atexit(f);
+// 	t_envp	*envp;
 
-	envp = NULL;
-	init_envp(env, &envp);
-	while ((str = readline("$> ")))
-	{
-		char **strs = ft_split(str, " ");
-		if ((!ft_strcmp(strs[0], "ls")))
-		{
-			int pid = fork();
-			if (pid == 0)
-				execve("/bin/ls", strs, env);
-			else
-				wait(NULL);
-		}
-		if (!ft_strcmp(strs[0], "cd"))
-		{
-			tmp = strs+1;
-			cd_(tmp, &envp);
-		}
-		else if (!ft_strcmp(strs[0], "pwd"))
-			pwd_(envp);
-		else if (!ft_strcmp(strs[0], "env"))
-			env_(envp);
-		else if(ft_strcmp(strs[0], "exit") == 0)
-			exit(EXIT_SUCCESS);
-		else if (!ft_strcmp(strs[0], "export"))
-		{
-			tmp = strs + 1;
-			export_(envp, tmp);
-		}
-		else if (!ft_strcmp(strs[0], "bash"))
-			system("bash");
-		free_split(strs);
-		free(str);
-	}
-	free_envp(envp);
-	// printf("%s\n", h);
-	// echo_(s);
+// 	envp = NULL;
+// 	init_envp(env, &envp);
+// 	while ((str = readline("$> ")))
+// 	{
+// 		char **strs = ft_split(str, " ");
+// 		if ((!ft_strcmp(strs[0], "ls")))
+// 		{
+// 			int pid = fork();
+// 			if (pid == 0)
+// 				execve("/bin/ls", strs, env);
+// 			else
+// 				wait(NULL);
+// 		}
+// 		if (!ft_strcmp(strs[0], "cd"))
+// 		{
+// 			tmp = strs+1;
+// 			cd_(tmp, &envp);
+// 		}
+// 		else if (!ft_strcmp(strs[0], "pwd"))
+// 			pwd_(envp);
+// 		else if (!ft_strcmp(strs[0], "env"))
+// 			env_(envp);
+// 		else if(ft_strcmp(strs[0], "exit") == 0)
+// 			exit(EXIT_SUCCESS);
+// 		else if (!ft_strcmp(strs[0], "export"))
+// 		{
+// 			tmp = strs + 1;
+// 			export_(envp, tmp);
+// 		}
+// 		else if (!ft_strcmp(strs[0], "bash"))
+// 			system("bash");
+// 		free_split(strs);
+// 		free(str);
+// 	}
+// 	free_envp(envp);
+// 	// printf("%s\n", h);
+// 	// echo_(s);
 
-	return EXIT_SUCCESS;
-}
+// 	return EXIT_SUCCESS;
+// }
