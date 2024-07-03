@@ -187,7 +187,7 @@ int	main(void)
 	name_operators(tokens);
 	type_files_and_limiters(tokens);
 	build_redirections(tokens->last);
-	ast = fetch_ast(tokens);
+	ast = fetch_ast(tokens); 
 	assert(strequal("<", ast->token->word));
 	assert(strequal("<", ast->left->token->word));
 	assert(strequal("file0", ast->right->token->word));
@@ -216,6 +216,7 @@ int	main(void)
 	assert(strequal("<<", ast->left->left->left->token->word));
 	assert(strequal("limiter", ast->left->left->left->right->token->word));
 	assert(strequal("cat", ast->left->left->left->left->token->word));
+	printf("\033[0;32m	GOOD\033[0m\n\n");
 
 	printf("PROMPT LOOP FOR DYNAMIC TESTING:\n\n");
 

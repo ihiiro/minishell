@@ -6,7 +6,7 @@
 /*   By: yel-yaqi <yel-yaqi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/06 13:42:17 by yel-yaqi          #+#    #+#             */
-/*   Updated: 2024/06/13 16:31:34 by yel-yaqi         ###   ########.fr       */
+/*   Updated: 2024/07/03 16:05:10 by yel-yaqi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,16 @@ static t_ast	*make_root_from_token(t_token *token)
 	return (root);
 }
 
+static t_ast	*get_redir_subtree(t_token *start)
+{
+	while (start)
+	{
+		if (is_redir_operator(start) || is_heredoc_operator(start))
+			return (start->subtree);
+		start = start->next;
+	}
+}
+
 t_ast	*fetch_ast(t_token *tokens)
 {
 	t_ast	*root;
@@ -47,6 +57,8 @@ t_ast	*fetch_ast(t_token *tokens)
 		root = start->subtree;
 	if (!root && start->next && start->next->type == PARA)
 		root = start->next->subtree;
+	if (!root)
+		root = get_redir_subtree(start);
 	if (!root)
 		root = make_root_from_token(start->next);
 	return (root);
