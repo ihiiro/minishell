@@ -6,7 +6,7 @@
 /*   By: yel-yaqi <yel-yaqi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/04 15:10:05 by yel-yaqi          #+#    #+#             */
-/*   Updated: 2024/07/03 13:04:23 by yel-yaqi         ###   ########.fr       */
+/*   Updated: 2024/07/03 15:07:20 by yel-yaqi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,8 @@ void	name_operators(t_token *tokens)
 			tokens->name = REDIR_OUT;
 		else if (tokens->word[0] == '<')
 			tokens->name = REDIR_IN;
+		else
+			tokens->name = NOT_OP;
 		tokens = tokens->next;
 	}
 }

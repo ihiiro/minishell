@@ -6,7 +6,7 @@
 /*   By: yel-yaqi <yel-yaqi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/05 18:48:14 by yel-yaqi          #+#    #+#             */
-/*   Updated: 2024/07/03 13:10:30 by yel-yaqi         ###   ########.fr       */
+/*   Updated: 2024/07/03 15:08:31 by yel-yaqi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,9 +92,10 @@ void	count_quoted_len(char *str, int *len, char *charset);
 void	tokenize(char **word_list, t_token **token_list);
 void	type_files_and_limiters(t_token *tokens);
 void	append(t_token *node, t_token **list);
+void	build_redirections(t_token *tokens);
 void	connect_pipelines(t_token *token);
-void	skip_quoted(char *str, int *i);
 void	name_operators(t_token *tokens);
+void	skip_quoted(char *str, int *i);
 void	connect_para(t_token *tokens);
 void	build_list(t_token *start);
 
@@ -104,6 +105,8 @@ t_token	*init_node(char *word);
 
 t_ast	*fetch_ast(t_token *tokens);
 
+int		is_heredoc_operator(t_token *token);
+int		is_redir_operator(t_token *token);
 int		build_pipelines(t_token *token);
 int		is_operator(char *word);
 

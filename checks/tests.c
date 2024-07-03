@@ -186,7 +186,7 @@ int	main(void)
 	tokenize(word_list, &tokens);
 	name_operators(tokens);
 	type_files_and_limiters(tokens);
-	build_redirections(tokens);
+	build_redirections(tokens->last);
 	ast = fetch_ast(tokens);
 	assert(strequal("<", ast->token->word));
 	assert(strequal("<", ast->left->token->word));
@@ -205,7 +205,7 @@ int	main(void)
 	tokenize(word_list, &tokens);
 	name_operators(tokens);
 	type_files_and_limiters(tokens);
-	build_redirections(tokens);
+	build_redirections(tokens->last);
 	ast = fetch_ast(tokens);
 	assert(strequal("<", ast->token->word));
 	assert(strequal("<", ast->left->token->word));
@@ -224,7 +224,7 @@ int	main(void)
 		tokens = NULL;
 		word_list = ft_split(readline("\033[1;34mtest> \033[0m"), " ");
 		tokenize(word_list, &tokens);
-		name_no_redir(tokens);
+		name_operators(tokens);
 		tokens = simplify_para(tokens);
 		build_list(tokens);
 		connect_para(tokens);

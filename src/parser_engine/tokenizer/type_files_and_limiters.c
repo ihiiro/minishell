@@ -6,21 +6,21 @@
 /*   By: yel-yaqi <yel-yaqi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/03 10:57:08 by yel-yaqi          #+#    #+#             */
-/*   Updated: 2024/07/03 12:55:45 by yel-yaqi         ###   ########.fr       */
+/*   Updated: 2024/07/03 13:21:40 by yel-yaqi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../libft/libft.h"
 #include "../../../include/minishell.h"
 
-static int	is_redir_operator(t_token *token)
+int	is_redir_operator(t_token *token)
 {
 	return (token->word && (!strcmp("<", token->word)
 			|| !strcmp(">", token->word)
 			|| !strcmp(">>", token->word)));
 }
 
-static int	is_heredoc_operator(t_token *token)
+int	is_heredoc_operator(t_token *token)
 {
 	return (token->word && !strcmp("<<", token->word));
 }
