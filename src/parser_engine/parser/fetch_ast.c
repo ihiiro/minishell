@@ -6,7 +6,7 @@
 /*   By: yel-yaqi <yel-yaqi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/06 13:42:17 by yel-yaqi          #+#    #+#             */
-/*   Updated: 2024/07/03 16:05:10 by yel-yaqi         ###   ########.fr       */
+/*   Updated: 2024/07/03 17:54:20 by yel-yaqi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ static t_ast	*get_redir_subtree(t_token *start)
 			return (start->subtree);
 		start = start->next;
 	}
+	return (NULL);
 }
 
 t_ast	*fetch_ast(t_token *tokens)
