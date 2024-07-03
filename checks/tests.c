@@ -32,6 +32,8 @@ int	main(void)
 	char	**word_list = ft_split(" a -l -a&&( b||c -ba | ( f -l	-d -x && g ) )  | d > e	", "	 ");
 	t_token	*tokens = NULL;
 	tokenize(word_list, &tokens);
+	name_operators(tokens);
+	type_files_and_limiters(tokens);
 	assert(tokens->type == COMMAND);
 	assert(tokens->next->type == ARGUMENT);
 	assert(tokens->next->next->type == ARGUMENT);
@@ -54,7 +56,7 @@ int	main(void)
 	assert(tokens->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->type == OPERATOR);
 	assert(tokens->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->type == COMMAND);
 	assert(tokens->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->type == OPERATOR);
-	assert(tokens->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->type == COMMAND);
+	assert(tokens->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->type == FILE);
 
 	printf("\033[0;32m	GOOD\033[0m\n\n");
 
@@ -62,8 +64,7 @@ int	main(void)
 	word_list = ft_split("&& || | > >> << <", " ");
 	tokens = NULL;
 	tokenize(word_list, &tokens);
-	name_no_redir(tokens);
-	name_redirections(tokens);
+	name_operators(tokens);
 	assert(tokens->name == AND);
 	assert(tokens->next->name == OR);
 	assert(tokens->next->next->name == PIPE);
@@ -75,11 +76,10 @@ int	main(void)
 	printf("\033[0;32m	GOOD\033[0m\n\n");
 
 	printf("\n#2 PARSER-BUILD-PIPELINES:\n");
-	// simplify redirections before building pipelines (todo)
 	word_list = ft_split("cat arg arg arg | ls arg | grep | wc && awk || cd | echo && less | tr", " ");
 	tokens = NULL;
 	tokenize(word_list, &tokens);
-	name_no_redir(tokens);
+	name_operators(tokens);
 	assert(build_pipelines(tokens->last) == 13);
 	connect_pipelines(tokens);
 
@@ -93,7 +93,7 @@ int	main(void)
 	word_list = ft_split("cat file0 | grep matchme && ls -la || cd ../..", " ");
 	tokens = NULL;
 	tokenize(word_list, &tokens);
-	name_no_redir(tokens);
+	name_operators(tokens);
 	build_pipelines(tokens->last);
 	connect_pipelines(tokens);
 	t_ast	*ast = fetch_ast(tokens);
@@ -151,7 +151,7 @@ int	main(void)
 	tokens = NULL;
 	word_list = ft_split("a && (c || d)", " ");
 	tokenize(word_list, &tokens);
-	name_no_redir(tokens);
+	name_operators(tokens);
 	simplify_para(tokens);
 	assert(tokens->type == COMMAND);
 	assert(tokens->next->type == OPERATOR);
@@ -184,6 +184,7 @@ int	main(void)
 	tokens = NULL;
 	word_list = ft_split("cat arg0 arg1 < file0 < file1 > file2 << limiter", " ");
 	tokenize(word_list, &tokens);
+	name_operators(tokens);
 	type_files_and_limiters(tokens);
 	build_redirections(tokens);
 	ast = fetch_ast(tokens);
@@ -202,6 +203,7 @@ int	main(void)
 	tokens = NULL;
 	word_list = ft_split("< file0 cat arg0 arg1 < file1 > file2 << limiter", " ");
 	tokenize(word_list, &tokens);
+	name_operators(tokens);
 	type_files_and_limiters(tokens);
 	build_redirections(tokens);
 	ast = fetch_ast(tokens);

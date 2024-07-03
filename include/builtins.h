@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mrezki <mrezki@student.42.fr>              +#+  +:+       +#+        */
+/*   By: yel-yaqi <yel-yaqi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/02 18:09:27 by mrezki            #+#    #+#             */
-/*   Updated: 2024/07/02 18:09:27 by mrezki           ###   ########.fr       */
+/*   Updated: 2024/07/03 13:11:32 by yel-yaqi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,10 @@
 
 typedef struct s_envp
 {
-	char	*name;
-	char	*value;
+	char			*name;
+	char			*value;
 	struct s_envp	*next;
-}		t_envp;
-
+}			t_envp;
 
 /* Built-ins */
 
@@ -27,8 +26,8 @@ void	change_env_value(t_envp **env, char *name, char *new_value);
 void	init_envp(char *envp[], t_envp **en);
 void	check_builtins(char *str);
 
-int	echo_(char **args);
-int	env_(t_envp *head);
+int		echo_(char **args);
+int		env_(t_envp *head);
 
 char	*search_env(t_envp *env, char *val);
 
