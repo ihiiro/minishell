@@ -9,3 +9,12 @@
 /*   Updated: 2024/07/02 21:28:32 by mrezki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+#include "../../include/minishell.h"
+
+void	exit_(char **strs, t_envp **env)
+{
+	free_split(strs);
+	free_envp(*env);
+	exit(EXIT_SUCCESS);
+}

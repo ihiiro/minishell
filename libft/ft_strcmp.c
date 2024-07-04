@@ -16,6 +16,8 @@ int	ft_strcmp(const char *a, const char *b)
 {
 	int	i;
 
+	if (!a || !b)
+		return (-1);
 	i = 0;
 	while ((a[i] == b[i]) && a[i] && b[i])
 		i++;

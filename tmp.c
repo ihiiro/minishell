@@ -12,10 +12,6 @@
 
 #include "../../include/minishell.h"
 
-/*
- * print_error: prints the error message str.
- */
-
 int	print_error(char *str)
 {
 	if (str)
@@ -25,85 +21,60 @@ int	print_error(char *str)
 	return (1);
 }
 
-/*
- * add_dir: adds a directory to the path.
- *
- * @pwd: current working directory.
- * @dir: directory to add.
- *
- * return: New path.
- *	NULL on failure.
- */
-
-char	*add_dir(char *pwd, char *dir)
+int	is_tilde(char *s1, char *s2)
 {
-	char	*new_value;
-	char	*full_path;
-
-	full_path = ft_strjoin(pwd, "/");
-	if (!full_path)
-		return (NULL);
-	new_value = ft_strjoin(full_path, dir);
-	free(full_path);
-	free(pwd);
-	return (new_value);
+	if (!ft_strcmp(s1, "~") && !s2)
+		return (1);
+	return (0);
 }
 
-/*
- * trim_string: Replace '/' with one '/' if there's multiple '/'.
- *
- * @str: The argument passed to cd.
- * @dirs: str splitted with '/'
- *
- * return: trimmed string.
- *	NULL on failure.
- */
-
-char	*trim_string(char *str, char **dirs)
+void	join_dir(char **tmp, char *str, char **trimmed, char **old)
 {
+	*tmp = ft_strjoin(str, "/");
+	*old = *trimmed;
+	*trimmed = ft_strjoin(*trimmed, *tmp);
+	free(*tmp);
+	free(*old);
+}
+
+char	*trim_string(char *str, int size)
+{
+	char	**dirs;
 	char	*trimmed;
 	char	*tmp;
+	char	*old;
 	int		i;
 
-	if (!ft_strcmp(str, "-") || count_char(str, '/') < 2)
-		return (free_split(dirs), ft_strdup(str));
-	trimmed = ft_strdup(dirs[0]);
-	i = 0;
-	while (dirs[++i])
+	dirs = ft_split(str, "/");
+	i = -1;
+	trimmed = NULL;
+	while (++i < size)
 	{
-		if (ft_strlen(dirs[i]) > 0)
+		if (str[0] == '/' && !i)
 		{
-			tmp = ft_strjoin(trimmed, "/");
-			free(trimmed);
-			trimmed = ft_strjoin(tmp, dirs[i]);
+			tmp = ft_strjoin("/", dirs[0]);
+			trimmed = ft_strjoin(tmp, "/");
 			free(tmp);
 		}
+		else if (i == size - 1)
+		{
+			old = trimmed;
+			trimmed = ft_strjoin(trimmed, dirs[i]);
+			free(old);
+		}
+		else
+			join_dir(&tmp, dirs[i], &trimmed, &old);
 	}
-	if (str[0] == '/' && trimmed[0] != '/')
-	{
-		tmp = ft_strjoin("/", trimmed);
-		free(trimmed);
-		trimmed = tmp;
-	}
+	printf("%s\n", trimmed);
 	return (free_split(dirs), trimmed);
 }
-
-/*
- * change_dir: changes the PWD and OLDPWD in the environment variables.
- *
- * @pwd: Argument passed to cd.
- * @env: Address of the linked list containing the environment variables.
- *
- * return: 0 on success
- *	1 on failure.
- */
 
 int	change_dir(char *pwd, t_envp **env)
 {
 	char	*dir;
 	char	*new_dir;
 
-	new_dir = trim_string(pwd, ft_split(pwd, "/"));
+	new_dir = trim_string(pwd, count_substrs(pwd, "/"));
 	if (!access(new_dir, F_OK))
 	{
 		if (chdir(new_dir) < 0)
@@ -114,8 +85,10 @@ int	change_dir(char *pwd, t_envp **env)
 	{
 		dir = ft_strdup(search_env(*env, "OLDPWD"));
 		if (!dir)
-			return (free(new_dir), ft_printf(2,
-					"Error: cd: OLDPWD not set\n"), 1);
+		{
+			ft_printf(2, "Error: cd: OLDPWD not set\n");
+			return (free(new_dir), 1);
+		}
 		if (chdir(dir) < 0)
 			print_error("chdir");
 		change_pwds(env, dir, 'd');
@@ -126,17 +99,6 @@ int	change_dir(char *pwd, t_envp **env)
 		return (free(new_dir), print_error("cd: no such file or directory"));
 	return (free(new_dir), 0);
 }
-
-/*
- * cd_: changes the current working directory, and adjust
- * PWD and OLDPWD accordingly.
- *
- * @args: arguments passed to cd.
- * @env: Address of the linked list containing the environment variables.
- *
- * return: 0 on success
- *	1 on failure.
- */
 
 int	cd_(char **args, t_envp **env)
 {

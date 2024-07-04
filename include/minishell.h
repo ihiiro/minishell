@@ -102,6 +102,7 @@ t_token	*init_node(char *word);
 
 t_ast	*fetch_ast(t_token *tokens);
 
+int		count_substrs(char *str, char *charset);
 int		build_pipelines(t_token *token);
 int		is_operator(char *word);
 

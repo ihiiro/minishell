@@ -39,14 +39,14 @@ int	main(int argc, char *argv[], char *env[])
 		check_builtins(str, &envp);
 		char **cmds = ft_split(str, " \t");
 		char *path = ft_strjoin("/bin/", cmds[0]);
-		if (!access(path, F_OK))
-		{
-			int pid = fork();
-			if (pid == 0)
-				execve(path, cmds, env);
-			else
-				wait(NULL);
-		}
+		// if (!access(path, F_OK))
+		// {
+		// 	int pid = fork();
+		// 	if (pid == 0)
+		// 		execve(path, cmds, env);
+		// 	else
+		// 		wait(NULL);
+		// }
 		free_split(cmds);
 		free(path);
 		free(str);

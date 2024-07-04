@@ -26,7 +26,7 @@ int	in_charset(char c, char *charset)
 	return (0);
 }
 
-static int	count_substrs(char *str, char *charset)
+int	count_substrs(char *str, char *charset)
 {
 	int	count;
 	int	new_string;
