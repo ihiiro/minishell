@@ -6,7 +6,7 @@
 /*   By: yel-yaqi <yel-yaqi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/04 11:10:21 by yel-yaqi          #+#    #+#             */
-/*   Updated: 2024/07/04 13:29:16 by yel-yaqi         ###   ########.fr       */
+/*   Updated: 2024/07/04 18:12:36 by yel-yaqi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,14 +36,15 @@ void	connect_redirections(t_token *tokens)
 
 	left_redir_tree_root = NULL;
 	right_redir_tree_root = NULL;
-	while (tokens)
+	while (tokens && tokens->type != PARA_CLOSE)
 	{
 		if ((is_redir_operator(tokens) || is_heredoc_operator(tokens))
 			&& !left_redir_tree_root)
 			left_redir_tree_root = tokens->subtree;
 		if (tokens->name == PIPE || tokens->name == AND || tokens->name == OR)
 		{
-			if (left_redir_tree_root && left_redir_tree_root != right_redir_tree_root)
+			if (left_redir_tree_root && left_redir_tree_root
+				!= right_redir_tree_root)
 				tokens->subtree->left = left_redir_tree_root;
 			left_redir_tree_root = NULL;
 			right_redir_tree_root = get_right_redir_tree_root(tokens);
