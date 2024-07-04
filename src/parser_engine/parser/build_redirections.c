@@ -6,7 +6,7 @@
 /*   By: yel-yaqi <yel-yaqi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/03 12:56:54 by yel-yaqi          #+#    #+#             */
-/*   Updated: 2024/07/03 18:41:08 by yel-yaqi         ###   ########.fr       */
+/*   Updated: 2024/07/04 10:26:09 by yel-yaqi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,8 @@ static t_ast	*get_redir_tree_tail(t_token *tokens)
 	{
 		if (is_redir_operator(tokens) || is_heredoc_operator(tokens))
 			return (tokens->subtree);
+		else if (tokens->name == AND || tokens->name == OR || tokens->name == PIPE)
+			break ;
 		tokens = tokens->next;
 	}
 	return (NULL);
@@ -92,6 +94,8 @@ void	build_redirections(t_token *tokens)
 			build(tokens, marker);
 			marker = 0;
 		}
+		if (tokens->name == AND || tokens->name == OR || tokens->name == PIPE)
+			marker = 1;
 		tokens = tokens->prev;
 	}
 }

@@ -203,6 +203,10 @@ int	main(void)
 	assert(strequal("cat", ast->left->left->left->left->token->word));
 	printf("\033[0;32m	GOOD\033[0m\n\n");
 
+	// printf("MULTIPLE-REDIRECTION-EXPRESSIONS:\n");
+
+	// printf("\033[0;32m	GOOD\033[0m\n\n");
+
 	printf("PROMPT LOOP FOR DYNAMIC TESTING:\n\n");
 
 	while (1)
