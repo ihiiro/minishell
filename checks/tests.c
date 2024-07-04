@@ -32,6 +32,8 @@ int	main(void)
 	char	**word_list = ft_split(" a -l -a&&( b||c -ba | ( f -l	-d -x && g ) )  | d > e	", "	 ");
 	t_token	*tokens = NULL;
 	tokenize(word_list, &tokens);
+	name_operators(tokens);
+	type_files_and_limiters(tokens);
 	assert(tokens->type == COMMAND);
 	assert(tokens->next->type == ARGUMENT);
 	assert(tokens->next->next->type == ARGUMENT);
@@ -54,7 +56,7 @@ int	main(void)
 	assert(tokens->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->type == OPERATOR);
 	assert(tokens->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->type == COMMAND);
 	assert(tokens->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->type == OPERATOR);
-	assert(tokens->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->type == COMMAND);
+	assert(tokens->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->type == FILE);
 
 	printf("\033[0;32m	GOOD\033[0m\n\n");
 
@@ -62,8 +64,7 @@ int	main(void)
 	word_list = ft_split("&& || | > >> << <", " ");
 	tokens = NULL;
 	tokenize(word_list, &tokens);
-	name_no_redir(tokens);
-	name_redirections(tokens);
+	name_operators(tokens);
 	assert(tokens->name == AND);
 	assert(tokens->next->name == OR);
 	assert(tokens->next->next->name == PIPE);
@@ -75,11 +76,10 @@ int	main(void)
 	printf("\033[0;32m	GOOD\033[0m\n\n");
 
 	printf("\n#2 PARSER-BUILD-PIPELINES:\n");
-	// simplify redirections before building pipelines (todo)
 	word_list = ft_split("cat arg arg arg | ls arg | grep | wc && awk || cd | echo && less | tr", " ");
 	tokens = NULL;
 	tokenize(word_list, &tokens);
-	name_no_redir(tokens);
+	name_operators(tokens);
 	assert(build_pipelines(tokens->last) == 13);
 	connect_pipelines(tokens);
 
@@ -87,13 +87,13 @@ int	main(void)
 
 	printf("\n#3 PARSER-FETCH-AST:\n");
 	assert(fetch_ast(tokens)->token->name == AND);
-	printf("\033[0;32m	GOOD\033[0m\n\n");
+	printf("\033[0;32m	GOOD\033[0m\n");
 
-	printf("\n#4 PARSER-AST-VALIDITY ( build_pipelines() + connect_pipelines() + fetch_ast() ):\n\n");
+	printf("\n#4 PARSER-AST-VALIDITY ( build_pipelines() + connect_pipelines() + fetch_ast() ):\n");
 	word_list = ft_split("cat file0 | grep matchme && ls -la || cd ../..", " ");
 	tokens = NULL;
 	tokenize(word_list, &tokens);
-	name_no_redir(tokens);
+	name_operators(tokens);
 	build_pipelines(tokens->last);
 	connect_pipelines(tokens);
 	t_ast	*ast = fetch_ast(tokens);
@@ -132,26 +132,11 @@ int	main(void)
 	printf("\n");
 	printf("\033[0;32m	GOOD\033[0m\n\n");
 
-	printf("#5 PARSER-BUILD-REDIRECTIONS ( build_pipelines() ):\n");
-	tokens = NULL;
-	word_list = ft_split("a > b < c", " ");
-	tokenize(word_list, &tokens);
-	name_no_redir(tokens);
-	build_pipelines(tokens->last);
-	ast = fetch_ast(tokens);
-	name_redirections(tokens);
-	assert(ast->token->name == REDIR_OUT);
-	assert(strequal(ast->left->token->word, "a"));
-	assert(ast->right->token->name == REDIR_IN);
-	assert(strequal(ast->right->right->token->word, "c"));
-	assert(strequal(ast->right->left->token->word, "b"));
-	printf("\033[0;32m	GOOD\033[0m\n\n");
-
-	printf("#6 PARSER-SIMPLIFY-PARA:\n");
+	printf("#5 PARSER-SIMPLIFY-PARA:\n");
 	tokens = NULL;
 	word_list = ft_split("a && (c || d)", " ");
 	tokenize(word_list, &tokens);
-	name_no_redir(tokens);
+	name_operators(tokens);
 	simplify_para(tokens);
 	assert(tokens->type == COMMAND);
 	assert(tokens->next->type == OPERATOR);
@@ -165,6 +150,59 @@ int	main(void)
 	connect_para(tokens);
 	printf("\033[0;32m	GOOD\033[0m\n\n");
 
+	printf("#6 PARSER-TYPE-FILES-AND-LIMITERS:\n");
+	tokens = NULL;
+	word_list = ft_split("CMD < FILE > FILE << LIMITER", " ");
+	tokenize(word_list, &tokens);
+	type_files_and_limiters(tokens);
+	assert(tokens->type == COMMAND);
+	assert(tokens->next->type == OPERATOR);
+	assert(tokens->next->next->type == FILE);
+	assert(tokens->next->next->next->type == OPERATOR);
+	assert(tokens->next->next->next->next->type == FILE);
+	assert(tokens->next->next->next->next->next->type == OPERATOR);
+	assert(tokens->next->next->next->next->next->next->type == LIMITER);
+	printf("\033[0;32m	GOOD\033[0m\n\n");
+
+	printf("#7 PARSER-BUILD-REDIRECTIONS:\n");
+	printf("REGULAR-FORM:\n");
+	tokens = NULL;
+	word_list = ft_split("cat arg0 arg1 < file0 < file1 > file2 << limiter", " ");
+	tokenize(word_list, &tokens);
+	name_operators(tokens);
+	type_files_and_limiters(tokens);
+	build_redirections(tokens->last);
+	ast = fetch_ast(tokens); 
+	assert(strequal("<", ast->token->word));
+	assert(strequal("<", ast->left->token->word));
+	assert(strequal("file0", ast->right->token->word));
+	assert(strequal("file1", ast->left->right->token->word));
+	assert(strequal(">", ast->left->left->token->word));
+	assert(strequal("file2", ast->left->left->right->token->word));
+	assert(strequal("<<", ast->left->left->left->token->word));
+	assert(strequal("limiter", ast->left->left->left->right->token->word));
+	assert(strequal("cat", ast->left->left->left->left->token->word));
+	printf("\033[0;32m	GOOD\033[0m\n");
+
+	printf("IRREGULAR-FORM:\n");
+	tokens = NULL;
+	word_list = ft_split("< file0 cat arg0 arg1 < file1 > file2 << limiter", " ");
+	tokenize(word_list, &tokens);
+	name_operators(tokens);
+	type_files_and_limiters(tokens);
+	build_redirections(tokens->last);
+	ast = fetch_ast(tokens);
+	assert(strequal("<", ast->token->word));
+	assert(strequal("<", ast->left->token->word));
+	assert(strequal("file0", ast->right->token->word));
+	assert(strequal("file1", ast->left->right->token->word));
+	assert(strequal(">", ast->left->left->token->word));
+	assert(strequal("file2", ast->left->left->right->token->word));
+	assert(strequal("<<", ast->left->left->left->token->word));
+	assert(strequal("limiter", ast->left->left->left->right->token->word));
+	assert(strequal("cat", ast->left->left->left->left->token->word));
+	printf("\033[0;32m	GOOD\033[0m\n\n");
+
 	printf("PROMPT LOOP FOR DYNAMIC TESTING:\n\n");
 
 	while (1)
@@ -172,7 +210,9 @@ int	main(void)
 		tokens = NULL;
 		word_list = ft_split(readline("\033[1;34mtest> \033[0m"), " ");
 		tokenize(word_list, &tokens);
-		name_no_redir(tokens);
+		name_operators(tokens);
+		type_files_and_limiters(tokens);
+		build_redirections(tokens->last);
 		tokens = simplify_para(tokens);
 		build_list(tokens);
 		connect_para(tokens);
