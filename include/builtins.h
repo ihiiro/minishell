@@ -36,6 +36,7 @@ int		first_occur(char *str, char h);
 int		count_char(char *str, char h);
 int		is_tilde(char *s1, char *s2);
 int		count_dots(char **dirs);
+int		print_error(char *str);
 int		echo_(char **args);
 int		env_(t_envp *head);
 int		pwd_(t_envp *env);

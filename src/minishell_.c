@@ -12,7 +12,7 @@
 
 #include "../include/minishell.h"
 
-void	f()
+void	f(void)
 {
 	system("leaks -quiet minishell");
 }
@@ -37,18 +37,6 @@ int	main(int argc, char *argv[], char *env[])
 				break ;
 		}
 		check_builtins(str, &envp);
-		char **cmds = ft_split(str, " \t");
-		char *path = ft_strjoin("/bin/", cmds[0]);
-		// if (!access(path, F_OK))
-		// {
-		// 	int pid = fork();
-		// 	if (pid == 0)
-		// 		execve(path, cmds, env);
-		// 	else
-		// 		wait(NULL);
-		// }
-		free_split(cmds);
-		free(path);
 		free(str);
 	}
 	free_envp(envp);

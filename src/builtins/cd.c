@@ -19,7 +19,7 @@
 int	print_error(char *str)
 {
 	if (str)
-		ft_printf(2, "Error: %s\n", str);
+		ft_printf(2, "Error: '%s'\n", str);
 	else
 		ft_printf(2, "Error\n");
 	return (1);

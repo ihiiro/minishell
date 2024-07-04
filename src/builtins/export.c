@@ -58,7 +58,11 @@ int	only_chars_nums(char *arg)
 	while (str[i])
 	{
 		if (!ft_isalnum(str[i]) && str[i] != '=')
+		{
+			ft_printf(2,
+				"Error: export: '%s': not a valid identifier\n", arg);
 			return (0);
+		}
 		i++;
 	}
 	free(str);
@@ -97,20 +101,20 @@ void	export_variables(char **args, t_envp *env)
 	{
 		if (!only_chars_nums(*args))
 		{
-			ft_printf(2,
-				"Error: export: '%s': not a valid identifier\n", *args);
 			if (!(args + 1))
 				break ;
 			else
 				args++;
 		}
 		if (count_char(*args, '=') == 0)
-			addnode(&env, *args, NULL);
-		else if ((*args)[0] == '=')
 		{
-			ft_printf(2,
-				"Error: export: '%s': not a valid identifier\n", *args);
+			if (search_env_name(env, *args) != NULL)
+				change_env_value(&env, *args, NULL);
+			else
+				addnode(&env, *args, NULL);
 		}
+		else if ((*args)[0] == '=')
+			print_error("not a valid identifier");
 		else if (count_char(*args, '=') == 1
 			&& (*args)[ft_strlen(*args) - 1] == '=')
 			empty_value(env, *args);

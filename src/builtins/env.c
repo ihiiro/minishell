@@ -119,7 +119,10 @@ void	change_env_value(t_envp **env, char *name, char *new_value)
 		if (ft_strcmp(head->name, name) == 0)
 		{
 			tmp = head->value;
-			head->value = ft_strdup(new_value);
+			if (new_value)
+				head->value = ft_strdup(new_value);
+			else
+				head->value = NULL;
 			free(tmp);
 		}
 		head = head->next;
