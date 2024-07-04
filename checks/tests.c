@@ -203,9 +203,30 @@ int	main(void)
 	assert(strequal("cat", ast->left->left->left->left->token->word));
 	printf("\033[0;32m	GOOD\033[0m\n\n");
 
-	// printf("MULTIPLE-REDIRECTION-EXPRESSIONS:\n");
-
-	// printf("\033[0;32m	GOOD\033[0m\n\n");
+	printf("CONNECT-REDIRECTIONS:\n");
+	tokens = NULL;
+	word_list = ft_split("cat arg0 arg1 < infile > outfile | grep < file0 && cat << end", " ");
+	tokenize(word_list, &tokens);
+	name_operators(tokens);
+	type_files_and_limiters(tokens);
+	build_list(tokens);
+	build_redirections(tokens->last);
+	// connect_redirections(tokens);
+	ast = fetch_ast(tokens);
+	assert(strequal("&&", ast->token->word));
+	assert(strequal("<<", ast->right->token->word));
+	assert(strequal("end", ast->right->right->token->word));
+	assert(strequal("cat", ast->right->left->token->word));
+	assert(strequal("|", ast->left->token->word));
+	assert(strequal("<", ast->left->right->token->word));
+	assert(strequal("file0", ast->left->right->right->token->word));
+	assert(strequal("grep", ast->left->right->left->token->word));
+	assert(strequal("<", ast->left->left->token->word));
+	assert(strequal("infile", ast->left->left->right->token->word));
+	assert(strequal(">", ast->left->left->left->token->word));
+	assert(strequal("outfile", ast->left->left->left->right->token->word));
+	assert(strequal("cat", ast->left->left->left->left->token->word));
+	printf("\033[0;32m	GOOD\033[0m\n\n");
 
 	printf("PROMPT LOOP FOR DYNAMIC TESTING:\n\n");
 
