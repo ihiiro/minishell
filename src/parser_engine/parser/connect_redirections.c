@@ -6,7 +6,7 @@
 /*   By: yel-yaqi <yel-yaqi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/04 11:10:21 by yel-yaqi          #+#    #+#             */
-/*   Updated: 2024/07/04 12:22:13 by yel-yaqi         ###   ########.fr       */
+/*   Updated: 2024/07/04 13:29:16 by yel-yaqi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,13 +16,13 @@ static t_ast	*get_right_redir_tree_root(t_token *tokens)
 {
 	t_token	*search_token;
 
-	search_token = search(tokens, REDIR_IN, FORWARDS);
+	search_token = search(tokens->next, REDIR_IN, FORWARDS);
 	if (!search_token)
-		search_token = search(tokens, REDIR_OUT, FORWARDS);
+		search_token = search(tokens->next, REDIR_OUT, FORWARDS);
 	if (!search_token)
-		search_token = search(tokens, REDIR_APP, FORWARDS);
+		search_token = search(tokens->next, REDIR_APP, FORWARDS);
 	if (!search_token)
-		search_token = search(tokens, HERE_DOC, FORWARDS);
+		search_token = search(tokens->next, HERE_DOC, FORWARDS);
 	if (!search_token)
 		return (NULL);
 	else
