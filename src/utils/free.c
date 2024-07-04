@@ -1,25 +1,43 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strcmp.c                                        :+:      :+:    :+:   */
+/*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mrezki <mrezki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/06/30 23:43:05 by mrezki            #+#    #+#             */
-/*   Updated: 2024/06/30 23:43:06 by mrezki           ###   ########.fr       */
+/*   Created: 2024/07/02 23:40:08 by mrezki            #+#    #+#             */
+/*   Updated: 2024/07/02 23:40:09 by mrezki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../../include/minishell.h"
 
-int	ft_strcmp(const char *a, const char *b)
+void	free_split(char **strs)
 {
 	int	i;
 
-	if (!a || !b)
-		return (-1);
-	i = 0;
-	while ((a[i] == b[i]) && a[i] && b[i])
-		i++;
-	return (a[i] - b[i]);
+	if (!strs)
+		return ;
+	i = -1;
+	while (strs[++i])
+	{
+		free(strs[i]);
+		strs[i] = NULL;
+	}
+	free(strs);
+	strs = NULL;
+}
+
+void	free_envp(t_envp *head)
+{
+	t_envp	*tmp;
+
+	while (head != NULL)
+	{
+		tmp = head->next;
+		free(head->value);
+		free(head->name);
+		free(head);
+		head = tmp;
+	}
 }

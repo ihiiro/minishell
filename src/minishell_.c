@@ -11,24 +11,34 @@
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
-#include <stdio.h>
 
-// int	main(int argc, char *argv[], char *envp[])
-// {
-// 	t_token *list;
-// 	t_shell	sh;
-// 	char	*str;
-//
-// 	sh.env = envp;
-// 	list = NULL;
-// 	while (1)
-// 	{
-// 		str = readline("$> ");
-// 		if (!str)
-// 			break ;
-// 		// char **cmds = ft_split(str, " \t");
-// 		// tokenize(cmds, &list);
-// 		check_builtins(str);
-// 	}
-// 	return (0);
-// }
+void	f(void)
+{
+	system("leaks -quiet minishell");
+}
+
+int	main(int argc, char *argv[], char *env[])
+{
+	t_envp	*envp;
+	char	*str;
+
+	atexit(f);
+	init_envp(env, &envp);
+	while (1)
+	{
+		str = readline("$> ");
+		if (!str)
+			break ;
+		while (str[0] == '\0')
+		{
+			free(str);
+			str = readline("$> ");
+			if (!str)
+				break ;
+		}
+		check_builtins(str, &envp);
+		free(str);
+	}
+	free_envp(envp);
+	return (0);
+}

@@ -1,25 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strcmp.c                                        :+:      :+:    :+:   */
+/*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mrezki <mrezki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/06/30 23:43:05 by mrezki            #+#    #+#             */
-/*   Updated: 2024/06/30 23:43:06 by mrezki           ###   ########.fr       */
+/*   Created: 2024/07/02 21:28:31 by mrezki            #+#    #+#             */
+/*   Updated: 2024/07/02 21:28:32 by mrezki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../../include/minishell.h"
 
-int	ft_strcmp(const char *a, const char *b)
+void	exit_(char **strs, t_envp **env)
 {
-	int	i;
-
-	if (!a || !b)
-		return (-1);
-	i = 0;
-	while ((a[i] == b[i]) && a[i] && b[i])
-		i++;
-	return (a[i] - b[i]);
+	free_split(strs);
+	free_envp(*env);
+	exit(EXIT_SUCCESS);
 }
