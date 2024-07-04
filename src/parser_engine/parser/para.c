@@ -6,7 +6,7 @@
 /*   By: yel-yaqi <yel-yaqi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/10 13:07:52 by yel-yaqi          #+#    #+#             */
-/*   Updated: 2024/06/14 13:52:21 by yel-yaqi         ###   ########.fr       */
+/*   Updated: 2024/07/04 16:49:26 by yel-yaqi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,9 @@ t_token	*simplify_para(t_token *tokens)
 		{
 			para_open = find_para_open(tokens);
 			build_pipelines(tokens);
+			build_redirections(tokens);
 			connect_pipelines(para_open);
+			connect_redirections(para_open);
 			simplify(para_open, &head);
 			point_at_para_subtrees(para_open);
 		}

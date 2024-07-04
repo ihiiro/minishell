@@ -6,7 +6,7 @@
 /*   By: yel-yaqi <yel-yaqi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/03 12:56:54 by yel-yaqi          #+#    #+#             */
-/*   Updated: 2024/07/04 10:45:22 by yel-yaqi         ###   ########.fr       */
+/*   Updated: 2024/07/04 17:16:58 by yel-yaqi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ static t_token	*get_cmd(t_token *token)
 {
 	while (token)
 	{
-		if (token->type == COMMAND)
+		if (token->type == COMMAND || token->type == PARA)
 			return (token);
 		else if (token->name == AND || token->name == OR || token->name == PIPE)
 			break ;
@@ -70,11 +70,16 @@ static void	build(t_token *token, int marker)
 	{
 		token->subtree = malloc(sizeof(t_ast));
 		token->subtree->token = token;
-		token->subtree->left = malloc(sizeof(t_ast));
+		if (cmd->type == PARA)
+			token->subtree->left = cmd->subtree;
+		else
+		{
+			token->subtree->left = malloc(sizeof(t_ast));
+			token->subtree->left->token = cmd;
+			token->subtree->left->left = NULL;
+			token->subtree->left->right = NULL;
+		}
 		token->subtree->right = malloc(sizeof(t_ast));
-		token->subtree->left->token = cmd;
-		token->subtree->left->left = NULL;
-		token->subtree->left->right = NULL;
 		token->subtree->right->token = token->next;
 		token->subtree->right->left = NULL;
 		token->subtree->right->right = NULL;

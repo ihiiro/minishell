@@ -6,7 +6,7 @@
 /*   By: yel-yaqi <yel-yaqi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/06 13:42:17 by yel-yaqi          #+#    #+#             */
-/*   Updated: 2024/07/04 11:27:59 by yel-yaqi         ###   ########.fr       */
+/*   Updated: 2024/07/04 17:19:07 by yel-yaqi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,12 +54,12 @@ t_ast	*fetch_ast(t_token *tokens)
 			root = tokens->subtree;
 		tokens = tokens->next;
 	}
+	if (!root)
+		root = get_redir_subtree(start);
 	if (!root && start->type == PARA)
 		root = start->subtree;
 	if (!root && start->next && start->next->type == PARA)
 		root = start->next->subtree;
-	if (!root)
-		root = get_redir_subtree(start);
 	if (!root)
 		root = make_root_from_token(start->next);
 	return (root);

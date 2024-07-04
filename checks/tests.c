@@ -239,8 +239,11 @@ int	main(void)
 		type_files_and_limiters(tokens);
 		tokens = simplify_para(tokens);
 		build_list(tokens);
-		build_redirections(tokens->last);
-		connect_redirections(tokens);
+		// 
+		// for (t_token *ptr = tokens; ptr; ptr = ptr->next)
+		// 	printf("'%s'::%d::%d, ", ptr->word, ptr->name, ptr->type);
+		// exit(0);
+		// 
 		connect_para(tokens);
 		printf("\033[0;32mTree:\033[0m\n");
 		ast = fetch_ast(tokens);
