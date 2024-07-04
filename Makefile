@@ -6,7 +6,7 @@
 #    By: yel-yaqi <yel-yaqi@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/05 20:21:35 by yel-yaqi          #+#    #+#              #
-#    Updated: 2024/07/04 10:43:40 by yel-yaqi         ###   ########.fr        #
+#    Updated: 2024/07/04 11:54:36 by yel-yaqi         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,6 +23,7 @@ MAIN_SOURCES 		= src/parser_engine/tokenizer/tokenize.c \
 			  src/parser_engine/parser/build_pipelines.c \
 			  src/parser_engine/parser/build_redirections.c \
 			  src/parser_engine/parser/connect_pipelines.c \
+			  src/parser_engine/parser/connect_redirections.c \
 			  src/parser_engine/parser/fetch_ast.c \
 			  src/parser_engine/parser/para.c \
 			  src/parser_engine/parser/build_list.c \

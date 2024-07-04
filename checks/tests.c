@@ -203,7 +203,7 @@ int	main(void)
 	assert(strequal("cat", ast->left->left->left->left->token->word));
 	printf("\033[0;32m	GOOD\033[0m\n\n");
 
-	printf("CONNECT-REDIRECTIONS:\n");
+	printf("#8 CONNECT-REDIRECTIONS:\n");
 	tokens = NULL;
 	word_list = ft_split("cat arg0 arg1 < infile > outfile | grep < file0 && cat << end", " ");
 	tokenize(word_list, &tokens);
@@ -211,7 +211,7 @@ int	main(void)
 	type_files_and_limiters(tokens);
 	build_list(tokens);
 	build_redirections(tokens->last);
-	// connect_redirections(tokens);
+	connect_redirections(tokens);
 	ast = fetch_ast(tokens);
 	assert(strequal("&&", ast->token->word));
 	assert(strequal("<<", ast->right->token->word));
@@ -237,9 +237,10 @@ int	main(void)
 		tokenize(word_list, &tokens);
 		name_operators(tokens);
 		type_files_and_limiters(tokens);
-		build_redirections(tokens->last);
 		tokens = simplify_para(tokens);
 		build_list(tokens);
+		build_redirections(tokens->last);
+		connect_redirections(tokens);
 		connect_para(tokens);
 		printf("\033[0;32mTree:\033[0m\n");
 		ast = fetch_ast(tokens);
