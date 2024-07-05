@@ -6,7 +6,7 @@
 #    By: yel-yaqi <yel-yaqi@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/05 20:21:35 by yel-yaqi          #+#    #+#              #
-#    Updated: 2024/06/24 16:35:06 by yel-yaqi         ###   ########.fr        #
+#    Updated: 2024/07/03 12:57:11 by yel-yaqi         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -46,17 +46,19 @@ all: $(NAME)
 
 check: $(TARGET_TEST)
 
+libft: $(LIBFT)
+
 src/%.o: src/%.c $(HEADER) Makefile
 	cc -c $< -o $@
 
-checks/%.o: checks/%.c  $(HEADER) Makefile
-	cc -g -c $< -o $@
+checks/%.o: checks/%.c $(HEADER) Makefile
+	@cc -g -c $< -o $@
 
 $(NAME): $(MAIN_OBJ) $(LIBFT)
 	cc $(CFLAGS) $^ -lreadline -o $@
 
-$(TARGET_TEST): $(ALL_OBJ) $(HEADER) Makefile
-	cc $(ALL_OBJ) -g -lreadline -o $@
+$(TARGET_TEST): $(ALL_OBJ) $(HEADER) $(LIBFT) Makefile
+	cc $(ALL_OBJ) -g $(LIBFT) -lreadline -o $@
 
 $(LIBFT):
 	$(MAKE) -C $(LIB_DIR)
@@ -69,5 +71,6 @@ fclean: clean
 	@$(MAKE) -C libft/ fclean
 
 re: fclean all
+
 
 .PHONY: check
