@@ -6,7 +6,7 @@
 /*   By: yel-yaqi <yel-yaqi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/10 13:07:52 by yel-yaqi          #+#    #+#             */
-/*   Updated: 2024/07/04 18:13:51 by yel-yaqi         ###   ########.fr       */
+/*   Updated: 2024/07/05 13:01:19 by yel-yaqi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,7 @@ static void	point_at_para_subtrees(t_token *para_open)
 			&& para_open->subtree->right->token
 			&& para_open->subtree->right->token->type == PARA)
 			para_open->subtree->right = para_open->next->subtree;
+		
 		para_open = para_open->next;
 	}
 }

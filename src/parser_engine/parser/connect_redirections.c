@@ -6,23 +6,40 @@
 /*   By: yel-yaqi <yel-yaqi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/04 11:10:21 by yel-yaqi          #+#    #+#             */
-/*   Updated: 2024/07/04 18:12:36 by yel-yaqi         ###   ########.fr       */
+/*   Updated: 2024/07/05 13:10:27 by yel-yaqi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../include/minishell.h"
 
+static t_token	*seek_next_pipe(t_token *tokens)
+{
+	while (tokens && tokens->type != PARA_CLOSE)
+	{
+		if (tokens->name == PIPE)
+			return (tokens);
+		tokens = tokens->next;
+	}
+	return (NULL);
+}
+
 static t_ast	*get_right_redir_tree_root(t_token *tokens)
 {
 	t_token	*search_token;
 
-	search_token = search(tokens->next, REDIR_IN, FORWARDS);
+	search_token = NULL;
+	if (tokens->name == PIPE || tokens->name == AND || tokens->name == OR)
+		search_token = seek_next_pipe(tokens->next);
 	if (!search_token)
-		search_token = search(tokens->next, REDIR_OUT, FORWARDS);
-	if (!search_token)
-		search_token = search(tokens->next, REDIR_APP, FORWARDS);
-	if (!search_token)
-		search_token = search(tokens->next, HERE_DOC, FORWARDS);
+	{
+		search_token = search(tokens->next, REDIR_IN, FORWARDS);
+		if (!search_token)
+			search_token = search(tokens->next, REDIR_OUT, FORWARDS);
+		if (!search_token)
+			search_token = search(tokens->next, REDIR_APP, FORWARDS);
+		if (!search_token)
+			search_token = search(tokens->next, HERE_DOC, FORWARDS);
+	}
 	if (!search_token)
 		return (NULL);
 	else
