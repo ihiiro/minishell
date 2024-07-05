@@ -6,7 +6,7 @@
 /*   By: yel-yaqi <yel-yaqi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/04 18:19:27 by yel-yaqi          #+#    #+#             */
-/*   Updated: 2024/07/04 18:22:01 by yel-yaqi         ###   ########.fr       */
+/*   Updated: 2024/07/05 18:39:34 by yel-yaqi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,9 +33,15 @@ void	build_compound(t_token *token, int marker)
 	if (marker)
 	{
 		token->subtree->left = malloc(sizeof(t_ast));
-		token->subtree->left->token = token->next->next;
-		token->subtree->left->left = NULL;
-		token->subtree->left->right = NULL;
+		if (token->next && token->next->next
+			&& token->next->next->type == COMMAND)
+		{
+			token->subtree->left->token = token->next->next;
+			token->subtree->left->left = NULL;
+			token->subtree->left->right = NULL;
+		}
+		else
+			token->subtree->left = NULL;
 	}
 	else
 		token->subtree->left = get_redir_tree_tail(token->next);
