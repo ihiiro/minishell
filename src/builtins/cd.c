@@ -40,7 +40,10 @@ char	*add_dir(char *pwd, char *dir)
 	char	*new_value;
 	char	*full_path;
 
-	full_path = ft_strjoin(pwd, "/");
+	if (!ft_strncmp(pwd, "/", 2))
+		full_path = ft_strdup(pwd);
+	else
+		full_path = ft_strjoin(pwd, "/");
 	if (!full_path)
 		return (NULL);
 	new_value = ft_strjoin(full_path, dir);

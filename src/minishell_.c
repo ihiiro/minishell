@@ -21,6 +21,8 @@ int	main(int argc, char *argv[], char *env[])
 {
 	t_envp	*envp;
 	char	*str;
+	char	*path;
+	char	**cmds;
 
 	atexit(f);
 	init_envp(env, &envp);
@@ -36,7 +38,19 @@ int	main(int argc, char *argv[], char *env[])
 			if (!str)
 				break ;
 		}
+		cmds = ft_split(str, " \t");
+		path = ft_strjoin("/bin/", cmds[0]);
+		// if (!access(path, F_OK))
+		// {
+		// 	int pid = fork();
+		// 	if (pid == 0)
+		// 		execve(path, cmds, env);
+		// 	else
+		// 	wait(NULL);
+		// }
 		check_builtins(str, &envp);
+		free_split(cmds);
+		free(path);
 		free(str);
 	}
 	free_envp(envp);

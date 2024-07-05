@@ -81,7 +81,7 @@ void	empty_value(t_envp *env, char *str)
 	char	*trimmed_str;
 
 	trimmed_str = ft_strtrim(str, "=");
-	if (!search_env(env, trimmed_str))
+	if (!search_env_name(env, trimmed_str))
 		addnode(&env, trimmed_str, "");
 	else
 		change_env_value(&env, trimmed_str, "");
@@ -108,9 +108,7 @@ void	export_variables(char **args, t_envp *env)
 		}
 		if (count_char(*args, '=') == 0)
 		{
-			if (search_env_name(env, *args) != NULL)
-				change_env_value(&env, *args, NULL);
-			else
+			if (search_env_name(env, *args) == NULL)
 				addnode(&env, *args, NULL);
 		}
 		else if ((*args)[0] == '=')
