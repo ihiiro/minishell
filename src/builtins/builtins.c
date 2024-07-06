@@ -24,7 +24,7 @@ void	builtins_(t_envp **envp, char **strs)
 		exit_(strs, envp);
 }
 
-void	check_builtins(char *str, t_envp **envp)
+int	check_builtins(char *str, t_envp **envp)
 {
 	char	**strs;
 	char	**head;
@@ -32,11 +32,11 @@ void	check_builtins(char *str, t_envp **envp)
 
 	strs = ft_split(str, " \t");
 	head = strs;
-	builtins_(envp, strs);
 	if (!strs)
 		ft_printf(2, "Error: Allocation failed\n");
 	if (!strs[0])
-		return ;
+		return (0);
+	builtins_(envp, strs);
 	if (!ft_strcmp(strs[0], "echo"))
 		echo_(++strs);
 	else if (!ft_strcmp(strs[0], "export"))
@@ -45,15 +45,6 @@ void	check_builtins(char *str, t_envp **envp)
 		unset_(*envp, ++strs);
 	else if (!ft_strcmp(strs[0], "leaks"))
 		system("leaks -quiet minishell");
-	else
-		return (free_split(strs));
 	free_split(head);
-}
-
-char	*copy_env(char *tmp, char *new_value, char **dirs)
-{
-	tmp = ft_strdup("/");
-	if (!tmp)
-		return (free_split(dirs), NULL);
-	return (free_split(dirs), free(new_value), tmp);
+	return (1);
 }

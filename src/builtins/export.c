@@ -6,7 +6,7 @@
 /*   By: mrezki <mrezki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/02 21:28:35 by mrezki            #+#    #+#             */
-/*   Updated: 2024/07/02 21:28:35 by mrezki           ###   ########.fr       */
+/*   Updated: 2024/07/05 22:42:28 by mrezki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,24 +48,30 @@ void	add_var_to_env(char *arg, t_envp *env)
  *	0 if not.
  */
 
-int	only_chars_nums(char *arg)
+int	only_chars_nums(char *arg, int *join_string)
 {
 	char	*str;
 	int		i;
+	int		err;
 
-	i = 0;
-	str = ft_substr(arg, 0, first_occur(arg, '='));
-	while (str[i])
-	{
-		if (!ft_isalnum(str[i]) && str[i] != '=')
-		{
-			ft_printf(2,
-				"Error: export: '%s': not a valid identifier\n", arg);
-			return (0);
-		}
-		i++;
-	}
-	free(str);
+	i = -1;
+	err = 0;
+	if (count_char(arg, '=') == 0 || arg[0] == '=')
+		str = arg;
+	else
+		str = ft_substr(arg, 0, first_occur(arg, '='));
+	(str[ft_strlen(str) - 1] == '+') && (*join_string = 1);
+	(!ft_isalpha(str[0]) && str[0] != '_' && (err = 1));
+	while (str[++i])
+		if (!ft_isalnum(str[i]) && str[ft_strlen(str) - 1] != '+'
+			&& str[i] != '_')
+			err = 1;
+	if (err)
+		ft_printf(2, "Error: export: '%s' is not a valid identifier\n", str);
+	if (count_char(arg, '=') && arg[0] != '=')
+		free(str);
+	if (err)
+		return (0);
 	return (1);
 }
 
@@ -97,22 +103,21 @@ void	empty_value(t_envp *env, char *str)
 
 void	export_variables(char **args, t_envp *env)
 {
+	int	join_string;
+
+	join_string = 0;
 	while (*args)
 	{
-		if (!only_chars_nums(*args))
+		if (!only_chars_nums(*args, &join_string))
 		{
-			if (!(args + 1))
+			if (!(args + 1) || !(*args))
 				break ;
-			else
-				args++;
 		}
-		if (count_char(*args, '=') == 0)
+		else if (count_char(*args, '=') == 0)
 		{
 			if (search_env_name(env, *args) == NULL)
 				addnode(&env, *args, NULL);
 		}
-		else if ((*args)[0] == '=')
-			print_error("not a valid identifier");
 		else if (count_char(*args, '=') == 1
 			&& (*args)[ft_strlen(*args) - 1] == '=')
 			empty_value(env, *args);

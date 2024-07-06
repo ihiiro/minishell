@@ -105,7 +105,6 @@ t_token	*init_node(char *word);
 
 t_ast	*fetch_ast(t_token *tokens);
 
-
 int		count_substrs(char *str, char *charset);
 int		is_heredoc_operator(t_token *token);
 int		is_redir_operator(t_token *token);

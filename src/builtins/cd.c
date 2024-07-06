@@ -147,9 +147,12 @@ int	cd_(char **args, t_envp **env)
 
 	if (!args[0] || is_tilde(args[0], args[1]))
 	{
-		dir = search_env(*env, "HOME");
+		dir = search_env_name(*env, "HOME");
 		if (!dir)
 			return (print_error("HOME is not set"));
+		dir = search_env(*env, "HOME");
+		if (!dir || !dir[0])
+			return (0);
 		if (chdir(dir) < 0)
 			return (print_error("chdir"));
 		dir = ft_strdup(dir);

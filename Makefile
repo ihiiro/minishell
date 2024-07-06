@@ -21,8 +21,6 @@ MAIN_SOURCES 		= src/parser_engine/tokenizer/tokenize.c \
 			  src/parser_engine/tokenizer/is_operator.c \
 			  src/parser_engine/parser/build_pipelines.c \
 			  src/parser_engine/parser/connect_pipelines.c \
-			  src/parser_engine/parser/fetch_ast.c \
-			  src/parser_engine/parser/para.c \
 			  src/parser_engine/parser/build_list.c \
 			  src/split/split.c src/split/strlen.c \
 			  src/split/substr.c src/split/strdup.c \

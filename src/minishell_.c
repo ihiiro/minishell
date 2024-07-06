@@ -17,12 +17,39 @@ void	f(void)
 	system("leaks -quiet minishell");
 }
 
+void	bash_exe(char *str, char *env[])
+{
+	char	*path;
+	char	**cmds;
+	char	**tmp;
+	int		pid;
+
+	cmds = ft_split(str, " \t");
+	if (!cmds)
+		return ;
+	tmp = cmds;
+	if (!cmds[1])
+		return ;
+	path = ft_strjoin("/bin/", cmds[1]);
+	if (!ft_strncmp(cmds[0], "run", 4))
+	{
+		if (!access(path, F_OK))
+		{
+			pid = fork();
+			if (pid == 0)
+				execve(path, cmds + 1, env);
+			else
+				wait(NULL);
+		}
+	}
+	free(path);
+	free_split(tmp);
+}
+
 int	main(int argc, char *argv[], char *env[])
 {
 	t_envp	*envp;
 	char	*str;
-	char	*path;
-	char	**cmds;
 
 	atexit(f);
 	init_envp(env, &envp);
@@ -38,19 +65,10 @@ int	main(int argc, char *argv[], char *env[])
 			if (!str)
 				break ;
 		}
-		cmds = ft_split(str, " \t");
-		path = ft_strjoin("/bin/", cmds[0]);
-		// if (!access(path, F_OK))
-		// {
-		// 	int pid = fork();
-		// 	if (pid == 0)
-		// 		execve(path, cmds, env);
-		// 	else
-		// 	wait(NULL);
-		// }
+		if (ft_strlen(str) > 0)
+			add_history(str);
 		check_builtins(str, &envp);
-		free_split(cmds);
-		free(path);
+		bash_exe(str, env);
 		free(str);
 	}
 	free_envp(envp);

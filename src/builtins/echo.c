@@ -12,6 +12,34 @@
 
 #include "../../include/minishell.h"
 
+/*
+ * skip_flag: skips argument that contains -n flag.
+ *
+ * @args: list of arguments passsed to echo.
+ * @flag: variable to set flag if it exists.
+ *
+ * return: index of the first valid argument.
+ */
+
+int	skip_flag(char **args, int *flag)
+{
+	int	i;
+	int	j;
+
+	i = 0;
+	while (args[i] && args[i][0] == '-')
+	{
+		j = 1;
+		while (args[i][j] == 'n')
+			j++;
+		if (args[i][j] != '\0')
+			break ;
+		*flag = 1;
+		i++;
+	}
+	return (i);
+}
+
 /**
  * echo_: Mimics the behavior of echo command.
  * args: list of arguments passed to the function.
@@ -25,17 +53,16 @@ int	echo_(char **args)
 	int	i;
 
 	n_flag = 0;
-	i = -1;
 	if (!args[0])
 		return (ft_printf(1, "\n"), 0);
-	if (args[0][0] == '-' && args[0][1] == 'n'
-		&& !args[1])
-		return (0);
-	if (args[0][0] == '-' && args[0][1] == 'n'
-		&& !args[0][2])
-		(1 && (n_flag = 1) && i++);
-	while (args[++i])
-		printf("%s ", args[i]);
+	i = skip_flag(args, &n_flag);
+	while (args[i])
+	{
+		printf("%s", args[i]);
+		if (args[i + 1])
+			printf(" ");
+		i++;
+	}
 	if (!n_flag)
 		printf("\n");
 	return (0);
