@@ -203,7 +203,7 @@ int	main(void)
 	assert(strequal("cat", ast->left->left->left->left->token->word));
 	printf("\033[0;32m	GOOD\033[0m\n\n");
 
-	printf("#8 CONNECT-REDIRECTIONS:\n");
+	printf("#8 PARSER-CONNECT-REDIRECTIONS:\n");
 	tokens = NULL;
 	word_list = ft_split("cat arg0 arg1 < infile > outfile | grep < file0 && cat << end", " ");
 	tokenize(word_list, &tokens);
@@ -228,8 +228,23 @@ int	main(void)
 	assert(strequal("cat", ast->left->left->left->left->token->word));
 	printf("\033[0;32m	GOOD\033[0m\n\n");
 
-	printf("PROMPT LOOP FOR DYNAMIC TESTING:\n\n");
+	printf("#9 PARSER-PUT-ARGS-INTO-CMD-TOKENS:\n");
+	tokens = NULL;
+	word_list = ft_split("CMD ARG0 ARG1 && CMD ARG0 ARG1 | ((((< FILE CMD ARG0 ARG1)))) > FILE", " ");
+	tokenize(word_list, &tokens);
+	name_operators(tokens);
+	type_files_and_limiters(tokens);
+	put_args_into_cmd_tokens(tokens);
+	for (t_token *ptr = tokens; ptr; ptr = ptr->next)
+		if (ptr->type == COMMAND)
+		{
+			assert(strequal("ARG0", ptr->args[0]));
+			assert(strequal("ARG1", ptr->args[1]));
+			assert(ptr->args[2] == NULL);
+		}
+	printf("\033[0;32m	GOOD\033[0m\n\n");
 
+	printf("PROMPT LOOP FOR DYNAMIC TESTING:\n\n");
 	while (1)
 	{
 		tokens = NULL;
