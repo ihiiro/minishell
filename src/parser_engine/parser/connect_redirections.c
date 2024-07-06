@@ -6,7 +6,7 @@
 /*   By: yel-yaqi <yel-yaqi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/04 11:10:21 by yel-yaqi          #+#    #+#             */
-/*   Updated: 2024/07/05 13:10:27 by yel-yaqi         ###   ########.fr       */
+/*   Updated: 2024/07/06 12:53:34 by yel-yaqi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@ static t_token	*seek_next_pipe(t_token *tokens)
 	{
 		if (tokens->name == PIPE)
 			return (tokens);
+		else if (tokens->name == AND || tokens->name == OR)
+			break ;
 		tokens = tokens->next;
 	}
 	return (NULL);
