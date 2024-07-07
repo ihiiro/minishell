@@ -6,7 +6,7 @@
 /*   By: yel-yaqi <yel-yaqi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/05 18:48:14 by yel-yaqi          #+#    #+#             */
-/*   Updated: 2024/07/06 16:37:11 by yel-yaqi         ###   ########.fr       */
+/*   Updated: 2024/07/07 11:34:52 by yel-yaqi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,6 +97,7 @@ void	count_quoted_len(char *str, int *len, char *charset);
 void	tokenize(char **word_list, t_token **token_list);
 void	build_simple(t_token *token, t_token *cmd);
 void	build_compound(t_token *token, int marker);
+void	make_irregular_arguments(t_token *tokens);
 void	put_args_into_cmd_tokens(t_token *tokens);
 void	type_files_and_limiters(t_token *tokens);
 void	append(t_token *node, t_token **list);

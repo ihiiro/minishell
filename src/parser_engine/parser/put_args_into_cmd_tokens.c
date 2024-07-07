@@ -6,7 +6,7 @@
 /*   By: yel-yaqi <yel-yaqi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/06 16:06:58 by yel-yaqi          #+#    #+#             */
-/*   Updated: 2024/07/06 16:42:52 by yel-yaqi         ###   ########.fr       */
+/*   Updated: 2024/07/07 10:09:25 by yel-yaqi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ static int	count_args(t_token *arg_list)
 
 static void	fill(char **cmd_args, t_token *arg_list)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (arg_list && arg_list->type == ARGUMENT)
