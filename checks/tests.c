@@ -267,28 +267,9 @@ int	main(void)
 	printf("PROMPT LOOP FOR DYNAMIC TESTING:\n\n");
 	while (1)
 	{
-		tokens = NULL;
-		word_list = ft_split(readline("\033[1;34mtest> \033[0m"), " ");
-		tokenize(word_list, &tokens);
-		name_operators(tokens);
-		type_files_and_limiters(tokens);
-		make_irregular_arguments(tokens);
-		tokens = simplify_para(tokens);
-		build_list(tokens);
-		
-		// for (t_token *ptr = tokens; ptr; ptr = ptr->next)
-		// 	printf("'%s'::%d::%d, ", ptr->word, ptr->name, ptr->type);
-		// exit(0);
-		
-		connect_para(tokens);
+		ast = parse(readline("\033[1;34mtest> \033[0m"));
 		printf("\033[0;32mTree:\033[0m\n");
-		ast = fetch_ast(tokens);
 		visualize_binary_tree(ast);
-		printf("\n");
-		printf("\033[0;32mflattened list:\033[0m\n");
-		for (t_token *ptr = tokens; ptr; ptr = ptr->next)
-			printf("%s ", ptr->word);
-		printf("\n\n");
 		printf("\n");
 		printf("\033[0;32mbottom-top: right-first\033[0m\n");
 		in_order(ast);
