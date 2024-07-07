@@ -13,14 +13,58 @@
 #include "../../include/minishell.h"
 
 /*
- * exit_: exits the shell.
+ * check_arg: check whether the argument is numeric.
+ * if not exit print error and exit with 255 exit status.
  *
+ * @arg: argument passed to exit.
  * @strs: commands.
+ * @env: linked list containing environment variables.
+ */
+
+void	check_arg(char *arg, char **strs, t_envp *env)
+{
+	int	i;
+
+	i = -1;
+	while (arg[++i])
+	{
+		if (!ft_isdigit(arg[i]))
+		{
+			free_envp(env);
+			printf("exit\n");
+			printf("minishell: exit: %s: numeric argument required\n", arg);
+			free_split(strs);
+			exit(255);
+		}
+	}
+}
+
+/*
+ * exit_: exits the shell with optional exit status.
+ *
+ * @strs: optional exit status.
  * @env: linked list containing environment variables.
  */
 
 void	exit_(char **strs, t_envp **env)
 {
+	short	exit_status;
+
+	if (strs[1] && strs[2])
+	{
+		printf("exit\nminishell: exit: too many arguments\n");
+		return ;
+	}
+	if (strs[1] && !strs[2])
+	{
+		check_arg(strs[1], strs, *env);
+		exit_status = ft_atoi(strs[1]);
+		exit_status = (exit_status & 0xFF);
+		free_split(strs);
+		free_envp(*env);
+		printf("exit\n");
+		exit(exit_status);
+	}
 	free_split(strs);
 	free_envp(*env);
 	printf("exit\n");

@@ -20,6 +20,7 @@ void	f(void)
 
 /*
  * bash_exe: Executes a command in bash. NOTE for tests.
+ * Usage: run commandss.
  *
  * @str: user prompt.
  * @env: List of environment variables.
