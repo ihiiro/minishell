@@ -6,54 +6,57 @@
 /*   By: yel-yaqi <yel-yaqi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/06 16:06:58 by yel-yaqi          #+#    #+#             */
-/*   Updated: 2024/07/07 10:09:25 by yel-yaqi         ###   ########.fr       */
+/*   Updated: 2024/07/07 12:12:59 by yel-yaqi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../include/minishell.h"
 
-static int	count_args(t_token *arg_list)
+static int	count_args(t_token *cmd)
 {
 	int	arg_count;
 
 	arg_count = 0;
-	while (arg_list && arg_list->type == ARGUMENT)
+	while (cmd && cmd->name != AND && cmd->name != OR
+		&& cmd->name != PIPE)
 	{
-		arg_count++;
-		arg_list = arg_list->next;
+		if (cmd->type == ARGUMENT)
+			arg_count++;
+		cmd = cmd->next;
 	}
 	return (arg_count);
 }
 
-static void	fill(char **cmd_args, t_token *arg_list)
+static void	fill(char **cmd_args_array, t_token *arg_list)
 {
 	int	i;
 
 	i = 0;
-	while (arg_list && arg_list->type == ARGUMENT)
+	while (arg_list && arg_list->name != AND && arg_list->name != OR
+		&& arg_list->name != PIPE)
 	{
-		cmd_args[i] = arg_list->word;
-		i++;
+		if (arg_list->type == ARGUMENT)
+		{
+			cmd_args_array[i] = arg_list->word;
+			i++;
+		}
 		arg_list = arg_list->next;
 	}
-	cmd_args[i] = NULL;
-}
-
-static void	put_into_cmd(t_token *cmd)
-{
-	int	arg_count;
-
-	arg_count = count_args(cmd->next);
-	cmd->args = malloc(sizeof(char *) * (arg_count + 1));
-	fill(cmd->args, cmd->next);
+	cmd_args_array[i] = NULL;
 }
 
 void	put_args_into_cmd_tokens(t_token *tokens)
 {
+	int	arg_count;
+
 	while (tokens)
 	{
 		if (tokens->type == COMMAND)
-			put_into_cmd(tokens);
+		{
+			arg_count = count_args(tokens);
+			tokens->args = malloc(sizeof(char *) * (arg_count + 1));
+			fill(tokens->args, tokens);
+		}
 		tokens = tokens->next;
 	}
 }
