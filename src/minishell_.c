@@ -6,7 +6,7 @@
 /*   By: mrezki <mrezki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/29 18:45:07 by mrezki            #+#    #+#             */
-/*   Updated: 2024/06/29 18:45:08 by mrezki           ###   ########.fr       */
+/*   Updated: 2024/07/07 01:03:11 by mrezki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,15 +21,13 @@ void	bash_exe(char *str, char *env[])
 {
 	char	*path;
 	char	**cmds;
-	char	**tmp;
 	int		pid;
 
 	cmds = ft_split(str, " \t");
 	if (!cmds)
 		return ;
-	tmp = cmds;
 	if (!cmds[1])
-		return ;
+		return (free_split(cmds));
 	path = ft_strjoin("/bin/", cmds[1]);
 	if (!ft_strncmp(cmds[0], "run", 4))
 	{
@@ -37,13 +35,13 @@ void	bash_exe(char *str, char *env[])
 		{
 			pid = fork();
 			if (pid == 0)
-				execve(path, cmds + 1, env);
+				execve(path, &cmds[1], env);
 			else
 				wait(NULL);
 		}
 	}
+	free_split(cmds);
 	free(path);
-	free_split(tmp);
 }
 
 int	main(int argc, char *argv[], char *env[])

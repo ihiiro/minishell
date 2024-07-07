@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: yel-yaqi <yel-yaqi@student.42.fr>          +#+  +:+       +#+         #
+#    By: mrezki <mrezki@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/05 20:21:35 by yel-yaqi          #+#    #+#              #
-#    Updated: 2024/07/03 12:57:11 by yel-yaqi         ###   ########.fr        #
+#    Updated: 2024/07/07 01:03:16 by mrezki           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -30,7 +30,7 @@ MAIN_SOURCES 		= src/parser_engine/tokenizer/tokenize.c \
 			  src/builtins/builtins.c src/builtins/cd.c \
 			  src/builtins/env.c src/builtins/pwd.c src/builtins/export.c \
 			  src/builtins/unset.c src/builtins/exit.c src/utils/free.c \
-			  src/utils/envp_list.c src/utils/char_utils.c
+			  src/utils/envp_list.c src/utils/char_utils.c src/builtins/unset_append.c
 ALL_SOURCES = $(MAIN_SOURCES) $(TARGET_TEST_SOURCES)
 
 MAIN_OBJ 	= $(MAIN_SOURCES:.c=.o)

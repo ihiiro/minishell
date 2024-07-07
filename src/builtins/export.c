@@ -6,7 +6,7 @@
 /*   By: mrezki <mrezki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/02 21:28:35 by mrezki            #+#    #+#             */
-/*   Updated: 2024/07/05 22:42:28 by mrezki           ###   ########.fr       */
+/*   Updated: 2024/07/07 01:02:35 by mrezki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,20 +20,25 @@
  * @env: A pointer to the head of a linked list containing environment variables.
  */
 
-void	add_var_to_env(char *arg, t_envp *env)
+void	add_var_to_env(char *arg, t_envp *env, int join_string)
 {
 	char	*name;
 	char	*value;
 	char	*tname;
 	char	*tvalue;
 
-	tname = ft_substr(arg, 0, first_occur(arg, '='));
+	if (join_string)
+		tname = ft_substr(arg, 0, first_occur(arg, '+'));
+	else
+		tname = ft_substr(arg, 0, first_occur(arg, '='));
 	tvalue = ft_substr(arg, first_occur(arg, '=') + 1, ft_strlen(arg));
 	name = ft_strdup(tname);
 	value = ft_strdup(tvalue);
 	free(tname);
 	free(tvalue);
-	if (search_env_name(env, name) != NULL)
+	if (search_env_name(env, name) && join_string)
+		append_to_env(&env, name, value);
+	else if (search_env_name(env, name) && !join_string)
 		change_env_value(&env, name, value);
 	else
 		addnode(&env, name, value);
@@ -95,7 +100,8 @@ void	empty_value(t_envp *env, char *str)
 }
 
 /*
- * export_variables: Processes and exports env.
+ * export_variables: Adds, Updates or append the value of
+ * the environment variable.
  *
  * @args: Arguments passed to export.
  * @env: A pointer to the head of a linked list containing environment variables.
@@ -119,10 +125,11 @@ void	export_variables(char **args, t_envp *env)
 				addnode(&env, *args, NULL);
 		}
 		else if (count_char(*args, '=') == 1
-			&& (*args)[ft_strlen(*args) - 1] == '=')
+			&& (*args)[ft_strlen(*args) - 1] == '='
+			&& !join_string)
 			empty_value(env, *args);
 		else
-			add_var_to_env(*args, env);
+			add_var_to_env(*args, env, join_string);
 		args++;
 	}
 }
