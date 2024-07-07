@@ -25,6 +25,7 @@ typedef struct s_envp
 void	change_env_value(t_envp **env, char *name, char *new_value);
 void	append_to_env(t_envp **env, char *name, char *value);
 void	change_pwds(t_envp **env, char *pwd, char home);
+void	shlvl_check(char *str, t_envp **env);
 void	init_envp(char *envp[], t_envp **en);
 void	exit_(char **strs, t_envp **env);
 

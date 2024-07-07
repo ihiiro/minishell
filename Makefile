@@ -17,20 +17,21 @@ LIBFT			= $(LIB_DIR)/libft.a
 TARGET_TEST 		= test
 TARGET_TEST_SOURCES	= checks/tests.c
 MAIN_SOURCES 		= src/parser_engine/tokenizer/tokenize.c \
-			  src/parser_engine/tokenizer/name_operators.c \
-			  src/parser_engine/tokenizer/is_operator.c \
-			  src/parser_engine/parser/build_pipelines.c \
-			  src/parser_engine/parser/connect_pipelines.c \
-			  src/parser_engine/parser/build_list.c \
-			  src/split/split.c src/split/strlen.c \
-			  src/split/substr.c src/split/strdup.c \
-			  src/split/strlcpy.c src/split/strchr.c\
-			  src/split/quoted.c src/list.c \
-			  src/minishell_.c src/builtins/echo.c \
-			  src/builtins/builtins.c src/builtins/cd.c \
-			  src/builtins/env.c src/builtins/pwd.c src/builtins/export.c \
-			  src/builtins/unset.c src/builtins/exit.c src/utils/free.c \
-			  src/utils/envp_list.c src/utils/char_utils.c src/builtins/unset_append.c
+			src/parser_engine/tokenizer/name_operators.c \
+			src/parser_engine/tokenizer/is_operator.c \
+			src/parser_engine/parser/build_pipelines.c \
+			src/parser_engine/parser/connect_pipelines.c \
+			src/parser_engine/parser/build_list.c \
+			src/split/split.c src/split/strlen.c \
+			src/split/substr.c src/split/strdup.c \
+			src/split/strlcpy.c src/split/strchr.c\
+			src/split/quoted.c src/list.c \
+			src/minishell_.c src/builtins/echo.c \
+			src/builtins/builtins.c src/builtins/cd.c \
+			src/builtins/env.c src/builtins/pwd.c src/builtins/export.c \
+			src/builtins/unset.c src/builtins/exit.c src/utils/free.c \
+			src/utils/envp_list.c src/utils/char_utils.c src/builtins/unset_append.c \
+			src/builtins/env_shlvl.c
 ALL_SOURCES = $(MAIN_SOURCES) $(TARGET_TEST_SOURCES)
 
 MAIN_OBJ 	= $(MAIN_SOURCES:.c=.o)

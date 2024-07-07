@@ -11,11 +11,19 @@
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
+#include <stdlib.h>
 
 void	f(void)
 {
 	system("leaks -quiet minishell");
 }
+
+/*
+ * bash_exe: Executes a command in bash. NOTE for tests.
+ *
+ * @str: user prompt.
+ * @env: List of environment variables.
+ */
 
 void	bash_exe(char *str, char *env[])
 {
@@ -44,19 +52,36 @@ void	bash_exe(char *str, char *env[])
 	free(path);
 }
 
+int	is_spaces(char *str)
+{
+	int	i;
+
+	i = 0;
+	while (str[i])
+	{
+		if (str[i] != ' ' || str[i] != '\t')
+			return (0);
+		i++;
+	}
+	return (1);
+}
+
+
 int	main(int argc, char *argv[], char *env[])
 {
 	t_envp	*envp;
 	char	*str;
 
-	atexit(f);
 	init_envp(env, &envp);
 	while (1)
 	{
 		str = readline("$> ");
 		if (!str)
-			break ;
-		while (str[0] == '\0')
+		{
+			printf("exit\n");
+			exit(EXIT_FAILURE);
+		}
+		while (str[0] == '\0' || is_spaces(str))
 		{
 			free(str);
 			str = readline("$> ");
@@ -65,6 +90,7 @@ int	main(int argc, char *argv[], char *env[])
 		}
 		if (ft_strlen(str) > 0)
 			add_history(str);
+		shlvl_check(str, &envp);
 		check_builtins(str, &envp);
 		bash_exe(str, env);
 		free(str);

@@ -12,9 +12,17 @@
 
 #include "../../include/minishell.h"
 
+/*
+ * exit_: exits the shell.
+ *
+ * @strs: commands.
+ * @env: linked list containing environment variables.
+ */
+
 void	exit_(char **strs, t_envp **env)
 {
 	free_split(strs);
 	free_envp(*env);
+	printf("exit\n");
 	exit(EXIT_SUCCESS);
 }
