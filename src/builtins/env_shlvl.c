@@ -27,6 +27,15 @@ size_t	env_len(t_envp *env)
 	return (len);
 }
 
+/*
+ * copy_env_to_arr: copy environment variables
+ * from linked list to an array of strings.
+ *
+ * @env: linked list containing environment variables.
+ *
+ * return: copy of env.
+ */
+
 char	**copy_env_to_arr(t_envp *env)
 {
 	char	**env_copy;
@@ -54,6 +63,14 @@ char	**copy_env_to_arr(t_envp *env)
 	env_copy[len] = NULL;
 	return (env_copy);
 }
+
+/*
+ * shlvl_check: Recursively call the program,
+ * and updates SHLVL accoridngly.
+ *
+ * @str: user prompt.
+ * @env: list of environment variables.
+ */
 
 void	shlvl_check(char *str, t_envp **env)
 {

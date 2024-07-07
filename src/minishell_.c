@@ -52,27 +52,10 @@ void	bash_exe(char *str, char *env[])
 	free(path);
 }
 
-int	is_spaces(char *str)
+void	command_loop(t_envp *envp, char *env[])
 {
-	int	i;
-
-	i = 0;
-	while (str[i])
-	{
-		if (str[i] != ' ' || str[i] != '\t')
-			return (0);
-		i++;
-	}
-	return (1);
-}
-
-
-int	main(int argc, char *argv[], char *env[])
-{
-	t_envp	*envp;
 	char	*str;
 
-	init_envp(env, &envp);
 	while (1)
 	{
 		str = readline("$> ");
@@ -95,6 +78,15 @@ int	main(int argc, char *argv[], char *env[])
 		bash_exe(str, env);
 		free(str);
 	}
+}
+
+int	main(int argc, char *argv[], char *env[])
+{
+	t_envp	*envp;
+	char	*str;
+
+	init_envp(env, &envp);
+	command_loop(envp, env);
 	free_envp(envp);
 	return (0);
 }
