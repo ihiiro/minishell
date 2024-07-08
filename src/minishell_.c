@@ -11,7 +11,9 @@
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
+#include <readline/history.h>
 #include <stdlib.h>
+#include <unistd.h>
 
 void	f(void)
 {
@@ -56,15 +58,14 @@ void	bash_exe(char *str, char *env[])
 void	command_loop(t_envp *envp, char *env[])
 {
 	char	*str;
+	int		sigint;
 
 	while (1)
 	{
+		init_signal(&sigint);
 		str = readline("$> ");
 		if (!str)
-		{
-			printf("exit\n");
-			exit(EXIT_FAILURE);
-		}
+			exit_(NULL, &envp);
 		while (str[0] == '\0' || is_spaces(str))
 		{
 			free(str);

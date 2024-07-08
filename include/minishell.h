@@ -32,6 +32,8 @@
 # include <fcntl.h>
 # include <sys/wait.h>
 # include <unistd.h>
+# include <signal.h>
+# include <termios.h>
 
 # include "../libft/libft.h"
 # include "builtins.h"
@@ -94,6 +96,7 @@ void	type_files_and_limiters(t_token *tokens);
 void	append(t_token *node, t_token **list);
 void	build_redirections(t_token *tokens);
 void	connect_pipelines(t_token *token);
+void	rl_replace_line(char *str, int a);
 void	name_operators(t_token *tokens);
 void	skip_quoted(char *str, int *i);
 void	connect_para(t_token *tokens);
@@ -121,5 +124,11 @@ size_t	ft_strlcpy(char *dst, const char *src, size_t dstsize);
 size_t	ft_strlen(const char *s);
 
 int		in_charset(char c, char *charset);
+
+/* Signals */
+
+void	init_signal(int *sigint);
+void	signal_handler(int sig);
+void	disable_echo(void);
 
 #endif

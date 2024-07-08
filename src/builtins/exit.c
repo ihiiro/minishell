@@ -21,7 +21,7 @@
  * @env: linked list containing environment variables.
  */
 
-void	check_arg(char *arg, char **strs, t_envp *env)
+void	check_arg(char *arg, char **strs, t_envp *env, short *status)
 {
 	int	i;
 
@@ -37,6 +37,7 @@ void	check_arg(char *arg, char **strs, t_envp *env)
 			exit(255);
 		}
 	}
+	*status = ft_atoi(arg) & 0xFF;
 }
 
 /*
@@ -50,23 +51,22 @@ void	exit_(char **strs, t_envp **env)
 {
 	short	exit_status;
 
+	if (!strs)
+	{
+		free_envp(*env);
+		printf("exit\n");
+		exit(EXIT_SUCCESS);
+	}
 	if (strs[1] && strs[2])
 	{
 		printf("exit\nminishell: exit: too many arguments\n");
 		return ;
 	}
-	if (strs[1] && !strs[2])
-	{
-		check_arg(strs[1], strs, *env);
-		exit_status = ft_atoi(strs[1]);
-		exit_status = (exit_status & 0xFF);
-		free_split(strs);
-		free_envp(*env);
-		printf("exit\n");
-		exit(exit_status);
-	}
+	exit_status = 0;
+	if (strs[1])
+		check_arg(strs[1], strs, *env, &exit_status);
 	free_split(strs);
 	free_envp(*env);
 	printf("exit\n");
-	exit(EXIT_SUCCESS);
+	exit(exit_status);
 }
