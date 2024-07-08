@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mrezki <mrezki@student.42.fr>              +#+  +:+       +#+        */
+/*   By: yel-yaqi <yel-yaqi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/29 18:45:07 by mrezki            #+#    #+#             */
 /*   Updated: 2024/07/07 01:03:11 by mrezki           ###   ########.fr       */

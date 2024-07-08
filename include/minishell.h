@@ -6,7 +6,7 @@
 /*   By: yel-yaqi <yel-yaqi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/05 18:48:14 by yel-yaqi          #+#    #+#             */
-/*   Updated: 2024/07/03 15:08:31 by yel-yaqi         ###   ########.fr       */
+/*   Updated: 2024/07/07 12:54:00 by yel-yaqi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,8 @@
 # define BACKWARDS 0
 # define FORWARDS 1
 
+/* types */
+
 # define NOTHING_TYPED -1
 # define OPERATOR 0
 # define COMMAND 1
@@ -51,6 +53,8 @@
 # define PARA 6
 # define FILE 7
 # define LIMITER 8
+
+/* names */
 
 # define NONE -1
 # define AND 0
@@ -78,6 +82,7 @@ typedef struct s_token
 	t_ast			*subtree;
 	int				type;
 	int				name;
+	char			**args;
 	struct s_token	*next;
 	struct s_token	*prev;
 	struct s_token	*last;
@@ -92,8 +97,13 @@ typedef struct s_shell
 
 void	count_quoted_len(char *str, int *len, char *charset);
 void	tokenize(char **word_list, t_token **token_list);
+void	build_simple(t_token *token, t_token *cmd);
+void	build_compound(t_token *token, int marker);
+void	make_irregular_arguments(t_token *tokens);
+void	put_args_into_cmd_tokens(t_token *tokens);
 void	type_files_and_limiters(t_token *tokens);
 void	append(t_token *node, t_token **list);
+void	connect_redirections(t_token *tokens);
 void	build_redirections(t_token *tokens);
 void	connect_pipelines(t_token *token);
 void	rl_replace_line(char *str, int a);
@@ -107,6 +117,8 @@ t_token	*simplify_para(t_token *tokens);
 t_token	*init_node(char *word);
 
 t_ast	*fetch_ast(t_token *tokens);
+t_ast	*parse(char *expr);
+
 
 int		count_substrs(char *str, char *charset);
 int		is_heredoc_operator(t_token *token);

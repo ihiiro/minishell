@@ -6,7 +6,7 @@
 /*   By: yel-yaqi <yel-yaqi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/03 10:57:08 by yel-yaqi          #+#    #+#             */
-/*   Updated: 2024/07/03 17:53:16 by yel-yaqi         ###   ########.fr       */
+/*   Updated: 2024/07/05 17:13:34 by yel-yaqi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,9 @@ void	type_files_and_limiters(t_token *tokens)
 		else if (tokens->prev && is_heredoc_operator(tokens->prev))
 			tokens->type = LIMITER;
 		else if (tokens->prev && tokens->prev->type == FILE
-			&& !is_redir_operator(tokens) && !is_heredoc_operator(tokens))
+			&& !is_redir_operator(tokens) && !is_heredoc_operator(tokens)
+			&& tokens->type != PARA_CLOSE
+			&& tokens->type != OPERATOR)
 			tokens->type = COMMAND;
 		tokens = tokens->next;
 	}

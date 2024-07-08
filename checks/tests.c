@@ -203,27 +203,73 @@ int	main(void)
 	assert(strequal("cat", ast->left->left->left->left->token->word));
 	printf("\033[0;32m	GOOD\033[0m\n\n");
 
-	printf("PROMPT LOOP FOR DYNAMIC TESTING:\n\n");
+	printf("#8 PARSER-CONNECT-REDIRECTIONS:\n");
+	tokens = NULL;
+	word_list = ft_split("cat arg0 arg1 < infile > outfile | grep < file0 && cat << end", " ");
+	tokenize(word_list, &tokens);
+	name_operators(tokens);
+	type_files_and_limiters(tokens);
+	build_list(tokens);
+	build_redirections(tokens->last);
+	connect_redirections(tokens);
+	ast = fetch_ast(tokens);
+	assert(strequal("&&", ast->token->word));
+	assert(strequal("<<", ast->right->token->word));
+	assert(strequal("end", ast->right->right->token->word));
+	assert(strequal("cat", ast->right->left->token->word));
+	assert(strequal("|", ast->left->token->word));
+	assert(strequal("<", ast->left->right->token->word));
+	assert(strequal("file0", ast->left->right->right->token->word));
+	assert(strequal("grep", ast->left->right->left->token->word));
+	assert(strequal("<", ast->left->left->token->word));
+	assert(strequal("infile", ast->left->left->right->token->word));
+	assert(strequal(">", ast->left->left->left->token->word));
+	assert(strequal("outfile", ast->left->left->left->right->token->word));
+	assert(strequal("cat", ast->left->left->left->left->token->word));
+	printf("\033[0;32m	GOOD\033[0m\n\n");
 
+	printf("#9 PARSER-PUT-ARGS-INTO-CMD-TOKENS:\n");
+	printf("REGULAR-FORM:\n");
+	tokens = NULL;
+	word_list = ft_split("CMD ARG0 ARG1 && CMD ARG0 ARG1 | ((((< FILE CMD ARG0 ARG1)))) > FILE", " ");
+	tokenize(word_list, &tokens);
+	name_operators(tokens);
+	type_files_and_limiters(tokens);
+	make_irregular_arguments(tokens);
+	put_args_into_cmd_tokens(tokens);
+	for (t_token *ptr = tokens; ptr; ptr = ptr->next)
+		if (ptr->type == COMMAND)
+		{
+			assert(strequal("ARG0", ptr->args[0]));
+			assert(strequal("ARG1", ptr->args[1]));
+			assert(ptr->args[2] == NULL);
+		}
+	printf("\033[0;32m	GOOD\033[0m\n");
+	printf("IRREGULAR-FORM:\n");
+	tokens = NULL;
+	word_list = ft_split("CMD ARG0 > FILE ARG1 < FILE ARG2 | < FILE CMD ARG0 << LIMITER ARG1 ARG2", " ");
+	tokenize(word_list, &tokens);
+	name_operators(tokens);
+	type_files_and_limiters(tokens);
+	make_irregular_arguments(tokens);
+	put_args_into_cmd_tokens(tokens);
+
+	for (t_token *ptr = tokens; ptr; ptr = ptr->next)
+		if (ptr->type == COMMAND)
+		{
+			assert(strequal("ARG0", ptr->args[0]));
+			assert(strequal("ARG1", ptr->args[1]));
+			assert(strequal("ARG2", ptr->args[2]));
+			assert(ptr->args[3] == NULL);
+		}
+	printf("\033[0;32m	GOOD\033[0m\n\n");
+
+	printf("PROMPT LOOP FOR DYNAMIC TESTING:\n\n");
 	while (1)
 	{
-		tokens = NULL;
-		word_list = ft_split(readline("\033[1;34mtest> \033[0m"), " ");
-		tokenize(word_list, &tokens);
-		name_operators(tokens);
-		type_files_and_limiters(tokens);
-		build_redirections(tokens->last);
-		tokens = simplify_para(tokens);
-		build_list(tokens);
-		connect_para(tokens);
+		ast = parse(readline("\033[1;34mtest> \033[0m"));
 		printf("\033[0;32mTree:\033[0m\n");
-		ast = fetch_ast(tokens);
 		visualize_binary_tree(ast);
-		printf("\n");
-		printf("\033[0;32mflattened list:\033[0m\n");
-		for (t_token *ptr = tokens; ptr; ptr = ptr->next)
-			printf("%s ", ptr->word);
-		printf("\n\n");
 		printf("\n");
 		printf("\033[0;32mbottom-top: right-first\033[0m\n");
 		in_order(ast);

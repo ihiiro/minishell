@@ -19,9 +19,18 @@ TARGET_TEST_SOURCES	= checks/tests.c
 MAIN_SOURCES 		= src/parser_engine/tokenizer/tokenize.c \
 			src/parser_engine/tokenizer/name_operators.c \
 			src/parser_engine/tokenizer/is_operator.c \
+			src/parser_engine/tokenizer/type_files_and_limiters.c \
+			src/parser_engine/tokenizer/make_irregular_arguments.c \
 			src/parser_engine/parser/build_pipelines.c \
+			src/parser_engine/parser/build_redirections.c \
+			src/parser_engine/parser/build_redir_branch.c \
 			src/parser_engine/parser/connect_pipelines.c \
+			src/parser_engine/parser/connect_redirections.c \
+			src/parser_engine/parser/fetch_ast.c \
+			src/parser_engine/parser/para.c \
 			src/parser_engine/parser/build_list.c \
+			src/parser_engine/parser/put_args_into_cmd_tokens.c \
+			src/parser_engine/parse.c \
 			src/split/split.c src/split/strlen.c \
 			src/split/substr.c src/split/strdup.c \
 			src/split/strlcpy.c src/split/strchr.c\
@@ -32,6 +41,7 @@ MAIN_SOURCES 		= src/parser_engine/tokenizer/tokenize.c \
 			src/builtins/unset.c src/builtins/exit.c src/utils/free.c \
 			src/utils/envp_list.c src/utils/char_utils.c src/builtins/unset_append.c \
 			src/builtins/env_shlvl.c src/signal.c
+
 ALL_SOURCES = $(MAIN_SOURCES) $(TARGET_TEST_SOURCES)
 
 MAIN_OBJ 	= $(MAIN_SOURCES:.c=.o)
