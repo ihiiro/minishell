@@ -6,7 +6,7 @@
 /*   By: mrezki <mrezki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/02 21:28:38 by mrezki            #+#    #+#             */
-/*   Updated: 2024/07/02 21:28:38 by mrezki           ###   ########.fr       */
+/*   Updated: 2024/07/07 01:02:38 by mrezki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,9 @@ char	*remove_last_dir(char *pwd)
 	int		i;
 	int		last_pos;
 
+	if (!ft_strncmp(pwd, "/", 2) || (count_char(pwd, '/') == 1
+			&& pwd[0] == '/'))
+		return (free(pwd), ft_strdup("/"));
 	last_pos = 0;
 	i = 0;
 	while (pwd[i])
@@ -57,23 +60,19 @@ char	*new_pwd(char *pwd, char *tmp, char *new_value, char **dirs)
 {
 	int		i;
 
-	if (pwd[0] == '/')
-		return (ft_strdup(pwd));
-	new_value = ft_strdup(tmp);
-	if (count_dots(dirs) >= count_char(tmp, '/') && count_char(tmp, '/') > 0)
-		return (copy_env(tmp, new_value, dirs));
+	if (!ft_strncmp(pwd, "/", 1))
+		new_value = ft_strdup("/");
+	else
+		new_value = ft_strdup(tmp);
 	i = -1;
 	while (dirs[++i])
 	{
-		if (!ft_strcmp(dirs[i], "."))
+		if (dirs[i] && !ft_strcmp(dirs[i], ".."))
 		{
-			i++;
-			if (!dirs[i])
-				break ;
+			if (ft_strncmp(new_value, "/", 2) != 0)
+				new_value = remove_last_dir(new_value);
 		}
-		else if (dirs[i] && !ft_strcmp(dirs[i], ".."))
-			new_value = remove_last_dir(new_value);
-		else if (dirs[i])
+		else if (dirs[i] && ft_strncmp(dirs[i], ".", 2))
 			new_value = add_dir(new_value, dirs[i]);
 	}
 	return (free_split(dirs), new_value);

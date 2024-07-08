@@ -32,6 +32,8 @@
 # include <fcntl.h>
 # include <sys/wait.h>
 # include <unistd.h>
+# include <signal.h>
+# include <termios.h>
 
 # include "../libft/libft.h"
 # include "builtins.h"
@@ -104,6 +106,7 @@ void	append(t_token *node, t_token **list);
 void	connect_redirections(t_token *tokens);
 void	build_redirections(t_token *tokens);
 void	connect_pipelines(t_token *token);
+void	rl_replace_line(char *str, int a);
 void	name_operators(t_token *tokens);
 void	skip_quoted(char *str, int *i);
 void	connect_para(t_token *tokens);
@@ -115,6 +118,7 @@ t_token	*init_node(char *word);
 
 t_ast	*fetch_ast(t_token *tokens);
 t_ast	*parse(char *expr);
+
 
 int		count_substrs(char *str, char *charset);
 int		is_heredoc_operator(t_token *token);
@@ -132,5 +136,11 @@ size_t	ft_strlcpy(char *dst, const char *src, size_t dstsize);
 size_t	ft_strlen(const char *s);
 
 int		in_charset(char c, char *charset);
+
+/* Signals */
+
+void	init_signal(int *sigint);
+void	signal_handler(int sig);
+void	disable_echo(void);
 
 #endif

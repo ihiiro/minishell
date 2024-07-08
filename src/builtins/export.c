@@ -6,7 +6,7 @@
 /*   By: yel-yaqi <yel-yaqi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/02 21:28:35 by mrezki            #+#    #+#             */
-/*   Updated: 2024/07/05 11:07:08 by yel-yaqi         ###   ########.fr       */
+/*   Updated: 2024/07/07 01:02:35 by mrezki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,20 +20,25 @@
  * @env: A pointer to the head of a linked list containing environment variables.
  */
 
-void	add_var_to_env(char *arg, t_envp *env)
+void	add_var_to_env(char *arg, t_envp *env, int join_string)
 {
 	char	*name;
 	char	*value;
 	char	*tname;
 	char	*tvalue;
 
-	tname = ft_substr(arg, 0, first_occur(arg, '='));
+	if (join_string)
+		tname = ft_substr(arg, 0, first_occur(arg, '+'));
+	else
+		tname = ft_substr(arg, 0, first_occur(arg, '='));
 	tvalue = ft_substr(arg, first_occur(arg, '=') + 1, ft_strlen(arg));
 	name = ft_strdup(tname);
 	value = ft_strdup(tvalue);
 	free(tname);
 	free(tvalue);
-	if (search_env_name(env, name) != NULL)
+	if (search_env_name(env, name) && join_string)
+		append_to_env(&env, name, value);
+	else if (search_env_name(env, name) && !join_string)
 		change_env_value(&env, name, value);
 	else
 		addnode(&env, name, value);
@@ -48,24 +53,30 @@ void	add_var_to_env(char *arg, t_envp *env)
  *	0 if not.
  */
 
-int	only_chars_nums(char *arg)
+int	only_chars_nums(char *arg, int *join_string)
 {
 	char	*str;
 	int		i;
+	int		err;
 
-	i = 0;
-	str = ft_substr(arg, 0, first_occur(arg, '='));
-	while (str[i])
-	{
-		if (!ft_isalnum(str[i]) && str[i] != '=')
-		{
-			ft_printf(2,
-				"Error: export: '%s': not a valid identifier\n", arg);
-			return (0);
-		}
-		i++;
-	}
-	free(str);
+	i = -1;
+	err = 0;
+	if (count_char(arg, '=') == 0 || arg[0] == '=')
+		str = arg;
+	else
+		str = ft_substr(arg, 0, first_occur(arg, '='));
+	(str[ft_strlen(str) - 1] == '+') && (*join_string = 1);
+	(!ft_isalpha(str[0]) && str[0] != '_' && (err = 1));
+	while (str[++i])
+		if (!ft_isalnum(str[i]) && str[ft_strlen(str) - 1] != '+'
+			&& str[i] != '_')
+			err = 1;
+	if (err)
+		ft_printf(2, "Error: export: '%s' is not a valid identifier\n", str);
+	if (count_char(arg, '=') && arg[0] != '=')
+		free(str);
+	if (err)
+		return (0);
 	return (1);
 }
 
@@ -81,7 +92,7 @@ void	empty_value(t_envp *env, char *str)
 	char	*trimmed_str;
 
 	trimmed_str = ft_strtrim(str, "=");
-	if (!search_env(env, trimmed_str))
+	if (!search_env_name(env, trimmed_str))
 		addnode(&env, trimmed_str, "");
 	else
 		change_env_value(&env, trimmed_str, "");
@@ -89,7 +100,8 @@ void	empty_value(t_envp *env, char *str)
 }
 
 /*
- * export_variables: Processes and exports env.
+ * export_variables: Adds, Updates or append the value of
+ * the environment variable.
  *
  * @args: Arguments passed to export.
  * @env: A pointer to the head of a linked list containing environment variables.
@@ -97,29 +109,27 @@ void	empty_value(t_envp *env, char *str)
 
 void	export_variables(char **args, t_envp *env)
 {
+	int	join_string;
+
+	join_string = 0;
 	while (*args)
 	{
-		if (!only_chars_nums(*args))
+		if (!only_chars_nums(*args, &join_string))
 		{
-			if (!(args + 1))
+			if (!(args + 1) || !(*args))
 				break ;
-			else
-				args++;
 		}
-		if (count_char(*args, '=') == 0)
+		else if (count_char(*args, '=') == 0)
 		{
-			if (search_env_name(env, *args) != NULL)
-				change_env_value(&env, *args, NULL);
-			else
+			if (search_env_name(env, *args) == NULL)
 				addnode(&env, *args, NULL);
 		}
-		else if ((*args)[0] == '=')
-			print_error("not a valid identifier");
 		else if (count_char(*args, '=') == 1
-			&& (*args)[ft_strlen(*args) - 1] == '=')
+			&& (*args)[ft_strlen(*args) - 1] == '='
+			&& !join_string)
 			empty_value(env, *args);
 		else
-			add_var_to_env(*args, env);
+			add_var_to_env(*args, env, join_string);
 		args++;
 	}
 }
