@@ -98,6 +98,7 @@ void	init_envp(char *envp[], t_envp **en)
 		free_split(vals);
 		i++;
 	}
+	change_env_value(&env, "SHELL", "minishell");
 	*en = env;
 }
 

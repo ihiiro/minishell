@@ -66,3 +66,17 @@ int	is_tilde(char *s1, char *s2)
 		return (1);
 	return (0);
 }
+
+int	is_spaces(char *str)
+{
+	int	i;
+
+	i = 0;
+	while (str[i])
+	{
+		if (str[i] != ' ' || str[i] != '\t')
+			return (0);
+		i++;
+	}
+	return (1);
+}

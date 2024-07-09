@@ -40,7 +40,10 @@ char	*add_dir(char *pwd, char *dir)
 	char	*new_value;
 	char	*full_path;
 
-	full_path = ft_strjoin(pwd, "/");
+	if (!ft_strncmp(pwd, "/", 2))
+		full_path = ft_strdup(pwd);
+	else
+		full_path = ft_strjoin(pwd, "/");
 	if (!full_path)
 		return (NULL);
 	new_value = ft_strjoin(full_path, dir);
@@ -144,9 +147,12 @@ int	cd_(char **args, t_envp **env)
 
 	if (!args[0] || is_tilde(args[0], args[1]))
 	{
-		dir = search_env(*env, "HOME");
+		dir = search_env_name(*env, "HOME");
 		if (!dir)
 			return (print_error("HOME is not set"));
+		dir = search_env(*env, "HOME");
+		if (!dir || !dir[0])
+			return (0);
 		if (chdir(dir) < 0)
 			return (print_error("chdir"));
 		dir = ft_strdup(dir);
