@@ -6,7 +6,7 @@
 /*   By: yel-yaqi <yel-yaqi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/29 18:45:07 by mrezki            #+#    #+#             */
-/*   Updated: 2024/07/07 01:03:11 by mrezki           ###   ########.fr       */
+/*   Updated: 2024/07/11 14:56:44 by yel-yaqi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,13 +82,13 @@ void	command_loop(t_envp *envp, char *env[])
 	}
 }
 
-int	main(int argc, char *argv[], char *env[])
-{
-	t_envp	*envp;
-	char	*str;
+// int	main(int argc, char *argv[], char *env[])
+// {
+// 	t_envp	*envp;
+// 	char	*str;
 
-	init_envp(env, &envp);
-	command_loop(envp, env);
-	free_envp(envp);
-	return (0);
-}
+// 	init_envp(env, &envp);
+// 	command_loop(envp, env);
+// 	free_envp(envp);
+// 	return (0);
+// }

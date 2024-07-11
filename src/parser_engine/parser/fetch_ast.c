@@ -6,38 +6,27 @@
 /*   By: yel-yaqi <yel-yaqi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/06 13:42:17 by yel-yaqi          #+#    #+#             */
-/*   Updated: 2024/07/07 12:44:10 by yel-yaqi         ###   ########.fr       */
+/*   Updated: 2024/07/11 14:50:48 by yel-yaqi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
 #include "../../../include/minishell.h"
 
-// static t_ast	*make_root_from_token(t_token *token)
-// {
-// 	t_ast	*root;
-//
-// 	root = NULL;
-// 	if (token)
-// 	{
-// 		root = malloc(sizeof(t_ast));
-// 		root->token = token;
-// 		root->right = NULL;
-// 		root->left = NULL;
-// 	}
-// 	return (root);
-// }
+static t_ast	*make_root_from_token(t_token *token)
+{
+	t_ast	*root;
 
-// static t_ast	*get_redir_subtree(t_token *start)
-// {
-// 	while (start)
-// 	{
-// 		if (is_redir_operator(start) || is_heredoc_operator(start))
-// 			return (start->subtree);
-// 		start = start->next;
-// 	}
-// 	return (NULL);
-// }
+	root = NULL;
+	if (token)
+	{
+		root = malloc(sizeof(t_ast));
+		root->token = token;
+		root->right = NULL;
+		root->left = NULL;
+	}
+	return (root);
+}
 
 static t_ast	*get_redir_subtree(t_token *start)
 {

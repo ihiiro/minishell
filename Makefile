@@ -3,14 +3,14 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: mrezki <mrezki@student.42.fr>              +#+  +:+       +#+         #
+#    By: yel-yaqi <yel-yaqi@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/05 20:21:35 by yel-yaqi          #+#    #+#              #
-#    Updated: 2024/07/07 01:03:16 by mrezki           ###   ########.fr        #
+#    Updated: 2024/07/11 14:56:32 by yel-yaqi         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-CFLAGS			=  -O3 -Wall -Wextra -Werror -g -lreadline -L /Users/mrezki/.brew/opt/readline/lib/
+CFLAGS			=  -O3 -Wall -Wextra -Werror -g -lreadline -L /Users/yel-yaqi/.brew/opt/readline/
 NAME			= minishell
 LIB_DIR			= ./libft
 LIBFT			= $(LIB_DIR)/libft.a
@@ -67,7 +67,7 @@ $(NAME): $(MAIN_OBJ) $(LIBFT)
 	cc $(CFLAGS) $^ -o $@
 
 $(TARGET_TEST): $(ALL_OBJ) $(HEADER) $(LIBFT) Makefile
-	cc $(ALL_OBJ) -g $(LIBFT) -lreadline -o $@
+	cc $(ALL_OBJ) -g $(LIBFT) -lreadline -L/Users/yel-yaqi/.brew/opt/readline/lib -o $@
 
 $(LIBFT):
 	$(MAKE) -C $(LIB_DIR)
