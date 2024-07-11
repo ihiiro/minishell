@@ -6,7 +6,7 @@
 /*   By: yel-yaqi <yel-yaqi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/10 13:07:52 by yel-yaqi          #+#    #+#             */
-/*   Updated: 2024/07/05 13:45:52 by yel-yaqi         ###   ########.fr       */
+/*   Updated: 2024/07/11 18:45:42 by yel-yaqi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ static void	simplify(t_token *para_open, t_token **head)
 	while (skip && skip->type != PARA_CLOSE)
 		skip = skip->next;
 	skip = skip->next;
-	para = malloc(sizeof(t_token));
+	para = gc_malloc(sizeof(t_token));
 	para->type = PARA;
 	para->next = skip;
 	if (skip)

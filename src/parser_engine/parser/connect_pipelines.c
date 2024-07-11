@@ -6,7 +6,7 @@
 /*   By: yel-yaqi <yel-yaqi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 10:40:26 by yel-yaqi          #+#    #+#             */
-/*   Updated: 2024/06/13 01:38:09 by yel-yaqi         ###   ########.fr       */
+/*   Updated: 2024/07/11 18:45:21 by yel-yaqi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 static void	connect_left(t_token *token, t_token *left_child,
 	t_ast *left_pipeline_subtree, t_ast *left_connector_subtree)
 {
-	token->subtree = malloc(sizeof(t_ast));
+	token->subtree = gc_malloc(sizeof(t_ast));
 	token->subtree->token = token;
 	if (left_connector_subtree)
 		token->subtree->left = left_connector_subtree;
@@ -24,7 +24,7 @@ static void	connect_left(t_token *token, t_token *left_child,
 		token->subtree->left = left_pipeline_subtree;
 	else
 	{
-		token->subtree->left = malloc(sizeof(t_ast));
+		token->subtree->left = gc_malloc(sizeof(t_ast));
 		token->subtree->left->token = left_child;
 		token->subtree->left->left = NULL;
 		token->subtree->left->right = NULL;
@@ -40,7 +40,7 @@ static void	connect_right(t_token *token)
 		token->subtree->right = search_token->subtree;
 	else
 	{
-		token->subtree->right = malloc(sizeof(t_ast));
+		token->subtree->right = gc_malloc(sizeof(t_ast));
 		token->subtree->right->token = token->next;
 		token->subtree->right->right = NULL;
 		token->subtree->right->left = NULL;

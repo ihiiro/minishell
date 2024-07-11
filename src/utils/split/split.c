@@ -6,12 +6,12 @@
 /*   By: yel-yaqi <yel-yaqi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/19 19:45:54 by yel-yaqi          #+#    #+#             */
-/*   Updated: 2024/06/24 16:42:33 by yel-yaqi         ###   ########.fr       */
+/*   Updated: 2024/07/11 18:47:13 by yel-yaqi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
-#include "../../include/minishell.h"
+#include "../../../include/minishell.h"
 
 int	in_charset(char c, char *charset)
 {
@@ -66,7 +66,7 @@ static char	*split_strdup(char *str, char *charset)
 		while (str[len] && !in_charset(str[len], charset))
 			len++;
 	}
-	cpy = (char *)malloc(len + 1);
+	cpy = gc_malloc(len + 1);
 	while (i < len)
 	{
 		cpy[i] = *ptr;
@@ -87,7 +87,7 @@ char	**ft_split(char *str, char *charset)
 	new_string = 1;
 	index = 0;
 	i = -1;
-	substrs = (char **)malloc(sizeof(char *)
+	substrs = gc_malloc(sizeof(char *)
 			* count_substrs(str, charset) + sizeof(char *));
 	while (str[++i])
 	{

@@ -6,7 +6,7 @@
 /*   By: yel-yaqi <yel-yaqi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/29 18:45:07 by mrezki            #+#    #+#             */
-/*   Updated: 2024/07/11 14:56:44 by yel-yaqi         ###   ########.fr       */
+/*   Updated: 2024/07/11 16:57:31 by yel-yaqi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,10 @@
 #include <stdlib.h>
 #include <unistd.h>
 
-void	f(void)
-{
-	system("leaks -quiet minishell");
-}
+// void	f(void)
+// {
+// 	system("leaks -quiet minishell");
+// }
 
 /*
  * bash_exe: Executes a command in bash. NOTE for tests.
