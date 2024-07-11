@@ -92,6 +92,7 @@ typedef struct s_token
 typedef struct s_shell
 {
 	t_envp	*env;
+	int		exit_status;
 }		t_shell;
 
 /* minishell */
@@ -121,6 +122,7 @@ t_ast	*fetch_ast(t_token *tokens);
 t_ast	*parse(char *expr);
 
 
+int		check_builtins(char *str, t_envp **env, t_shell *sh);
 int		count_substrs(char *str, char *charset);
 int		is_heredoc_operator(t_token *token);
 int		is_redir_operator(t_token *token);

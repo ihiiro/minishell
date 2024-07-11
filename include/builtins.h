@@ -27,11 +27,10 @@ void	append_to_env(t_envp **env, char *name, char *value);
 void	change_pwds(t_envp **env, char *pwd, char home);
 void	shlvl_check(char *str, t_envp **env);
 void	init_envp(char *envp[], t_envp **en);
-void	exit_(char **strs, t_envp **env);
 
-int		check_builtins(char *str, t_envp **env);
 int		export_(t_envp *env, char **args);
 int		unset_(t_envp **env, char **args);
+int		exit_(char **strs, t_envp **env);
 int		cd_(char **args, t_envp **env);
 int		is_spaces(char *str);
 int		echo_(char **args);
