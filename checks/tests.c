@@ -4,8 +4,6 @@
 #include <readline/readline.h>
 #include "../include/minishell.h"
 
-#include "../not_mine/print_ast.c"
-
 bool	strequal(char *str0, char *str1)
 {
 	int	rslt = strcmp(str0, str1);
@@ -23,6 +21,17 @@ void	in_order(t_ast* root)
 	in_order(root->right);
 	if (root->token)
 		printf("%s\n", root->token->word);
+}
+
+void	rebuild_expr(t_ast *root)
+{
+	if (root)
+	{
+		rebuild_expr(root->left);
+		printf("%s ", root->token->word);
+		rebuild_expr(root->right);
+	}
+	return;
 }
 
 int	main(void)
@@ -268,8 +277,7 @@ int	main(void)
 	while (1)
 	{
 		ast = parse(readline("\033[1;34mtest> \033[0m"));
-		printf("\033[0;32mTree:\033[0m\n");
-		visualize_binary_tree(ast);
+		rebuild_expr(ast);
 		printf("\n");
 		printf("\033[0;32mbottom-top: right-first\033[0m\n");
 		in_order(ast);

@@ -67,7 +67,7 @@ $(NAME): $(MAIN_OBJ) $(LIBFT)
 	cc $(CFLAGS) $^ -o $@
 
 $(TARGET_TEST): $(ALL_OBJ) $(HEADER) $(LIBFT) Makefile
-	cc $(ALL_OBJ) -g $(LIBFT) -lreadline -o $@
+	cc $(ALL_OBJ) -g $(LIBFT) -lreadline -L /Users/mrezki/.brew/opt/readline/lib/ -o $@
 
 $(LIBFT):
 	$(MAKE) -C $(LIB_DIR)

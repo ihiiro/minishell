@@ -55,7 +55,7 @@ void	bash_exe(char *str, char *env[])
 	free(path);
 }
 
-void	command_loop(t_envp *envp, char *env[])
+void	command_loop(t_envp *envp, char *env[], t_shell sh)
 {
 	char	*str;
 	int		sigint;
@@ -76,19 +76,22 @@ void	command_loop(t_envp *envp, char *env[])
 		if (ft_strlen(str) > 0)
 			add_history(str);
 		shlvl_check(str, &envp);
-		check_builtins(str, &envp);
+		check_builtins(str, &envp, &sh);
 		bash_exe(str, env);
+		if (!ft_strncmp(str, "$?", 3))
+			printf("%d\n", sh.exit_status);
 		free(str);
 	}
 }
 
 int	main(int argc, char *argv[], char *env[])
 {
-	t_envp	*envp;
+	t_shell	sh;
 	char	*str;
 
-	init_envp(env, &envp);
-	command_loop(envp, env);
-	free_envp(envp);
+	sh.exit_status = 0;
+	init_envp(env, &sh.env);
+	command_loop(sh.env, env, sh);
+	free_envp(sh.env);
 	return (0);
 }

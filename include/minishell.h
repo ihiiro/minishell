@@ -6,7 +6,7 @@
 /*   By: yel-yaqi <yel-yaqi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/05 18:48:14 by yel-yaqi          #+#    #+#             */
-/*   Updated: 2024/07/07 12:54:00 by yel-yaqi         ###   ########.fr       */
+/*   Updated: 2024/07/08 13:10:59 by yel-yaqi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,7 @@ typedef struct s_token
 	t_ast			*subtree;
 	int				type;
 	int				name;
+	int				state;
 	char			**args;
 	struct s_token	*next;
 	struct s_token	*prev;
@@ -91,6 +92,7 @@ typedef struct s_token
 typedef struct s_shell
 {
 	t_envp	*env;
+	int		exit_status;
 }		t_shell;
 
 /* minishell */
@@ -120,6 +122,7 @@ t_ast	*fetch_ast(t_token *tokens);
 t_ast	*parse(char *expr);
 
 
+int		check_builtins(char *str, t_envp **env, t_shell *sh);
 int		count_substrs(char *str, char *charset);
 int		is_heredoc_operator(t_token *token);
 int		is_redir_operator(t_token *token);
