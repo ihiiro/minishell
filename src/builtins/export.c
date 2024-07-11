@@ -68,8 +68,8 @@ int	only_chars_nums(char *arg, int *join_string)
 	(str[ft_strlen(str) - 1] == '+') && (*join_string = 1);
 	(!ft_isalpha(str[0]) && str[0] != '_' && (err = 1));
 	while (str[++i])
-		if (!ft_isalnum(str[i]) && str[ft_strlen(str) - 1] != '+'
-			&& str[i] != '_')
+		if (!ft_isalnum(str[i]) && str[i] != '_'
+			&& (str[ft_strlen(str) - 1] == '+' && count_char(arg, '=') == 0))
 			err = 1;
 	if (err)
 		ft_printf(2, "Error: export: '%s' is not a valid identifier\n", str);
@@ -107,7 +107,7 @@ void	empty_value(t_envp *env, char *str)
  * @env: A pointer to the head of a linked list containing environment variables.
  */
 
-void	export_variables(char **args, t_envp *env)
+int	export_variables(char **args, t_envp *env)
 {
 	int	join_string;
 
@@ -117,7 +117,7 @@ void	export_variables(char **args, t_envp *env)
 		if (!only_chars_nums(*args, &join_string))
 		{
 			if (!(args + 1) || !(*args))
-				break ;
+				return (1);
 		}
 		else if (count_char(*args, '=') == 0)
 		{
@@ -132,6 +132,7 @@ void	export_variables(char **args, t_envp *env)
 			add_var_to_env(*args, env, join_string);
 		args++;
 	}
+	return (0);
 }
 
 /*
@@ -144,6 +145,7 @@ void	export_variables(char **args, t_envp *env)
  *	export var: sets var with no value (visible in export).
  *	export var=: sets var with empty string (visible in env and export).
  *	export =var: Error.
+ *	export var+=val2: Joins the value of var with val2.
  * @env: A pointer to the head of linked list envirement variable.
  * @args: List of arguments passed to export.
  *
@@ -161,12 +163,12 @@ int	export_(t_envp *env, char **args)
 		{
 			if (!head->value)
 				printf("declare -x %s\n", head->name);
-			else
+			else if (head->name)
 				printf("declare -x %s=\"%s\"\n", head->name, head->value);
 			head = head->next;
 		}
 	}
 	else
-		export_variables(args, env);
+		return (export_variables(args, env));
 	return (0);
 }

@@ -31,7 +31,7 @@ void	exit_(char **strs, t_envp **env);
 
 int		check_builtins(char *str, t_envp **env);
 int		export_(t_envp *env, char **args);
-int		unset_(t_envp *env, char **args);
+int		unset_(t_envp **env, char **args);
 int		cd_(char **args, t_envp **env);
 int		is_spaces(char *str);
 int		echo_(char **args);

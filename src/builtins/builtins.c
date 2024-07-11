@@ -42,7 +42,7 @@ int	check_builtins(char *str, t_envp **envp)
 	else if (!ft_strcmp(strs[0], "export"))
 		export_(*envp, ++strs);
 	else if (!ft_strcmp(strs[0], "unset"))
-		unset_(*envp, ++strs);
+		unset_(envp, ++strs);
 	else if (!ft_strcmp(strs[0], "leaks"))
 		system("leaks -quiet minishell");
 	free_split(head);
