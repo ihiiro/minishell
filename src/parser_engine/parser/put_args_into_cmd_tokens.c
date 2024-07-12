@@ -6,7 +6,7 @@
 /*   By: yel-yaqi <yel-yaqi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/06 16:06:58 by yel-yaqi          #+#    #+#             */
-/*   Updated: 2024/07/07 12:12:59 by yel-yaqi         ###   ########.fr       */
+/*   Updated: 2024/07/12 12:24:09 by yel-yaqi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ void	put_args_into_cmd_tokens(t_token *tokens)
 		if (tokens->type == COMMAND)
 		{
 			arg_count = count_args(tokens);
-			tokens->args = malloc(sizeof(char *) * (arg_count + 1));
+			tokens->args = gc_malloc(sizeof(char *) * (arg_count + 1), COLLECT);
 			fill(tokens->args, tokens);
 		}
 		tokens = tokens->next;

@@ -34,8 +34,24 @@ void	rebuild_expr(t_ast *root)
 	return;
 }
 
+void	g()
+{
+	system("leaks test");
+}
+
 int	main(void)
 {
+	atexit(g);
+	//
+
+	// parse("OMEGA | (A && b > c || d | > f && g | < h) > z << d | (G > F < D | < file0 X) > DELTA");
+	// gc_malloc(1, );
+	// while (1);
+
+
+
+
+	//
 
 	printf("\n#0 TOKENIZER-TYPES:\n");
 	char	**word_list = ft_split(" a -l -a&&( b||c -ba | ( f -l	-d -x && g ) )  | d > e	", "	 ");
@@ -276,10 +292,15 @@ int	main(void)
 	printf("PROMPT LOOP FOR DYNAMIC TESTING:\n\n");
 	while (1)
 	{
-		ast = parse(readline("\033[1;34mtest> \033[0m"));
+		char *str = readline("\033[1;34mtest> \033[0m");
+		ast = parse(str);
+		if (!ft_strncmp(str, "exit", 5))
+			exit(0);
+		free(str);
 		rebuild_expr(ast);
 		printf("\n");
 		printf("\033[0;32mbottom-top: right-first\033[0m\n");
 		in_order(ast);
 	}
+	gc_malloc(NO_SIZE, CLEAR);
 }

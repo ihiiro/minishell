@@ -6,7 +6,7 @@
 /*   By: yel-yaqi <yel-yaqi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/05 18:48:14 by yel-yaqi          #+#    #+#             */
-/*   Updated: 2024/07/08 13:10:59 by yel-yaqi         ###   ########.fr       */
+/*   Updated: 2024/07/12 12:22:37 by yel-yaqi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,8 +42,12 @@
 # define BACKWARDS 0
 # define FORWARDS 1
 
-/* types */
+/* garbage collector defines */
+# define NO_SIZE 0
+# define CLEAR 0
+# define COLLECT 1
 
+/* types */
 # define NOTHING_TYPED -1
 # define OPERATOR 0
 # define COMMAND 1
@@ -56,7 +60,6 @@
 # define LIMITER 8
 
 /* names */
-
 # define NONE -1
 # define AND 0
 # define OR 1
@@ -69,6 +72,12 @@
 # define LIMITER 8
 
 struct	s_token;
+
+typedef struct s_gc
+{
+	void		*garbage;
+	struct s_gc	*next;
+}		t_gc;
 
 typedef struct s_token
 {
@@ -90,8 +99,7 @@ typedef struct s_shell
 	int		exit_status;
 }		t_shell;
 
-/* minishell */
-
+/* parser */
 void	count_quoted_len(char *str, int *len, char *charset);
 void	tokenize(char **word_list, t_token **token_list);
 void	build_simple(t_token *token, t_token *cmd);
@@ -116,13 +124,15 @@ t_token	*init_node(char *word);
 t_ast	*fetch_ast(t_token *tokens);
 t_ast	*parse(char *expr);
 
-
 int		check_builtins(char *str, t_envp **env, t_shell *sh);
 int		count_substrs(char *str, char *charset);
 int		is_heredoc_operator(t_token *token);
 int		is_redir_operator(t_token *token);
 int		build_pipelines(t_token *token);
 int		is_operator(char *word);
+
+/* garbage collector */
+void	*gc_malloc(size_t size, int lever);
 
 /* libft */
 char	*ft_substr(char const *s, unsigned int start, size_t len);

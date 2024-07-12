@@ -15,10 +15,10 @@
 #include <stdlib.h>
 #include <unistd.h>
 
-void	f(void)
-{
-	system("leaks -quiet minishell");
-}
+// void	f(void)
+// {
+// 	system("leaks -quiet minishell");
+// }
 
 /*
  * bash_exe: Executes a command in bash. NOTE for tests.
@@ -86,14 +86,13 @@ void	command_loop(t_envp *envp, char *env[], t_shell sh)
 	}
 }
 
-int	main(int argc, char *argv[], char *env[])
-{
-	t_shell	sh;
-	char	*str;
+// int	main(int argc, char *argv[], char *env[])
+// {
+// 	t_envp	*envp;
+// 	char	*str;
 
-	sh.exit_status = 0;
-	init_envp(env, &sh.env);
-	command_loop(sh.env, env, sh);
-	free_envp(sh.env);
-	return (0);
-}
+// 	init_envp(env, &envp);
+// 	command_loop(envp, env);
+// 	free_envp(envp);
+// 	return (0);
+// }

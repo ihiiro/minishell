@@ -3,14 +3,14 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: mrezki <mrezki@student.42.fr>              +#+  +:+       +#+         #
+#    By: yel-yaqi <yel-yaqi@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/05 20:21:35 by yel-yaqi          #+#    #+#              #
 #    Updated: 2024/07/08 05:09:07 by mrezki           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-CFLAGS			=  -O3 -Wall -Wextra -Werror -g -lreadline -L /Users/mrezki/.brew/opt/readline/lib/
+CFLAGS			=  -O3 -Wall -Wextra -Werror -g -lreadline -L /Users/yel-yaqi/.brew/opt/readline/
 NAME			= minishell
 LIB_DIR			= ./libft
 LIBFT			= $(LIB_DIR)/libft.a
@@ -31,10 +31,11 @@ MAIN_SOURCES 		= src/parser_engine/tokenizer/tokenize.c \
 			src/parser_engine/parser/build_list.c \
 			src/parser_engine/parser/put_args_into_cmd_tokens.c \
 			src/parser_engine/parse.c \
-			src/split/split.c src/split/strlen.c \
-			src/split/substr.c src/split/strdup.c \
-			src/split/strlcpy.c src/split/strchr.c\
-			src/split/quoted.c src/list.c \
+			src/utils/gc.c \
+			src/utils/split/split.c src/utils/split/strlen.c \
+			src/utils/split/substr.c src/utils/split/strdup.c \
+			src/utils/split/strlcpy.c src/utils/split/strchr.c\
+			src/utils/split/quoted.c src/list.c \
 			src/minishell_.c src/builtins/echo.c \
 			src/builtins/builtins.c src/builtins/cd.c \
 			src/builtins/env.c src/builtins/pwd.c src/builtins/export.c \
@@ -67,7 +68,7 @@ $(NAME): $(MAIN_OBJ) $(LIBFT)
 	cc $(CFLAGS) $^ -o $@
 
 $(TARGET_TEST): $(ALL_OBJ) $(HEADER) $(LIBFT) Makefile
-	cc $(ALL_OBJ) -g $(LIBFT) -lreadline -L /Users/mrezki/.brew/opt/readline/lib/ -o $@
+	cc $(ALL_OBJ) -g $(LIBFT) -lreadline -L/Users/yel-yaqi/.brew/opt/readline/lib -o $@
 
 $(LIBFT):
 	$(MAKE) -C $(LIB_DIR)

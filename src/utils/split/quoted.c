@@ -6,11 +6,11 @@
 /*   By: yel-yaqi <yel-yaqi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 16:34:01 by yel-yaqi          #+#    #+#             */
-/*   Updated: 2024/06/24 16:42:48 by yel-yaqi         ###   ########.fr       */
+/*   Updated: 2024/07/11 16:44:54 by yel-yaqi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/minishell.h"
+#include "../../../include/minishell.h"
 
 void	skip_quoted(char *str, int *i)
 {
