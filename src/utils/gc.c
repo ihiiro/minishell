@@ -6,18 +6,31 @@
 /*   By: yel-yaqi <yel-yaqi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/11 15:32:33 by yel-yaqi          #+#    #+#             */
-/*   Updated: 2024/07/11 18:54:56 by yel-yaqi         ###   ########.fr       */
+/*   Updated: 2024/07/12 12:19:11 by yel-yaqi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
+
+static void	clear_list(t_gc *gl)
+{
+	t_gc	*tmp;
+
+	while (gl)
+	{
+		tmp = gl->next;
+		free(gl->garbage);
+		free(gl);
+		gl = tmp;
+	}
+}
 
 static void	*add_to_garbage_list(t_gc **gl, void *mem)
 {
 	t_gc	*ptr;
 
 	if (!mem)
-		return (NULL);
+		return (clear_list(*gl), NULL);
 	if (!*gl)
 	{
 		*gl = malloc(sizeof(t_gc));
@@ -33,22 +46,28 @@ static void	*add_to_garbage_list(t_gc **gl, void *mem)
 			ptr = ptr->next;
 		ptr->next = malloc(sizeof(t_gc));
 		if (!ptr->next)
-			return (NULL);
+			return (clear_list(*gl), NULL);
 		ptr->next->garbage = mem;
 		ptr->next->next = NULL;
 	}
 	return (mem);
 }
 
-void	*gc_malloc(size_t size)
+void	*gc_malloc(size_t size, int lever)
 {
 	static t_gc	*garbage_list;
 	void		*mem;
 
-	mem = malloc(size);
-	if (!mem)
-		return (NULL);
-	if (!add_to_garbage_list(&garbage_list, mem))
-		return (NULL);
+	mem = NULL;
+	if (!lever)
+		clear_list(garbage_list);
+	else
+	{
+		mem = malloc(size);
+		if (!mem)
+			return (clear_list(garbage_list), NULL);
+		if (!add_to_garbage_list(&garbage_list, mem))
+			return (clear_list(garbage_list), NULL);
+	}
 	return (mem);
 }

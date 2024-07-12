@@ -34,19 +34,18 @@ void	rebuild_expr(t_ast *root)
 	return;
 }
 
-void	f()
+void	g()
 {
-	// gc_malloc(1, 0);
 	system("leaks test");
 }
 
 int	main(void)
 {
-	atexit(f);
+	atexit(g);
 	//
 
 	// parse("OMEGA | (A && b > c || d | > f && g | < h) > z << d | (G > F < D | < file0 X) > DELTA");
-	// gc_malloc(1, 0);
+	// gc_malloc(1, );
 	// while (1);
 
 
@@ -295,12 +294,13 @@ int	main(void)
 	{
 		char *str = readline("\033[1;34mtest> \033[0m");
 		ast = parse(str);
+		if (!ft_strncmp(str, "exit", 5))
+			exit(0);
 		free(str);
-		if (ast && strequal(ast->token->word, "leaks"))
-			f();
 		rebuild_expr(ast);
 		printf("\n");
 		printf("\033[0;32mbottom-top: right-first\033[0m\n");
 		in_order(ast);
 	}
+	gc_malloc(NO_SIZE, CLEAR);
 }

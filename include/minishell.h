@@ -6,7 +6,7 @@
 /*   By: yel-yaqi <yel-yaqi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/05 18:48:14 by yel-yaqi          #+#    #+#             */
-/*   Updated: 2024/07/11 18:42:42 by yel-yaqi         ###   ########.fr       */
+/*   Updated: 2024/07/12 12:22:37 by yel-yaqi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,11 @@
 
 # define BACKWARDS 0
 # define FORWARDS 1
+
+/* garbage collector defines */
+# define NO_SIZE 0
+# define CLEAR 0
+# define COLLECT 1
 
 /* types */
 # define NOTHING_TYPED -1
@@ -129,7 +134,7 @@ int		build_pipelines(t_token *token);
 int		is_operator(char *word);
 
 /* garbage collector */
-void	*gc_malloc(size_t size);
+void	*gc_malloc(size_t size, int lever);
 
 /* libft */
 char	*ft_substr(char const *s, unsigned int start, size_t len);

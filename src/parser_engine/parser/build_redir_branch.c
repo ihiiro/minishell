@@ -6,7 +6,7 @@
 /*   By: yel-yaqi <yel-yaqi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/04 18:19:27 by yel-yaqi          #+#    #+#             */
-/*   Updated: 2024/07/11 18:44:38 by yel-yaqi         ###   ########.fr       */
+/*   Updated: 2024/07/12 12:23:38 by yel-yaqi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,11 +28,11 @@ static t_ast	*get_redir_tree_tail(t_token *tokens)
 
 void	build_compound(t_token *token, int marker)
 {
-	token->subtree = gc_malloc(sizeof(t_ast));
+	token->subtree = gc_malloc(sizeof(t_ast), COLLECT);
 	token->subtree->token = token;
 	if (marker)
 	{
-		token->subtree->left = gc_malloc(sizeof(t_ast));
+		token->subtree->left = gc_malloc(sizeof(t_ast), COLLECT);
 		if (token->next && token->next->next
 			&& token->next->next->type == COMMAND)
 		{
@@ -45,7 +45,7 @@ void	build_compound(t_token *token, int marker)
 	}
 	else
 		token->subtree->left = get_redir_tree_tail(token->next);
-	token->subtree->right = gc_malloc(sizeof(t_ast));
+	token->subtree->right = gc_malloc(sizeof(t_ast), COLLECT);
 	token->subtree->right->token = token->next;
 	token->subtree->right->left = NULL;
 	token->subtree->right->right = NULL;
@@ -53,18 +53,18 @@ void	build_compound(t_token *token, int marker)
 
 void	build_simple(t_token *token, t_token *cmd)
 {
-	token->subtree = gc_malloc(sizeof(t_ast));
+	token->subtree = gc_malloc(sizeof(t_ast), COLLECT);
 	token->subtree->token = token;
 	if (cmd->type == PARA)
 		token->subtree->left = cmd->subtree;
 	else
 	{
-		token->subtree->left = gc_malloc(sizeof(t_ast));
+		token->subtree->left = gc_malloc(sizeof(t_ast), COLLECT);
 		token->subtree->left->token = cmd;
 		token->subtree->left->left = NULL;
 		token->subtree->left->right = NULL;
 	}
-	token->subtree->right = gc_malloc(sizeof(t_ast));
+	token->subtree->right = gc_malloc(sizeof(t_ast), COLLECT);
 	token->subtree->right->token = token->next;
 	token->subtree->right->left = NULL;
 	token->subtree->right->right = NULL;

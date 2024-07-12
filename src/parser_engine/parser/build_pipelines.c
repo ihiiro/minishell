@@ -6,7 +6,7 @@
 /*   By: yel-yaqi <yel-yaqi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 15:39:21 by yel-yaqi          #+#    #+#             */
-/*   Updated: 2024/07/11 18:44:52 by yel-yaqi         ###   ########.fr       */
+/*   Updated: 2024/07/12 12:23:30 by yel-yaqi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,8 +46,8 @@ static void	build(t_token *token, int *checksum)
 {
 	t_token	*search_token;
 
-	token->subtree = gc_malloc(sizeof(t_ast));
-	token->subtree->left = gc_malloc(sizeof(t_ast));
+	token->subtree = gc_malloc(sizeof(t_ast), COLLECT);
+	token->subtree->left = gc_malloc(sizeof(t_ast), COLLECT);
 	token->subtree->token = token;
 	token->subtree->left->token = search(token->prev, NOT_OP, BACKWARDS);
 	token->subtree->left->left = NULL;
@@ -60,7 +60,7 @@ static void	build(t_token *token, int *checksum)
 		token->subtree->right = search_token->subtree;
 	else
 	{
-		token->subtree->right = gc_malloc(sizeof(t_ast));
+		token->subtree->right = gc_malloc(sizeof(t_ast), COLLECT);
 		token->subtree->right->token = token->next;
 		token->subtree->right->left = NULL;
 		token->subtree->right->right = NULL;

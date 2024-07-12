@@ -6,7 +6,7 @@
 /*   By: yel-yaqi <yel-yaqi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/06 13:42:17 by yel-yaqi          #+#    #+#             */
-/*   Updated: 2024/07/11 18:45:37 by yel-yaqi         ###   ########.fr       */
+/*   Updated: 2024/07/12 12:23:53 by yel-yaqi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ static t_ast	*make_root_from_token(t_token *token)
 	root = NULL;
 	if (token)
 	{
-		root = gc_malloc(sizeof(t_ast));
+		root = gc_malloc(sizeof(t_ast), COLLECT);
 		root->token = token;
 		root->right = NULL;
 		root->left = NULL;

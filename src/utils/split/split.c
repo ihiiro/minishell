@@ -6,7 +6,7 @@
 /*   By: yel-yaqi <yel-yaqi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/19 19:45:54 by yel-yaqi          #+#    #+#             */
-/*   Updated: 2024/07/11 18:47:13 by yel-yaqi         ###   ########.fr       */
+/*   Updated: 2024/07/12 12:24:27 by yel-yaqi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ static char	*split_strdup(char *str, char *charset)
 		while (str[len] && !in_charset(str[len], charset))
 			len++;
 	}
-	cpy = gc_malloc(len + 1);
+	cpy = gc_malloc(len + 1, COLLECT);
 	while (i < len)
 	{
 		cpy[i] = *ptr;
@@ -88,7 +88,7 @@ char	**ft_split(char *str, char *charset)
 	index = 0;
 	i = -1;
 	substrs = gc_malloc(sizeof(char *)
-			* count_substrs(str, charset) + sizeof(char *));
+			* count_substrs(str, charset) + sizeof(char *), COLLECT);
 	while (str[++i])
 	{
 		if (!in_charset(str[i], charset) && new_string)
