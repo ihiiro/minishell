@@ -1,24 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   unset_append.c                                     :+:      :+:    :+:   */
+/*   traverse.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mrezki <mrezki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/07/07 01:02:45 by mrezki            #+#    #+#             */
-/*   Updated: 2024/07/08 05:08:47 by mrezki           ###   ########.fr       */
+/*   Created: 2024/07/12 09:51:22 by mrezki            #+#    #+#             */
+/*   Updated: 2024/07/12 09:51:23 by mrezki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-void	append_to_env(t_envp **env, char *name, char *value)
+void	traverse_tree(t_ast *ast)
 {
-	char	*new_env;
-	char	*tmp;
-
-	tmp = search_env(*env, name);
-	new_env = ft_strjoin(tmp, value);
-	change_env_value(env, name, new_env);
-	free(new_env);
+	int	count_oper;
+	
+	count_oper = 0;
+	if (!ast)
+		return ;
+	while (ast)
+	{
+		printf("%s\n", ast->token->word);
+		if (ast->token->name == OR || ast->token->name == AND)
+			count_oper++;
+		ast = ast->left;
+	}
+	printf("%d\n", count_oper);
 }

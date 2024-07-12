@@ -6,7 +6,7 @@
 /*   By: mrezki <mrezki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/02 18:09:27 by mrezki            #+#    #+#             */
-/*   Updated: 2024/07/07 01:05:12 by mrezki           ###   ########.fr       */
+/*   Updated: 2024/07/08 05:09:18 by mrezki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,9 +29,8 @@ void	shlvl_check(char *str, t_envp **env);
 void	init_envp(char *envp[], t_envp **en);
 void	exit_(char **strs, t_envp **env);
 
-int		check_builtins(char *str, t_envp **env);
 int		export_(t_envp *env, char **args);
-int		unset_(t_envp *env, char **args);
+int		unset_(t_envp **env, char **args);
 int		cd_(char **args, t_envp **env);
 int		is_spaces(char *str);
 int		echo_(char **args);

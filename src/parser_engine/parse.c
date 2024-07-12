@@ -26,9 +26,5 @@ t_ast	*parse(char *expr)
 	tokens = simplify_para(tokens);
 	build_list(tokens);
 	connect_para(tokens);
-	printf("\033[0;32mflattened list:\033[0m\n");
-	for (t_token *ptr = tokens; ptr; ptr = ptr->next)
-		printf("%s ", ptr->word);
-	printf("\n\n");
 	return (fetch_ast(tokens));
 }

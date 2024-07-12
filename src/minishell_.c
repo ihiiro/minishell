@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yel-yaqi <yel-yaqi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mrezki <mrezki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/29 18:45:07 by mrezki            #+#    #+#             */
-/*   Updated: 2024/07/11 16:57:31 by yel-yaqi         ###   ########.fr       */
+/*   Updated: 2024/07/08 05:08:56 by mrezki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ void	bash_exe(char *str, char *env[])
 	free(path);
 }
 
-void	command_loop(t_envp *envp, char *env[])
+void	command_loop(t_envp *envp, char *env[], t_shell sh)
 {
 	char	*str;
 	int		sigint;
@@ -75,9 +75,13 @@ void	command_loop(t_envp *envp, char *env[])
 		}
 		if (ft_strlen(str) > 0)
 			add_history(str);
+		sh.ast = parse(str);
+		traverse_tree(sh.ast);
 		shlvl_check(str, &envp);
-		check_builtins(str, &envp);
+		check_builtins(str, &envp, &sh);
 		bash_exe(str, env);
+		if (!ft_strncmp(str, "$?", 3))
+			printf("%d\n", sh.exit_status);
 		free(str);
 	}
 }

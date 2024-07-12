@@ -1,24 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   unset_append.c                                     :+:      :+:    :+:   */
+/*   ast_operators.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mrezki <mrezki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/07/07 01:02:45 by mrezki            #+#    #+#             */
-/*   Updated: 2024/07/08 05:08:47 by mrezki           ###   ########.fr       */
+/*   Created: 2024/07/12 09:54:03 by mrezki            #+#    #+#             */
+/*   Updated: 2024/07/12 09:54:04 by mrezki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/minishell.h"
+#ifndef AST_OPERATORS_H
+# define AST_OPERATORS_H
 
-void	append_to_env(t_envp **env, char *name, char *value)
+typedef struct s_ast
 {
-	char	*new_env;
-	char	*tmp;
+	struct s_token	*token;
+	struct s_ast	*left;
+	struct s_ast	*right;
+}				t_ast;
 
-	tmp = search_env(*env, name);
-	new_env = ft_strjoin(tmp, value);
-	change_env_value(env, name, new_env);
-	free(new_env);
-}
+void	traverse_tree(t_ast *ast);
+
+#endif // !AST_OPERATORS_H

@@ -37,6 +37,7 @@
 
 # include "../libft/libft.h"
 # include "builtins.h"
+# include "ast_operators.h"
 
 # define BACKWARDS 0
 # define FORWARDS 1
@@ -78,19 +79,13 @@ typedef struct s_gc
 	struct s_gc	*next;
 }		t_gc;
 
-typedef struct s_ast
-{
-	struct s_token	*token;
-	struct s_ast	*left;
-	struct s_ast	*right;
-}				t_ast;
-
 typedef struct s_token
 {
 	char			*word;
 	t_ast			*subtree;
 	int				type;
 	int				name;
+	int				state;
 	char			**args;
 	struct s_token	*next;
 	struct s_token	*prev;
@@ -100,6 +95,8 @@ typedef struct s_token
 typedef struct s_shell
 {
 	t_envp	*env;
+	t_ast	*ast;
+	int		exit_status;
 }		t_shell;
 
 /* parser */
@@ -127,6 +124,7 @@ t_token	*init_node(char *word);
 t_ast	*fetch_ast(t_token *tokens);
 t_ast	*parse(char *expr);
 
+int		check_builtins(char *str, t_envp **env, t_shell *sh);
 int		count_substrs(char *str, char *charset);
 int		is_heredoc_operator(t_token *token);
 int		is_redir_operator(t_token *token);

@@ -6,7 +6,7 @@
 #    By: yel-yaqi <yel-yaqi@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/05 20:21:35 by yel-yaqi          #+#    #+#              #
-#    Updated: 2024/07/11 16:39:39 by yel-yaqi         ###   ########.fr        #
+#    Updated: 2024/07/08 05:09:07 by mrezki           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -41,7 +41,7 @@ MAIN_SOURCES 		= src/parser_engine/tokenizer/tokenize.c \
 			src/builtins/env.c src/builtins/pwd.c src/builtins/export.c \
 			src/builtins/unset.c src/builtins/exit.c src/utils/free.c \
 			src/utils/envp_list.c src/utils/char_utils.c src/builtins/unset_append.c \
-			src/builtins/env_shlvl.c src/signal.c
+			src/builtins/env_shlvl.c src/signal.c src/exec/traverse.c
 
 ALL_SOURCES = $(MAIN_SOURCES) $(TARGET_TEST_SOURCES)
 

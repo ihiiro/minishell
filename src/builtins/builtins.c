@@ -6,25 +6,25 @@
 /*   By: mrezki <mrezki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/02 18:09:06 by mrezki            #+#    #+#             */
-/*   Updated: 2024/07/02 18:09:08 by mrezki           ###   ########.fr       */
+/*   Updated: 2024/07/08 05:08:09 by mrezki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-void	builtins_(t_envp **envp, char **strs)
+void	builtins_(t_envp **envp, char **strs, t_shell *sh)
 {
 	if (!ft_strcmp(strs[0], "cd"))
-		cd_(++strs, envp);
+		sh->exit_status = cd_(++strs, envp);
 	else if (!ft_strcmp(strs[0], "pwd"))
-		pwd_(*envp);
+		sh->exit_status = pwd_(*envp);
 	else if (!ft_strcmp(strs[0], "env"))
-		env_(*envp);
+		sh->exit_status = env_(*envp);
 	else if (!ft_strcmp(strs[0], "exit"))
 		exit_(strs, envp);
 }
 
-int	check_builtins(char *str, t_envp **envp)
+int	check_builtins(char *str, t_envp **envp, t_shell *sh)
 {
 	char	**strs;
 	char	**head;
@@ -36,15 +36,15 @@ int	check_builtins(char *str, t_envp **envp)
 		ft_printf(2, "Error: Allocation failed\n");
 	if (!strs[0])
 		return (0);
-	builtins_(envp, strs);
+	builtins_(envp, strs, sh);
 	if (!ft_strcmp(strs[0], "echo"))
-		echo_(++strs);
+		sh->exit_status = echo_(++strs);
 	else if (!ft_strcmp(strs[0], "export"))
-		export_(*envp, ++strs);
+		sh->exit_status = export_(*envp, ++strs);
 	else if (!ft_strcmp(strs[0], "unset"))
-		unset_(*envp, ++strs);
+		sh->exit_status = unset_(envp, ++strs);
 	else if (!ft_strcmp(strs[0], "leaks"))
-		system("leaks -quiet minishell");
+		sh->exit_status = system("leaks -quiet minishell");
 	free_split(head);
 	return (1);
 }

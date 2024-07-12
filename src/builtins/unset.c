@@ -6,7 +6,7 @@
 /*   By: mrezki <mrezki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/02 21:28:42 by mrezki            #+#    #+#             */
-/*   Updated: 2024/07/07 01:03:07 by mrezki           ###   ########.fr       */
+/*   Updated: 2024/07/08 05:08:50 by mrezki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,7 +136,7 @@ int	node_position(t_envp *env, char *name)
  *	1 on failure.
  */
 
-int	unset_(t_envp *env, char **args)
+int	unset_(t_envp **env, char **args)
 {
 	int	i;
 	int	err;
@@ -151,8 +151,8 @@ int	unset_(t_envp *env, char **args)
 				"Error: unset: '%s' not a valid identifier\n", args[i]);
 			err = 1;
 		}
-		if (search_env_name(env, args[i]) != NULL)
-			remove_node(&env, args[i], node_position(env, args[i]));
+		if (search_env_name(*env, args[i]) != NULL)
+			remove_node(env, args[i], node_position(*env, args[i]));
 		i++;
 	}
 	if (err)
