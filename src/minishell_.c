@@ -75,6 +75,8 @@ void	command_loop(t_envp *envp, char *env[], t_shell sh)
 		}
 		if (ft_strlen(str) > 0)
 			add_history(str);
+		sh.ast = parse(str);
+		traverse_tree(sh.ast);
 		shlvl_check(str, &envp);
 		check_builtins(str, &envp, &sh);
 		bash_exe(str, env);

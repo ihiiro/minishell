@@ -21,7 +21,7 @@ void	builtins_(t_envp **envp, char **strs, t_shell *sh)
 	else if (!ft_strcmp(strs[0], "env"))
 		sh->exit_status = env_(*envp);
 	else if (!ft_strcmp(strs[0], "exit"))
-		sh->exit_status = exit_(strs, envp);
+		exit_(strs, envp);
 }
 
 int	check_builtins(char *str, t_envp **envp, t_shell *sh)

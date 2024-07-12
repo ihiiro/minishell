@@ -37,6 +37,7 @@
 
 # include "../libft/libft.h"
 # include "builtins.h"
+# include "ast_operators.h"
 
 # define BACKWARDS 0
 # define FORWARDS 1
@@ -69,13 +70,6 @@
 
 struct	s_token;
 
-typedef struct s_ast
-{
-	struct s_token	*token;
-	struct s_ast	*left;
-	struct s_ast	*right;
-}				t_ast;
-
 typedef struct s_token
 {
 	char			*word;
@@ -92,6 +86,7 @@ typedef struct s_token
 typedef struct s_shell
 {
 	t_envp	*env;
+	t_ast	*ast;
 	int		exit_status;
 }		t_shell;
 
