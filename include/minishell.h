@@ -6,7 +6,7 @@
 /*   By: yel-yaqi <yel-yaqi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/05 18:48:14 by yel-yaqi          #+#    #+#             */
-/*   Updated: 2024/07/12 12:22:37 by yel-yaqi         ###   ########.fr       */
+/*   Updated: 2024/07/13 08:36:50 by yel-yaqi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ typedef struct s_token
 	t_ast			*subtree;
 	int				type;
 	int				name;
-	int				state;
+	int				subshell;
 	char			**args;
 	struct s_token	*next;
 	struct s_token	*prev;

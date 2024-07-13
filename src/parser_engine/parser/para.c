@@ -6,7 +6,7 @@
 /*   By: yel-yaqi <yel-yaqi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/10 13:07:52 by yel-yaqi          #+#    #+#             */
-/*   Updated: 2024/07/12 12:24:00 by yel-yaqi         ###   ########.fr       */
+/*   Updated: 2024/07/13 09:10:15 by yel-yaqi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ static void	simplify(t_token *para_open, t_token **head)
 	para->word = NULL;
 	para->name = NOT_OP;
 	para->subtree = fetch_ast(para_open);
+	para->subtree->token->subshell = 1;
 	if (para_open->prev)
 		para_open->prev->next = para;
 	else
