@@ -60,7 +60,7 @@ check: $(TARGET_TEST)
 libft: $(LIBFT)
 
 src/%.o: src/%.c $(HEADER) Makefile
-	cc -c $< -o $@
+	cc -c -g $< -o $@
 
 checks/%.o: checks/%.c $(HEADER) Makefile
 	@cc -g -c $< -o $@

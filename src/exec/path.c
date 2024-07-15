@@ -19,27 +19,29 @@ char	*join_path(char *path, char *cmd)
 
 	tmp = ft_strjoin(path, "/");
 	if (!tmp)
-		perror("Malloc");
+		return (perror("Malloc"), NULL);
 	new_path = ft_strjoin(tmp, cmd);
 	if (!new_path)
-		perror("Malloc");
+		return (perror("Malloc"), NULL);
 	free(tmp);
 	return (new_path);
 }
 
-char	*find_path(char *cmd, char *env[], t_shell *sh)
+char	*find_path(char *cmd, char *env[], t_shell *sh, char *path_env)
 {
-	char	*path_env;
 	char	**paths;
 	char	*path;
 	int		i;
 
-	path_env = search_env(sh->env, "PATH");
 	paths = ft_split(path_env, ":");
+	if (!paths)
+		return (perror("Malloc"), NULL);
 	i = 0;
 	while (paths[i])
 	{
 		path = join_path(paths[i], cmd);
+		if (!path)
+			return (NULL);
 		if (!access(path, F_OK))
 			return (free_split(paths), path);
 		free(path);
@@ -57,16 +59,21 @@ int	execute_cmd(char **cmd, char *env[], t_shell *sh)
 
 	path_env = search_env(sh->env, "PATH");
 	if (!path_env)
-		return (print_error(cmd[0], "No such file or directory"), 127);
-	path = find_path(cmd[0], env, sh);
+		return (print_error(cmd[0], MSG_NOFILE), ERR_NOFILE);
+	path = find_path(cmd[0], env, sh, path_env);
 	if (!path)
-		return (print_error(cmd[0], "Command not found"), 127);
+		return (free(path), print_error(cmd[0], MSG_NOCMD), ERR_NOCMD);
 	if (access(path, X_OK) != 0)
-		return (print_error(cmd[0], "Permission denied"), 126);
+		return (free(path), print_error(cmd[0], MSG_NOPERM), ERR_NOPERM);
 	pid = fork();
 	if (!pid)
+	{
 		execve(path, cmd, env);
+		free(path);
+		exit(print_error(cmd[0], "execve"));
+	}
 	else
-		waitpid(pid, &sh->exit_status, 0);
+		if (waitpid(pid, &sh->exit_status, 0) < 0)
+			return (free(path), print_error("waitpid", NULL));
 	return (free(path), WEXITSTATUS(sh->exit_status));
 }
