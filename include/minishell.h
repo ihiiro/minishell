@@ -29,7 +29,7 @@
 # include <readline/readline.h>
 # include <stdlib.h>
 # include <stdio.h>
-# include <fcntl.h>
+# include <sys/fcntl.h>
 # include <sys/wait.h>
 # include <unistd.h>
 # include <signal.h>
@@ -97,7 +97,6 @@ typedef struct s_token
 	t_ast			*subtree;
 	int				type;
 	int				name;
-	int				state;
 	char			**args;
 	struct s_token	*next;
 	struct s_token	*prev;

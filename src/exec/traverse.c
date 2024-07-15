@@ -11,12 +11,13 @@
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
-#include <unistd.h>
 
 void	command(t_ast *ast, t_shell *sh)
 {
 	char	**env;
 
+	if (!ast || ast->token->type != COMMAND)
+		return ;
 	if (is_builtin(ast->token->word))
 		builtins_exe(ast->token->word, ast, sh);
 	else if (!ft_strncmp(ast->token->word, "./minishell", 12))
@@ -96,12 +97,28 @@ void	pipe_operator(t_ast *ast, t_shell *sh)
 	sh->exit_status = WEXITSTATUS(status);
 }
 
+void	redirect_out(t_ast *ast, t_shell *sh)
+{
+	int	fd;
+
+	if (!ast || ast->token->name != REDIR_OUT)
+		return ;
+	fd = open(ast->right->token->word, O_WRONLY | O_CREAT | O_TRUNC, 0644);
+	dup2(fd, STDOUT_FILENO);
+	close(fd);
+	traverse_tree(ast->left, sh);
+}
+
 void	traverse_tree(t_ast *ast, t_shell *sh)
 {
 	if (!ast)
 		return ;
+	int copy = dup(STDOUT_FILENO);
 	and_or_operators(ast, sh);
 	pipe_operator(ast, sh);
+	redirect_out(ast, sh);
 	command(ast, sh);
+	dup2(copy, STDOUT_FILENO);
+	close(copy);
 	return ;
 }
