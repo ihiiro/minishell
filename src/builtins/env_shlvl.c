@@ -40,28 +40,29 @@ char	**copy_env_to_arr(t_envp *env)
 {
 	char	**env_copy;
 	char	*tmp;
-	size_t	len;
 	size_t	i;
 
-	len = env_len(env);
-	env_copy = malloc(sizeof(char *) * (len + 1));
+	env_copy = malloc(sizeof(char *) * (env_len(env) + 1));
 	if (!env_copy)
-		print_error("Allocation failed");
-	i = 0;
-	while (i < len)
+		print_error("Malloc", NULL);
+	i = -1;
+	while (++i < env_len(env))
 	{
 		tmp = ft_strjoin(env->name, "=");
 		if (!tmp)
-			return (NULL);
-		env_copy[i] = ft_strjoin(tmp, env->value);
-		if (!env_copy[i])
-			return (NULL);
-		free(tmp);
+			return (free_split(env_copy), NULL);
+		if (env->value)
+		{
+			env_copy[i] = ft_strjoin(tmp, env->value);
+			free(tmp);
+			if (!env_copy[i])
+				return (free_split(env_copy), NULL);
+		}
+		else
+			env_copy[i] = tmp;
 		env = env->next;
-		i++;
 	}
-	env_copy[len] = NULL;
-	return (env_copy);
+	return (env_copy[i] = NULL, env_copy);
 }
 
 /*
@@ -80,21 +81,17 @@ void	shlvl_check(char *str, t_envp **env)
 	int		shell_level;
 	int		pid;
 
-	if (!ft_strncmp(str, "./minishell",
-			ft_strlen("./minishell") + 1))
-	{
-		shell_level = ft_atoi(search_env(*env, "SHLVL"));
-		new_shlvl = ft_itoa(++shell_level);
-		change_env_value(env, "SHLVL", new_shlvl);
-		pid = fork();
-		args = ft_split(str, " \t");
-		envp = copy_env_to_arr(*env);
-		if (pid == 0)
-			execve("./minishell", &args[1], envp);
-		else
-			wait(NULL);
-		free_split(args);
-		free_split(envp);
-		free(new_shlvl);
-	}
+	shell_level = ft_atoi(search_env(*env, "SHLVL"));
+	new_shlvl = ft_itoa(++shell_level);
+	change_env_value(env, "SHLVL", new_shlvl);
+	pid = fork();
+	args = ft_split(str, " \t");
+	envp = copy_env_to_arr(*env);
+	if (pid == 0)
+		execve("./minishell", &args[1], envp);
+	else
+		wait(NULL);
+	free_split(args);
+	free_split(envp);
+	free(new_shlvl);
 }

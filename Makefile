@@ -10,7 +10,7 @@
 #                                                                              #
 # **************************************************************************** #
 
-CFLAGS			=  -O3 -Wall -Wextra -Werror -g -lreadline -L /Users/yel-yaqi/.brew/opt/readline/
+CFLAGS			=  -O3 -Wall -Wextra -Werror -g -lreadline -L /Users/mrezki/.brew/opt/readline/lib
 NAME			= minishell
 LIB_DIR			= ./libft
 LIBFT			= $(LIB_DIR)/libft.a
@@ -41,7 +41,8 @@ MAIN_SOURCES 		= src/parser_engine/tokenizer/tokenize.c \
 			src/builtins/env.c src/builtins/pwd.c src/builtins/export.c \
 			src/builtins/unset.c src/builtins/exit.c src/utils/free.c \
 			src/utils/envp_list.c src/utils/char_utils.c src/builtins/unset_append.c \
-			src/builtins/env_shlvl.c src/signal.c src/exec/traverse.c
+			src/builtins/env_shlvl.c src/signal.c src/exec/traverse.c \
+			src/exec/path.c
 
 ALL_SOURCES = $(MAIN_SOURCES) $(TARGET_TEST_SOURCES)
 

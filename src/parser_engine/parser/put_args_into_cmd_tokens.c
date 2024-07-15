@@ -35,6 +35,11 @@ static void	fill(char **cmd_args_array, t_token *arg_list)
 	while (arg_list && arg_list->name != AND && arg_list->name != OR
 		&& arg_list->name != PIPE)
 	{
+		if (i == 0)
+		{
+			cmd_args_array[i] = arg_list->word;
+			i++;
+		}
 		if (arg_list->type == ARGUMENT)
 		{
 			cmd_args_array[i] = arg_list->word;
@@ -53,7 +58,7 @@ void	put_args_into_cmd_tokens(t_token *tokens)
 	{
 		if (tokens->type == COMMAND)
 		{
-			arg_count = count_args(tokens);
+			arg_count = count_args(tokens) + 1;
 			tokens->args = gc_malloc(sizeof(char *) * (arg_count + 1), COLLECT);
 			fill(tokens->args, tokens);
 		}

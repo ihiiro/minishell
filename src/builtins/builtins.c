@@ -12,39 +12,50 @@
 
 #include "../../include/minishell.h"
 
-void	builtins_(t_envp **envp, char **strs, t_shell *sh)
+void	builtins_(char *cmd, char **args, t_shell *sh)
 {
-	if (!ft_strcmp(strs[0], "cd"))
-		sh->exit_status = cd_(++strs, envp);
-	else if (!ft_strcmp(strs[0], "pwd"))
-		sh->exit_status = pwd_(*envp);
-	else if (!ft_strcmp(strs[0], "env"))
-		sh->exit_status = env_(*envp);
-	else if (!ft_strcmp(strs[0], "exit"))
-		exit_(strs, envp);
+	if (!ft_strcmp(cmd, "cd"))
+		sh->exit_status = cd_(args, &sh->env);
+	else if (!ft_strcmp(cmd, "pwd"))
+		sh->exit_status = pwd_(sh->env);
+	else if (!ft_strcmp(cmd, "env"))
+		sh->exit_status = env_(sh->env);
+	else if (!ft_strcmp(cmd, "exit"))
+		exit_(args, &sh->env);
 }
 
-int	check_builtins(char *str, t_envp **envp, t_shell *sh)
+void	builtins_exe(char *cmd, t_ast *node, t_shell *sh)
 {
-	char	**strs;
-	char	**head;
+	if (!ft_strcmp(cmd, "echo"))
+		sh->exit_status = echo_(++node->token->args);
+	else if (!ft_strcmp(cmd, "export"))
+		sh->exit_status = export_(sh->env, ++node->token->args);
+	else if (!ft_strcmp(cmd, "unset"))
+		sh->exit_status = unset_(&sh->env, ++node->token->args);
+	else if (!ft_strncmp(cmd, "st", 3))
+		printf("%d\n", sh->exit_status);
+	builtins_(cmd, ++node->token->args, sh);
+}
+
+int	is_builtin(char *str)
+{
+	char	*builtins[9];
 	int		i;
 
-	strs = ft_split(str, " \t");
-	head = strs;
-	if (!strs)
-		ft_printf(2, "Error: Allocation failed\n");
-	if (!strs[0])
+	if (!str)
 		return (0);
-	builtins_(envp, strs, sh);
-	if (!ft_strcmp(strs[0], "echo"))
-		sh->exit_status = echo_(++strs);
-	else if (!ft_strcmp(strs[0], "export"))
-		sh->exit_status = export_(*envp, ++strs);
-	else if (!ft_strcmp(strs[0], "unset"))
-		sh->exit_status = unset_(envp, ++strs);
-	else if (!ft_strcmp(strs[0], "leaks"))
-		sh->exit_status = system("leaks -quiet minishell");
-	free_split(head);
-	return (1);
+	builtins[0] = "echo";
+	builtins[1] = "cd";
+	builtins[2] = "export";
+	builtins[3] = "unset";
+	builtins[4] = "env";
+	builtins[5] = "exit";
+	builtins[6] = "pwd";
+	builtins[7] = "st";
+	builtins[8] = NULL;
+	i = -1;
+	while (builtins[++i])
+		if (!strncmp(str, builtins[i], strlen(builtins[i]) + 1))
+			return (1);
+	return (0);
 }

@@ -16,10 +16,12 @@
  * print_error: prints the error message str.
  */
 
-int	print_error(char *str)
+int	print_error(char *str, char *arg)
 {
-	if (str)
+	if (str && !arg)
 		ft_printf(2, "Error: '%s'\n", str);
+	else if (arg)
+		ft_printf(2, "Error: %s: %s\n", str, arg);
 	else
 		ft_printf(2, "Error\n");
 	return (1);
@@ -110,23 +112,21 @@ int	change_dir(char *pwd, t_envp **env)
 	if (!access(new_dir, F_OK))
 	{
 		if (chdir(new_dir) < 0)
-			return (free(new_dir), print_error("chdir"));
+			return (free(new_dir), print_error("chdir", NULL));
 		change_pwds(env, new_dir, 'd');
 	}
 	else if (ft_strcmp(new_dir, "-") == 0)
 	{
-		dir = ft_strdup(search_env(*env, "OLDPWD"));
+		dir = search_env(*env, "OLDPWD");
 		if (!dir)
-			return (free(new_dir), ft_printf(2,
-					"Error: cd: OLDPWD not set\n"), 1);
+			return (free(new_dir), print_error("cd", "OLDPWD not set"));
 		if (chdir(dir) < 0)
-			print_error("chdir");
+			print_error("chdir", NULL);
 		change_pwds(env, dir, 'd');
 		printf("%s\n", dir);
-		free(dir);
 	}
 	else
-		return (free(new_dir), print_error("cd: no such file or directory"));
+		return (free(new_dir), print_error("cd", "No such file or directory"));
 	return (free(new_dir), 0);
 }
 
@@ -149,19 +149,19 @@ int	cd_(char **args, t_envp **env)
 	{
 		dir = search_env_name(*env, "HOME");
 		if (!dir)
-			return (print_error("HOME is not set"));
+			return (print_error("HOME is not set", NULL));
 		dir = search_env(*env, "HOME");
 		if (!dir || !dir[0])
 			return (0);
 		if (chdir(dir) < 0)
-			return (print_error("chdir"));
+			return (print_error("chdir", NULL));
 		dir = ft_strdup(dir);
 		change_pwds(env, dir, 'h');
 		free(dir);
 		return (0);
 	}
 	if (args[1] && args[0])
-		return (print_error("cd: too many arguments"));
+		return (print_error("cd", "Too many arguments"));
 	else
 		return (change_dir(args[0], env));
 	return (0);

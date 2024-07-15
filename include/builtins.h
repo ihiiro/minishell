@@ -44,14 +44,16 @@ char	*add_dir(char *pwd, char *dir);
 /* Utils */
 
 void	addnode(t_envp **head, char *name, char *value);
+char	**copy_env_to_arr(t_envp *env);
 void	free_split(char **strs);
 void	free_envp(t_envp *head);
 
+int		print_error(char *str, char *arg);
 int		first_occur(char *str, char h);
 int		count_char(char *str, char h);
 int		is_tilde(char *s1, char *s2);
 int		count_dots(char **dirs);
-int		print_error(char *str);
+int		is_builtin(char *str);
 
 t_envp	*create_node(char *name, char *value);
 

@@ -23,6 +23,7 @@ t_ast	*parse(char *expr)
 	name_operators(tokens);
 	type_files_and_limiters(tokens);
 	make_irregular_arguments(tokens);
+	put_args_into_cmd_tokens(tokens);
 	tokens = simplify_para(tokens);
 	build_list(tokens);
 	connect_para(tokens);

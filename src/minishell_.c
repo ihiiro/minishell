@@ -15,46 +15,6 @@
 #include <stdlib.h>
 #include <unistd.h>
 
-// void	f(void)
-// {
-// 	system("leaks -quiet minishell");
-// }
-
-/*
- * bash_exe: Executes a command in bash. NOTE for tests.
- * Usage: run commandss.
- *
- * @str: user prompt.
- * @env: List of environment variables.
- */
-
-void	bash_exe(char *str, char *env[])
-{
-	char	*path;
-	char	**cmds;
-	int		pid;
-
-	cmds = ft_split(str, " \t");
-	if (!cmds)
-		return ;
-	if (!cmds[1])
-		return (free_split(cmds));
-	path = ft_strjoin("/bin/", cmds[1]);
-	if (!ft_strncmp(cmds[0], "run", 4))
-	{
-		if (!access(path, F_OK))
-		{
-			pid = fork();
-			if (pid == 0)
-				execve(path, &cmds[1], env);
-			else
-				wait(NULL);
-		}
-	}
-	free_split(cmds);
-	free(path);
-}
-
 void	command_loop(t_envp *envp, char *env[], t_shell sh)
 {
 	char	*str;
@@ -71,28 +31,25 @@ void	command_loop(t_envp *envp, char *env[], t_shell sh)
 			free(str);
 			str = readline("$> ");
 			if (!str)
-				break ;
+				exit_(NULL, &envp);
 		}
 		if (ft_strlen(str) > 0)
 			add_history(str);
 		sh.ast = parse(str);
-		traverse_tree(sh.ast);
-		shlvl_check(str, &envp);
-		check_builtins(str, &envp, &sh);
-		bash_exe(str, env);
-		if (!ft_strncmp(str, "$?", 3))
-			printf("%d\n", sh.exit_status);
+		traverse_tree(sh.ast, &sh);
+		if (!ft_strncmp(str, "pid", 4))
+			printf("%d\n", getpid());
 		free(str);
 	}
 }
 
-// int	main(int argc, char *argv[], char *env[])
-// {
-// 	t_envp	*envp;
-// 	char	*str;
+int	main(int argc, char *argv[], char *env[])
+{
+	t_shell	sh;
+	char	*str;
 
-// 	init_envp(env, &envp);
-// 	command_loop(envp, env);
-// 	free_envp(envp);
-// 	return (0);
-// }
+	init_envp(env, &sh.env);
+	command_loop(sh.env, env, sh);
+	free_envp(sh.env);
+	return (0);
+}

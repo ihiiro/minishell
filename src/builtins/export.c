@@ -110,15 +110,14 @@ void	empty_value(t_envp *env, char *str)
 int	export_variables(char **args, t_envp *env)
 {
 	int	join_string;
+	int	err;
 
 	join_string = 0;
+	err = 0;
 	while (*args)
 	{
 		if (!only_chars_nums(*args, &join_string))
-		{
-			if (!(args + 1) || !(*args))
-				return (1);
-		}
+			err = 1;
 		else if (count_char(*args, '=') == 0)
 		{
 			if (search_env_name(env, *args) == NULL)
@@ -132,6 +131,8 @@ int	export_variables(char **args, t_envp *env)
 			add_var_to_env(*args, env, join_string);
 		args++;
 	}
+	if (err)
+		return (1);
 	return (0);
 }
 

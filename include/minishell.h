@@ -151,4 +151,10 @@ void	init_signal(int *sigint);
 void	signal_handler(int sig);
 void	disable_echo(void);
 
+/* Execution */
+
+void	builtins_exe(char *cmd, t_ast *node, t_shell *sh);
+void	traverse_tree(t_ast *ast, t_shell *sh);
+int		execute_cmd(char **cmd, char *env[], t_shell *sh);
+
 #endif

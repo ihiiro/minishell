@@ -20,6 +20,4 @@ typedef struct s_ast
 	struct s_ast	*right;
 }				t_ast;
 
-void	traverse_tree(t_ast *ast);
-
 #endif // !AST_OPERATORS_H
