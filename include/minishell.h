@@ -6,7 +6,7 @@
 /*   By: yel-yaqi <yel-yaqi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/05 18:48:14 by yel-yaqi          #+#    #+#             */
-/*   Updated: 2024/07/13 08:36:50 by yel-yaqi         ###   ########.fr       */
+/*   Updated: 2024/07/16 19:17:01 by yel-yaqi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,7 +100,6 @@ typedef struct s_shell
 }		t_shell;
 
 /* parser */
-void	count_quoted_len(char *str, int *len, char *charset);
 void	tokenize(char **word_list, t_token **token_list);
 void	build_simple(t_token *token, t_token *cmd);
 void	build_compound(t_token *token, int marker);
@@ -113,7 +112,6 @@ void	build_redirections(t_token *tokens);
 void	connect_pipelines(t_token *token);
 void	rl_replace_line(char *str, int a);
 void	name_operators(t_token *tokens);
-void	skip_quoted(char *str, int *i);
 void	connect_para(t_token *tokens);
 void	build_list(t_token *start);
 
@@ -129,7 +127,9 @@ int		count_substrs(char *str, char *charset);
 int		is_heredoc_operator(t_token *token);
 int		is_redir_operator(t_token *token);
 int		build_pipelines(t_token *token);
+int		strdup_is_quoted(char c);
 int		is_operator(char *word);
+int		is_quoted(char c);
 
 /* garbage collector */
 void	*gc_malloc(size_t size, int lever);

@@ -6,7 +6,7 @@
 /*   By: yel-yaqi <yel-yaqi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/19 19:45:54 by yel-yaqi          #+#    #+#             */
-/*   Updated: 2024/07/12 12:24:27 by yel-yaqi         ###   ########.fr       */
+/*   Updated: 2024/07/16 19:15:37 by yel-yaqi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,10 +42,10 @@ int	count_substrs(char *str, char *charset)
 			count++;
 			new_string = 0;
 		}
-		else if (in_charset(str[i], charset) && !new_string)
+		if (!is_quoted(str[i]) && in_charset(str[i], charset) && !new_string)
 			new_string = 1;
-		skip_quoted(str, &i);
 	}
+	printf("==%d==\n", count);
 	return (count);
 }
 
@@ -59,12 +59,11 @@ static char	*split_strdup(char *str, char *charset)
 	len = 0;
 	i = 0;
 	ptr = str;
-	if (*str == '"' || *str == '\'')
-		count_quoted_len(str, &len, charset);
-	else
+	while (str[len])
 	{
-		while (str[len] && !in_charset(str[len], charset))
-			len++;
+		if (!strdup_is_quoted(str[len]) && in_charset(str[len], charset))
+			break ;
+		len++;
 	}
 	cpy = gc_malloc(len + 1, COLLECT);
 	while (i < len)
@@ -97,9 +96,8 @@ char	**ft_split(char *str, char *charset)
 			index++;
 			new_string = 0;
 		}
-		else if (in_charset(str[i], charset) && !new_string)
+		if (!is_quoted(str[i]) && in_charset(str[i], charset) && !new_string)
 			new_string = 1;
-		skip_quoted(str, &i);
 	}
 	substrs[index] = 0;
 	return (substrs);
