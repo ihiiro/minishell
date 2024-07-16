@@ -292,15 +292,16 @@ int	main(void)
 	printf("PROMPT LOOP FOR DYNAMIC TESTING:\n\n");
 	while (1)
 	{
-		char *str = readline("\033[1;34mtest> \033[0m");
-		ast = parse(str);
-		if (!ft_strncmp(str, "exit", 5))
-			exit(0);
-		free(str);
-		// rebuild_expr(ast);
-		// printf("\n");
-		// printf("\033[0;32mbottom-top: right-first\033[0m\n");
-		// in_order(ast);
+		ast = build_ast();
+		// char *str = readline("\033[1;34mtest> \033[0m");
+		// ast = parse(str);
+		// if (!ft_strncmp(str, "exit", 5))
+		// 	exit(0);
+		// free(str);
+		rebuild_expr(ast);
+		printf("\n");
+		printf("\033[0;32mbottom-top: right-first\033[0m\n");
+		in_order(ast);
 	}
 	gc_malloc(NO_SIZE, CLEAR);
 }

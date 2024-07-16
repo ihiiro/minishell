@@ -6,7 +6,7 @@
 /*   By: yel-yaqi <yel-yaqi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/05 18:48:14 by yel-yaqi          #+#    #+#             */
-/*   Updated: 2024/07/16 19:17:01 by yel-yaqi         ###   ########.fr       */
+/*   Updated: 2024/07/16 20:03:53 by yel-yaqi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,6 +119,7 @@ t_token	*search(t_token *from, int name, int direction);
 t_token	*simplify_para(t_token *tokens);
 t_token	*init_node(char *word);
 
+t_ast	*build_ast(void);
 t_ast	*fetch_ast(t_token *tokens);
 t_ast	*parse(char *expr);
 
