@@ -10,7 +10,7 @@
 #                                                                              #
 # **************************************************************************** #
 
-CFLAGS			=  -O3 -Wall -Wextra -Werror -g -lreadline -L /Users/mrezki/.brew/opt/readline/lib
+CFLAGS			=  -O3 -Wall -Wextra -Werror -g
 NAME			= minishell
 LIB_DIR			= ./libft
 LIBFT			= $(LIB_DIR)/libft.a
@@ -66,7 +66,7 @@ checks/%.o: checks/%.c $(HEADER) Makefile
 	@cc -g -c $< -o $@
 
 $(NAME): $(MAIN_OBJ) $(LIBFT)
-	cc $(CFLAGS) $^ -o $@
+	cc $(CFLAGS) $^ -o $@  -lreadline
 
 $(TARGET_TEST): $(ALL_OBJ) $(HEADER) $(LIBFT) Makefile
 	cc $(ALL_OBJ) -g $(LIBFT) -lreadline -L/Users/yel-yaqi/.brew/opt/readline/lib -o $@

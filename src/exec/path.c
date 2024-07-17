@@ -33,6 +33,8 @@ char	*find_path(char *cmd, char *env[], t_shell *sh, char *path_env)
 	char	*path;
 	int		i;
 
+	if (cmd[0] == '/')
+		return (cmd);
 	paths = ft_split(path_env, ":");
 	if (!paths)
 		return (perror("Malloc"), NULL);

@@ -12,12 +12,15 @@
 
 #include "../../include/minishell.h"
 
-void	command(t_ast *ast, t_shell *sh)
+void	command(t_ast *ast, t_shell *sh, int fd)
 {
 	char	**env;
 
 	if (!ast || ast->token->type != COMMAND)
 		return ;
+	// int copy = dup(STDIN_FILENO);
+	// if (fd > 0)
+		// dup2(fd, STDIN_FILENO);
 	if (is_builtin(ast->token->word))
 		builtins_exe(ast->token->word, ast, sh);
 	else if (!ft_strncmp(ast->token->word, "./minishell", 12))
@@ -27,8 +30,10 @@ void	command(t_ast *ast, t_shell *sh)
 		env = copy_env_to_arr(sh->env);
 		sh->exit_status = execute_cmd(ast->token->args, env, sh);
 		free_split(env);
-		return ;
 	}
+	// dup2(copy, STDIN_FILENO);
+	// close(copy);
+	// close(fd);
 }
 
 void	and_or_operators(t_ast *ast, t_shell *sh)
@@ -99,26 +104,127 @@ void	pipe_operator(t_ast *ast, t_shell *sh)
 
 void	redirect_out(t_ast *ast, t_shell *sh)
 {
+	char  *file;
 	int	fd;
+	int	fd_out;
 
 	if (!ast || ast->token->name != REDIR_OUT)
 		return ;
-	fd = open(ast->right->token->word, O_WRONLY | O_CREAT | O_TRUNC, 0644);
+	file = ast->right->token->word;
+	fd = open(file, O_WRONLY | O_CREAT | O_TRUNC, 0644);
+	if (fd == -1)
+	{
+		sh->exit_status = print_error(file, MSG_NOPERM);
+		return ;
+	}
+	fd_out = dup(STDOUT_FILENO);
 	dup2(fd, STDOUT_FILENO);
 	close(fd);
 	traverse_tree(ast->left, sh);
+	dup2(fd_out, STDOUT_FILENO);
+	close(fd_out);
+}
+void	redirect_app(t_ast *ast, t_shell *sh)
+{
+	char  *file;
+	int	fd;
+	int	fd_out;
+
+	if (!ast || ast->token->name != REDIR_APP)
+		return ;
+	file = ast->right->token->word;
+	if (access(file, X_OK))
+	{
+		sh->exit_status = print_error(file, MSG_NOPERM);
+		return ;
+	}
+	fd = open(file, O_WRONLY | O_CREAT | O_APPEND, 0644);
+	fd_out = dup(STDOUT_FILENO);
+	dup2(fd, STDOUT_FILENO);
+	close(fd);
+	traverse_tree(ast->left, sh);
+	dup2(fd_out, STDOUT_FILENO);
+	close(fd_out);
+}
+
+int file_is_okay(char *file, int *status)
+{
+	if (access(file, F_OK))
+	{
+		*status = 1;
+		return (print_error(file, MSG_NOFILE), 0);
+	}
+	return (1);
+}
+
+void	redirect_in(t_ast *ast, t_shell *sh)
+{
+	char  *file;
+	int	  fd;
+	int	  fd_in;
+
+	if (!ast || ast->token->name != REDIR_IN)
+		return ;
+	file = ast->right->token->word;
+	if (!file_is_okay(file, &sh->exit_status))
+		return ;
+	fd = open(file, O_RDONLY);
+	fd_in = dup(STDIN_FILENO);
+	dup2(fd, STDIN_FILENO);
+	close(fd);
+	traverse_tree(ast->left, sh);
+	dup2(fd_in, STDIN_FILENO);
+	close(fd_in);
+}
+
+void  here_doc(t_ast *ast, t_shell *sh, int *fd)
+{
+	int fds[2];
+	char  *str;
+
+	if (!ast || ast->token->name != HERE_DOC)
+		return ;
+	if (pipe(fds) < 0)
+	{
+		perror("pipe");
+		return ;
+	}
+	*fd = fds[0];
+	printf("%d %d\n", *fd, fds[0]);
+	while (1)
+	{
+		str = readline("> ");
+		if (!str)
+		{
+			free(str);
+			print_error("warning",
+				"here-document at line 1 delimited by end-of-file (wanted `end')");
+			return ;
+		}
+		if (!ft_strncmp(str, ast->right->token->word, ft_strlen(str) + 1))
+		{
+			free(str);
+			close(fds[1]);
+			traverse_tree(ast->left, sh);
+			return ;
+		}
+		ft_printf(fds[1], "%s\n", str);
+		free(str);
+	}
 }
 
 void	traverse_tree(t_ast *ast, t_shell *sh)
 {
+	static int fd;
+
 	if (!ast)
 		return ;
-	int copy = dup(STDOUT_FILENO);
 	and_or_operators(ast, sh);
 	pipe_operator(ast, sh);
 	redirect_out(ast, sh);
-	command(ast, sh);
-	dup2(copy, STDOUT_FILENO);
-	close(copy);
+	redirect_app(ast, sh);
+	redirect_in(ast, sh);
+	here_doc(ast, sh, &fd);
+	command(ast, sh, fd);
 	return ;
 }

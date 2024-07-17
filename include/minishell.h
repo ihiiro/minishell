@@ -24,6 +24,7 @@
 
  */
 
+# include "/usr/include/readline/readline.h"
 # include <stddef.h>
 # include <readline/history.h>
 # include <readline/readline.h>
@@ -122,7 +123,7 @@ void	append(t_token *node, t_token **list);
 void	connect_redirections(t_token *tokens);
 void	build_redirections(t_token *tokens);
 void	connect_pipelines(t_token *token);
-void	rl_replace_line(char *str, int a);
+// void	rl_replace_line(char *str, int a);
 void	name_operators(t_token *tokens);
 void	skip_quoted(char *str, int *i);
 void	connect_para(t_token *tokens);
