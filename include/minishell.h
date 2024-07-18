@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yel-yaqi <yel-yaqi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mrezki <mrezki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/05 18:48:14 by yel-yaqi          #+#    #+#             */
-/*   Updated: 2024/07/12 12:22:37 by yel-yaqi         ###   ########.fr       */
+/*   Updated: 2024/07/18 11:51:53 by mrezki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,6 @@
 
  */
 
-# include "/usr/include/readline/readline.h"
 # include <stddef.h>
 # include <readline/history.h>
 # include <readline/readline.h>
@@ -37,8 +36,9 @@
 # include <termios.h>
 
 # include "../libft/libft.h"
+# include "structs.h"
 # include "builtins.h"
-# include "ast_operators.h"
+# include "exec.h"
 
 # define BACKWARDS 0
 # define FORWARDS 1
@@ -84,33 +84,6 @@
 # define NOT_OP 7
 # define LIMITER 8
 
-struct	s_token;
-
-typedef struct s_gc
-{
-	void		*garbage;
-	struct s_gc	*next;
-}		t_gc;
-
-typedef struct s_token
-{
-	char			*word;
-	t_ast			*subtree;
-	int				type;
-	int				name;
-	char			**args;
-	struct s_token	*next;
-	struct s_token	*prev;
-	struct s_token	*last;
-}			t_token;
-
-typedef struct s_shell
-{
-	t_envp	*env;
-	t_ast	*ast;
-	int		exit_status;
-}		t_shell;
-
 /* parser */
 void	count_quoted_len(char *str, int *len, char *charset);
 void	tokenize(char **word_list, t_token **token_list);
@@ -123,7 +96,7 @@ void	append(t_token *node, t_token **list);
 void	connect_redirections(t_token *tokens);
 void	build_redirections(t_token *tokens);
 void	connect_pipelines(t_token *token);
-// void	rl_replace_line(char *str, int a);
+void	rl_replace_line(char *str, int a);
 void	name_operators(t_token *tokens);
 void	skip_quoted(char *str, int *i);
 void	connect_para(t_token *tokens);

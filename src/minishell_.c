@@ -6,14 +6,11 @@
 /*   By: mrezki <mrezki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/29 18:45:07 by mrezki            #+#    #+#             */
-/*   Updated: 2024/07/08 05:08:56 by mrezki           ###   ########.fr       */
+/*   Updated: 2024/07/18 11:53:02 by mrezki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
-#include <readline/history.h>
-#include <stdlib.h>
-#include <unistd.h>
 
 void	command_loop(t_envp *envp, char *env[], t_shell sh)
 {
@@ -48,6 +45,7 @@ int	main(int argc, char *argv[], char *env[])
 	t_shell	sh;
 	char	*str;
 
+	sh.doc_file = ".here_doc_tmp.txt";
 	init_envp(env, &sh.env);
 	command_loop(sh.env, env, sh);
 	free_envp(sh.env);

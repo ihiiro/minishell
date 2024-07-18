@@ -3,14 +3,14 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: yel-yaqi <yel-yaqi@student.42.fr>          +#+  +:+       +#+         #
+#    By: mrezki <mrezki@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/05 20:21:35 by yel-yaqi          #+#    #+#              #
-#    Updated: 2024/07/08 05:09:07 by mrezki           ###   ########.fr        #
+#    Updated: 2024/07/18 11:53:09 by mrezki           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-CFLAGS			=  -O3 -Wall -Wextra -Werror -g
+CFLAGS			=  -O3 -Wall -Wextra -Werror -g -lreadline -L/Users/mrezki/.brew/opt/readline/lib
 NAME			= minishell
 LIB_DIR			= ./libft
 LIBFT			= $(LIB_DIR)/libft.a
@@ -42,7 +42,8 @@ MAIN_SOURCES 		= src/parser_engine/tokenizer/tokenize.c \
 			src/builtins/unset.c src/builtins/exit.c src/utils/free.c \
 			src/utils/envp_list.c src/utils/char_utils.c src/builtins/unset_append.c \
 			src/builtins/env_shlvl.c src/signal.c src/exec/traverse.c \
-			src/exec/path.c
+			src/exec/path.c src/exec/here_doc.c src/exec/pipe.c \
+			src/exec/and_or.c src/exec/redirections.c src/exec/command.c
 
 ALL_SOURCES = $(MAIN_SOURCES) $(TARGET_TEST_SOURCES)
 
@@ -66,7 +67,7 @@ checks/%.o: checks/%.c $(HEADER) Makefile
 	@cc -g -c $< -o $@
 
 $(NAME): $(MAIN_OBJ) $(LIBFT)
-	cc $(CFLAGS) $^ -o $@  -lreadline
+	cc $(CFLAGS) $^ -o $@
 
 $(TARGET_TEST): $(ALL_OBJ) $(HEADER) $(LIBFT) Makefile
 	cc $(ALL_OBJ) -g $(LIBFT) -lreadline -L/Users/yel-yaqi/.brew/opt/readline/lib -o $@

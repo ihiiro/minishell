@@ -1,30 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   traverse.c                                         :+:      :+:    :+:   */
+/*   command.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mrezki <mrezki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/07/12 09:51:22 by mrezki            #+#    #+#             */
-/*   Updated: 2024/07/18 11:52:43 by mrezki           ###   ########.fr       */
+/*   Created: 2024/07/18 11:52:22 by mrezki            #+#    #+#             */
+/*   Updated: 2024/07/18 11:52:22 by mrezki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-void	traverse_tree(t_ast *ast, t_shell *sh)
+void	command(t_ast *ast, t_shell *sh, int fd)
 {
-	static int	fd;
+	char	**env;
 
-	if (!ast)
+	if (!ast || ast->token->type != COMMAND)
 		return ;
-	and_or_operators(ast, sh);
-	pipe_operator(ast, sh);
-	redirect_out(ast, sh);
-	redirect_app(ast, sh);
-	redirect_in(ast, sh);
-	here_doc(ast, sh, &fd);
-	command(ast, sh, fd);
-	doc_close(ast, sh, fd);
-	return ;
+	if (is_builtin(ast->token->word))
+		builtins_exe(ast->token->word, ast, sh);
+	else if (!ft_strncmp(ast->token->word, "./minishell", 12))
+		shlvl_check(ast->token->word, &sh->env);
+	else if (ast->token->type == COMMAND)
+	{
+		env = copy_env_to_arr(sh->env);
+		sh->exit_status = execute_cmd(ast->token->args, env, sh);
+		free_split(env);
+	}
 }

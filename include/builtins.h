@@ -6,19 +6,14 @@
 /*   By: mrezki <mrezki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/02 18:09:27 by mrezki            #+#    #+#             */
-/*   Updated: 2024/07/08 05:09:18 by mrezki           ###   ########.fr       */
+/*   Updated: 2024/07/18 11:51:41 by mrezki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef BUILTINS_H
 # define BUILTINS_H
 
-typedef struct s_envp
-{
-	struct s_envp	*next;
-	char			*name;
-	char			*value;
-}		t_envp;
+# include "structs.h"
 
 /* Built-ins */
 
