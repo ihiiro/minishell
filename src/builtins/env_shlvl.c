@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
+#include <stdlib.h>
 
 size_t	env_len(t_envp *env)
 {
@@ -45,21 +46,22 @@ char	**copy_env_to_arr(t_envp *env)
 	env_copy = malloc(sizeof(char *) * (env_len(env) + 1));
 	if (!env_copy)
 		print_error("Malloc", NULL);
-	i = -1;
-	while (++i < env_len(env))
+	i = 0;
+	while (env)
 	{
-		tmp = ft_strjoin(env->name, "=");
-		if (!tmp)
-			return (free_split(env_copy), NULL);
 		if (env->value)
 		{
+			tmp = ft_strjoin(env->name, "=");
+			if (!tmp)
+				return (free_split(env_copy), NULL);
 			env_copy[i] = ft_strjoin(tmp, env->value);
 			free(tmp);
 			if (!env_copy[i])
 				return (free_split(env_copy), NULL);
 		}
 		else
-			env_copy[i] = tmp;
+			env_copy[i] = ft_strdup(env->name);
+		i++;
 		env = env->next;
 	}
 	return (env_copy[i] = NULL, env_copy);
@@ -83,12 +85,20 @@ void	shlvl_check(char *str, t_envp **env)
 
 	shell_level = ft_atoi(search_env(*env, "SHLVL"));
 	new_shlvl = ft_itoa(++shell_level);
+	if (!new_shlvl)
+		return (perror("Malloc"));
 	change_env_value(env, "SHLVL", new_shlvl);
-	pid = fork();
 	args = ft_split(str, " \t");
+	if (!args)
+		return (perror("Malloc"));
 	envp = copy_env_to_arr(*env);
+	pid = fork();
 	if (pid == 0)
+	{
 		execve("./minishell", &args[1], envp);
+		perror("minishell");
+		exit(EXIT_FAILURE);
+	}
 	else
 		wait(NULL);
 	free_split(args);
