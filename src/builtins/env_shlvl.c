@@ -55,7 +55,6 @@ char	**copy_env_to_arr(t_envp *env)
 			if (!tmp)
 				return (free_split(env_copy), NULL);
 			env_copy[i] = ft_strjoin(tmp, env->value);
-			free(tmp);
 			if (!env_copy[i])
 				return (free_split(env_copy), NULL);
 		}
@@ -65,6 +64,18 @@ char	**copy_env_to_arr(t_envp *env)
 		env = env->next;
 	}
 	return (env_copy[i] = NULL, env_copy);
+}
+
+char	*shlvl_new_value(t_envp *env)
+{
+	char	*new_shlvl;
+	int		shell_level;
+
+	shell_level = ft_atoi(search_env(env, "SHLVL"));
+	new_shlvl = ft_itoa(++shell_level);
+	if (!new_shlvl)
+		return (perror("Malloc"), NULL);
+	return (new_shlvl);
 }
 
 /*
@@ -80,13 +91,9 @@ void	shlvl_check(char *str, t_envp **env)
 	char	**args;
 	char	**envp;
 	char	*new_shlvl;
-	int		shell_level;
 	int		pid;
 
-	shell_level = ft_atoi(search_env(*env, "SHLVL"));
-	new_shlvl = ft_itoa(++shell_level);
-	if (!new_shlvl)
-		return (perror("Malloc"));
+	new_shlvl = shlvl_new_value(*env);
 	change_env_value(env, "SHLVL", new_shlvl);
 	args = ft_split(str, " \t");
 	if (!args)

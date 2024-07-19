@@ -19,7 +19,7 @@ void	here_doc(t_ast *ast, t_shell *sh, int *fd)
 
 	if (!ast || ast->token->name != HERE_DOC)
 		return ;
-	*fd = open(".here_doc_tmp.txt", O_CREAT | O_APPEND | O_RDWR, 0664);
+	*fd = open(sh->doc_file, O_CREAT | O_APPEND | O_RDWR, 0664);
 	if (*fd < 0)
 		return (perror("open"));
 	sh->stdin_copy = dup(STDIN_FILENO);
@@ -50,4 +50,13 @@ void	doc_close(t_ast *ast, t_shell *sh, int fd)
 		close(sh->stdin_copy);
 		close(fd);
 	}
+}
+
+void	copy_to_stdin(int fd, char *tmp_file)
+{
+	close(fd);
+	fd = open(tmp_file, O_RDONLY);
+	if (fd < 0)
+		return (perror("open"));
+	dup2(fd, STDIN_FILENO);
 }

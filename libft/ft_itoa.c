@@ -35,7 +35,7 @@ static char	*ito(int len, long n, int sign)
 	si = 0;
 	if (!sign)
 		si = 1;
-	ptr = malloc(sizeof(char) * len + sign + 1);
+	ptr = gc_malloc(sizeof(char) * len + sign + 1, 1);
 	if (!ptr)
 		return (NULL);
 	ptr[len + sign] = '\0';

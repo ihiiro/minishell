@@ -74,6 +74,7 @@ void	*ft_memset(void *b, int c, size_t len);
 void	*ft_calloc(size_t count, size_t size);
 void	ft_putendl_fd(char *s, int fd);
 void	ft_bzero(void *s, size_t n);
+void	*gc_malloc(size_t size, int lever);
 
 // printf.
 
