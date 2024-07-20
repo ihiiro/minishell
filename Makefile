@@ -6,7 +6,7 @@
 #    By: yel-yaqi <yel-yaqi@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/05 20:21:35 by yel-yaqi          #+#    #+#              #
-#    Updated: 2024/07/17 12:45:02 by yel-yaqi         ###   ########.fr        #
+#    Updated: 2024/07/20 13:30:56 by yel-yaqi         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -36,7 +36,7 @@ MAIN_SOURCES 		= src/parser_engine/tokenizer/tokenize.c \
 			src/utils/split/split.c src/utils/split/strlen.c \
 			src/utils/split/substr.c src/utils/split/strdup.c \
 			src/utils/split/strlcpy.c src/utils/split/quoted.c src/list.c \
-			src/minishell_.c src/builtins/echo.c \
+			src/utils/strequal.c src/minishell_.c src/builtins/echo.c \
 			src/builtins/builtins.c src/builtins/cd.c \
 			src/builtins/env.c src/builtins/pwd.c src/builtins/export.c \
 			src/builtins/unset.c src/builtins/exit.c src/utils/free.c \

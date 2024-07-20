@@ -6,7 +6,7 @@
 /*   By: yel-yaqi <yel-yaqi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/05 18:48:14 by yel-yaqi          #+#    #+#             */
-/*   Updated: 2024/07/20 10:05:39 by yel-yaqi         ###   ########.fr       */
+/*   Updated: 2024/07/20 13:29:00 by yel-yaqi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,6 +133,8 @@ int		check_tokens(char *line);
 int		strdup_is_quoted(char c);
 int		is_operator(char *word);
 int		is_quoted(char c);
+
+bool	strequal(char *str0, char *str1);
 
 /* garbage collector */
 void	*gc_malloc(size_t size, int lever);

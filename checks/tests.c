@@ -4,15 +4,6 @@
 #include <readline/readline.h>
 #include "../include/minishell.h"
 
-bool	strequal(char *str0, char *str1)
-{
-	int	rslt = strcmp(str0, str1);
-	if (rslt)
-		return (false);
-	else
-		return (true);
-}
-
 void	in_order(t_ast* root)
 {
 	if (root == NULL)
@@ -293,6 +284,8 @@ int	main(void)
 	while (1)
 	{
 		ast = build_ast();
+		if (!ast)
+			break ;
 		// char *str = readline("\033[1;34mtest> \033[0m");
 		// ast = parse(str);
 		// if (!ft_strncmp(str, "exit", 5))
