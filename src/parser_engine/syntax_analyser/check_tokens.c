@@ -6,7 +6,7 @@
 /*   By: yel-yaqi <yel-yaqi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/17 10:18:10 by yel-yaqi          #+#    #+#             */
-/*   Updated: 2024/07/20 16:26:35 by yel-yaqi         ###   ########.fr       */
+/*   Updated: 2024/07/20 17:39:44 by yel-yaqi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,8 @@ int	check_tokens(char *line)
 	char	**word_list;
 	t_token	*tokens;
 
+	if (!quotes_balanced(line))
+		return (0);
 	word_list = ft_split(line, " \t");
 	tokens = NULL;
 	tokenize(word_list, &tokens);

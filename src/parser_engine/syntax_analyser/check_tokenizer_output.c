@@ -6,7 +6,7 @@
 /*   By: yel-yaqi <yel-yaqi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/20 16:25:55 by yel-yaqi          #+#    #+#             */
-/*   Updated: 2024/07/20 16:34:28 by yel-yaqi         ###   ########.fr       */
+/*   Updated: 2024/07/20 18:42:40 by yel-yaqi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,9 @@ int	check_tokenizer_output(t_token *tokens)
 			return (syntax_error(tokens), 0);
 		else if (tokens->prev && is_operator(tokens->prev->word)
 			&& strequal(")", tokens->word))
+			return (syntax_error(tokens), 0);
+		else if (tokens->prev && !is_operator(tokens->prev->word)
+			&& strequal("(", tokens->word))
 			return (syntax_error(tokens), 0);
 		tokens = tokens->next;
 	}
