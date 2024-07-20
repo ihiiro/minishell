@@ -6,7 +6,7 @@
 /*   By: yel-yaqi <yel-yaqi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/19 19:45:54 by yel-yaqi          #+#    #+#             */
-/*   Updated: 2024/07/20 12:38:02 by yel-yaqi         ###   ########.fr       */
+/*   Updated: 2024/07/20 16:21:49 by yel-yaqi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,6 @@ int	count_substrs(char *str, char *charset)
 		if (!is_quoted(str[i]) && in_charset(str[i], charset) && !new_string)
 			new_string = 1;
 	}
-	// printf("==%d==\n", count);
 	return (count);
 }
 

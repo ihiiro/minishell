@@ -6,7 +6,7 @@
 /*   By: yel-yaqi <yel-yaqi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/05 18:48:14 by yel-yaqi          #+#    #+#             */
-/*   Updated: 2024/07/20 13:29:00 by yel-yaqi         ###   ########.fr       */
+/*   Updated: 2024/07/20 16:32:02 by yel-yaqi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,6 +125,7 @@ t_ast	*fetch_ast(t_token *tokens);
 t_ast	*parse(char *expr);
 
 int		check_builtins(char *str, t_envp **env, t_shell *sh);
+int		check_tokenizer_output(t_token *tokens);
 int		count_substrs(char *str, char *charset);
 int		is_heredoc_operator(t_token *token);
 int		is_redir_operator(t_token *token);
