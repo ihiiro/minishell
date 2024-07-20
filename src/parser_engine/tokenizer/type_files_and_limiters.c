@@ -6,7 +6,7 @@
 /*   By: yel-yaqi <yel-yaqi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/03 10:57:08 by yel-yaqi          #+#    #+#             */
-/*   Updated: 2024/07/05 17:13:34 by yel-yaqi         ###   ########.fr       */
+/*   Updated: 2024/07/20 10:27:17 by yel-yaqi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,14 +15,14 @@
 
 int	is_redir_operator(t_token *token)
 {
-	return (token->word && (!strcmp("<", token->word)
-			|| !strcmp(">", token->word)
-			|| !strcmp(">>", token->word)));
+	return (token->word && (!ft_strcmp("<", token->word)
+			|| !ft_strcmp(">", token->word)
+			|| !ft_strcmp(">>", token->word)));
 }
 
 int	is_heredoc_operator(t_token *token)
 {
-	return (token->word && !strcmp("<<", token->word));
+	return (token->word && !ft_strcmp("<<", token->word));
 }
 
 void	type_files_and_limiters(t_token *tokens)
