@@ -6,20 +6,11 @@
 /*   By: yel-yaqi <yel-yaqi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/07 12:38:36 by yel-yaqi          #+#    #+#             */
-/*   Updated: 2024/07/20 18:53:42 by yel-yaqi         ###   ########.fr       */
+/*   Updated: 2024/07/21 13:34:37 by yel-yaqi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../include/minishell.h"
-
-// static void	remove_quotes(t_token *tokens)
-// {
-// 	while (tokens)
-// 	{
-		
-// 		tokens = tokens->next;
-// 	}
-// }
 
 t_ast	*parse(char *expr)
 {
@@ -36,7 +27,8 @@ t_ast	*parse(char *expr)
 	type_files_and_limiters(tokens);
 	make_irregular_arguments(tokens);
 	put_args_into_cmd_tokens(tokens);
-	// remove_quotes(tokens);
+	set_tokens_expansion_indices(tokens);
+	remove_quotes(tokens);
 	// 
 	for (t_token *ptr = tokens; ptr; ptr = ptr->next)
 			printf("=%s::%d::%d=\n", ptr->word, ptr->type, ptr->name);

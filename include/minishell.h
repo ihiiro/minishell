@@ -6,7 +6,7 @@
 /*   By: yel-yaqi <yel-yaqi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/05 18:48:14 by yel-yaqi          #+#    #+#             */
-/*   Updated: 2024/07/20 18:46:54 by yel-yaqi         ###   ########.fr       */
+/*   Updated: 2024/07/21 13:22:26 by yel-yaqi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ typedef struct s_token
 	int				type;
 	int				name;
 	int				subshell;
-	int				expansion;
+	size_t			*expansion_indices;
 	char			**args;
 	struct s_token	*next;
 	struct s_token	*prev;
@@ -108,12 +108,14 @@ void	build_compound(t_token *token, int marker);
 void	make_irregular_arguments(t_token *tokens);
 void	put_args_into_cmd_tokens(t_token *tokens);
 void	type_files_and_limiters(t_token *tokens);
+void	set_tokens_expansion_indices(t_token *tokens);
 void	append(t_token *node, t_token **list);
 void	connect_redirections(t_token *tokens);
 void	build_redirections(t_token *tokens);
 void	connect_pipelines(t_token *token);
 void	rl_replace_line(char *str, int a);
 void	name_operators(t_token *tokens);
+void	remove_quotes(t_token *tokens);
 void	connect_para(t_token *tokens);
 void	build_list(t_token *start);
 
@@ -133,7 +135,6 @@ int		is_redir_operator(t_token *token);
 int		build_pipelines(t_token *token);
 int		quotes_balanced(char *line);
 int		check_tokens(char *line);
-int		strdup_is_quoted(char c);
 int		is_operator(char *word);
 int		is_quoted(char c);
 

@@ -6,7 +6,7 @@
 /*   By: yel-yaqi <yel-yaqi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/19 19:45:54 by yel-yaqi          #+#    #+#             */
-/*   Updated: 2024/07/20 16:21:49 by yel-yaqi         ###   ########.fr       */
+/*   Updated: 2024/07/21 11:09:00 by yel-yaqi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ static char	*split_strdup(char *str, char *charset)
 	ptr = str;
 	while (str[len])
 	{
-		if (!strdup_is_quoted(str[len]) && in_charset(str[len], charset))
+		if (!is_quoted(str[len]) && in_charset(str[len], charset))
 			break ;
 		len++;
 	}
