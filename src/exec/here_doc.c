@@ -15,28 +15,30 @@
 void	here_doc(t_ast *ast, t_shell *sh, int *fd)
 {
 	char	*str;
-	int		copy;
 
-	if (!ast || ast->token->name != HERE_DOC)
+	if (!ast)
 		return ;
-	*fd = open(sh->doc_file, O_CREAT | O_APPEND | O_RDWR, 0664);
-	if (*fd < 0)
-		return (perror("open"));
-	sh->stdin_copy = dup(STDIN_FILENO);
-	while (1)
+	if (ast->token->name == HERE_DOC)
 	{
-		str = readline("> ");
-		if (!str)
-			return (free(str));
-		if (!ft_strncmp(str, ast->right->token->word, ft_strlen(str) + 1))
+		*fd = open(sh->doc_file, O_CREAT | O_TRUNC | O_RDWR, 0664);
+		if (*fd < 0)
+			return (perror("open"));
+		sh->stdin_copy = dup(STDIN_FILENO);
+		while (1)
 		{
+			str = readline("> ");
+			if (!str)
+				return (free(str));
+			if (!ft_strncmp(str, ast->right->token->word, ft_strlen(str) + 1))
+			{
+				return (close(*fd), free(str));
+			}
+			ft_printf(*fd, "%s\n", str);
 			free(str);
-			traverse_tree(ast->left, sh);
-			return ;
 		}
-		ft_printf(*fd, "%s\n", str);
-		free(str);
 	}
+	here_doc(ast->left, sh, fd);
+	here_doc(ast->right, sh, fd);
 }
 
 void	doc_close(t_ast *ast, t_shell *sh, int fd)
@@ -52,9 +54,10 @@ void	doc_close(t_ast *ast, t_shell *sh, int fd)
 	}
 }
 
-void	copy_to_stdin(int fd, char *tmp_file)
+void	copy_to_stdin(char *tmp_file)
 {
-	close(fd);
+	int	fd;
+
 	fd = open(tmp_file, O_RDONLY);
 	if (fd < 0)
 		return (perror("open"));

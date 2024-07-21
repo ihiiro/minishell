@@ -19,11 +19,11 @@ void	second_child(t_ast *ast, t_shell *sh, int *fd, int *status);
 void	here_doc(t_ast *ast, t_shell *sh, int *fd);
 void	doc_close(t_ast *ast, t_shell *sh, int fd);
 void	and_or_operators(t_ast *ast, t_shell *sh);
-void	command(t_ast *ast, t_shell *sh, int fd);
+void	command(t_ast *ast, t_shell *sh);
 void	pipe_operator(t_ast *ast, t_shell *sh);
 void	redirect_out(t_ast *ast, t_shell *sh);
 void	redirect_app(t_ast *ast, t_shell *sh);
 void	redirect_in(t_ast *ast, t_shell *sh);
-void	copy_to_stdin(int fd, char *tmp_file);
+void	copy_to_stdin(char *tmp_file);
 
 #endif // !EXEC_H

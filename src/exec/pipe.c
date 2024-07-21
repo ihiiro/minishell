@@ -53,7 +53,7 @@ void	pipe_operator(t_ast *ast, t_shell *sh)
 		traverse_tree(ast->left, sh);
 		exit(sh->exit_status);
 	}
-	second_child(ast, sh, fd, &status);
 	waitpid(pid, &status, 0);
+	second_child(ast, sh, fd, &status);
 	sh->exit_status = WEXITSTATUS(status);
 }

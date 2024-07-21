@@ -14,8 +14,6 @@
 
 void	traverse_tree(t_ast *ast, t_shell *sh)
 {
-	static int	fd;
-
 	if (!ast)
 		return ;
 	and_or_operators(ast, sh);
@@ -23,8 +21,8 @@ void	traverse_tree(t_ast *ast, t_shell *sh)
 	redirect_out(ast, sh);
 	redirect_app(ast, sh);
 	redirect_in(ast, sh);
-	here_doc(ast, sh, &fd);
-	command(ast, sh, fd);
-	doc_close(ast, sh, fd);
+	if (ast->token->name == HERE_DOC)
+		traverse_tree(ast->left, sh);
+	command(ast, sh);
 	return ;
 }

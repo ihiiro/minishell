@@ -106,14 +106,14 @@ char	**check_expand(char **args, t_shell *sh)
 	return (args);
 }
 
-void	command(t_ast *ast, t_shell *sh, int fd)
+void	command(t_ast *ast, t_shell *sh)
 {
 	char	**env;
 
 	if (!ast || ast->token->type != COMMAND)
 		return ;
 	if (!access(sh->doc_file, F_OK))
-		copy_to_stdin(fd, sh->doc_file);
+		copy_to_stdin(sh->doc_file);
 	check_expand(ast->token->args, sh);
 	if (is_builtin(ast->token->word))
 		builtins_exe(ast->token->word, ast, sh);
