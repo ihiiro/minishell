@@ -16,8 +16,8 @@
 # include "structs.h"
 
 void	second_child(t_ast *ast, t_shell *sh, int *fd, int *status);
-void	here_doc(t_ast *ast, t_shell *sh, int *fd);
-void	doc_close(t_ast *ast, t_shell *sh, int fd);
+void	here_doc(t_ast *ast, t_shell *sh);
+void	doc_close(t_ast *ast, t_shell *sh);
 void	and_or_operators(t_ast *ast, t_shell *sh);
 void	command(t_ast *ast, t_shell *sh);
 void	pipe_operator(t_ast *ast, t_shell *sh);

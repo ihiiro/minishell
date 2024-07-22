@@ -22,7 +22,10 @@ void	traverse_tree(t_ast *ast, t_shell *sh)
 	redirect_app(ast, sh);
 	redirect_in(ast, sh);
 	if (ast->token->name == HERE_DOC)
+	{
 		traverse_tree(ast->left, sh);
+		doc_close(ast, sh);
+	}
 	command(ast, sh);
 	return ;
 }

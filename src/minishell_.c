@@ -12,13 +12,6 @@
 
 #include "../include/minishell.h"
 
-void	open_docs(t_ast *ast, t_shell *sh)
-{
-	int	fd;
-
-	here_doc(ast, sh, &fd);
-}
-
 void	command_loop(t_envp *envp, char *env[], t_shell sh)
 {
 	char	*str;
@@ -40,9 +33,8 @@ void	command_loop(t_envp *envp, char *env[], t_shell sh)
 		if (ft_strlen(str) > 0)
 			add_history(str);
 		sh.ast = parse(str);
-		open_docs(sh.ast, &sh);
+		here_doc(sh.ast, &sh);
 		traverse_tree(sh.ast, &sh);
-		doc_close(sh.ast, &sh, -1);
 		if (!ft_strncmp(str, "pid", 4))
 			printf("%d\n", getpid());
 		free(str);

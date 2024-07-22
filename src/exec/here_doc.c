@@ -12,16 +12,17 @@
 
 #include "../../include/minishell.h"
 
-void	here_doc(t_ast *ast, t_shell *sh, int *fd)
+void	here_doc(t_ast *ast, t_shell *sh)
 {
 	char	*str;
+	int		fd;
 
 	if (!ast)
 		return ;
 	if (ast->token->name == HERE_DOC)
 	{
-		*fd = open(sh->doc_file, O_CREAT | O_TRUNC | O_RDWR, 0664);
-		if (*fd < 0)
+		fd = open(sh->doc_file, O_CREAT | O_TRUNC | O_RDWR, 0664);
+		if (fd < 0)
 			return (perror("open"));
 		sh->stdin_copy = dup(STDIN_FILENO);
 		while (1)
@@ -31,17 +32,17 @@ void	here_doc(t_ast *ast, t_shell *sh, int *fd)
 				return (free(str));
 			if (!ft_strncmp(str, ast->right->token->word, ft_strlen(str) + 1))
 			{
-				return (close(*fd), free(str));
+				return (close(fd), free(str));
 			}
-			ft_printf(*fd, "%s\n", str);
+			ft_printf(fd, "%s\n", str);
 			free(str);
 		}
 	}
-	here_doc(ast->left, sh, fd);
-	here_doc(ast->right, sh, fd);
+	here_doc(ast->left, sh);
+	here_doc(ast->right, sh);
 }
 
-void	doc_close(t_ast *ast, t_shell *sh, int fd)
+void	doc_close(t_ast *ast, t_shell *sh)
 {
 	if (!ast)
 		return ;
@@ -50,7 +51,6 @@ void	doc_close(t_ast *ast, t_shell *sh, int fd)
 		dup2(sh->stdin_copy, STDIN_FILENO);
 		unlink(sh->doc_file);
 		close(sh->stdin_copy);
-		close(fd);
 	}
 }
 
