@@ -12,74 +12,55 @@
 
 #include "../../include/minishell.h"
 
-char	*join_rest(char *var, t_envp *env)
+char	*expand_single_var(char *var, t_shell *sh, int start, int end)
 {
 	char	*tmp;
-	char	*new;
-	char	*rest;
+	char	*expanded;
 
-	tmp = ft_substr(var, first_occur(var, '$') + 1,
-			ft_strlen(var) - 1);
+	tmp = ft_substr(var, start, end - start);
 	if (!tmp)
-		return (perror("Malloc"), NULL);
-	new = search_env(env, tmp);
-	rest = ft_substr(var, 0, first_occur(var, '$'));
-	if (!rest)
-		return (perror("Malloc"), NULL);
-	new = ft_strjoin(rest, new);
-	if (!new)
-		return (perror("Malloc"), NULL);
-	free(rest);
-	return (new);
-}
-
-char	*expand_var(char *var, t_envp *env, int has_rest)
-{
-	char	*tmp;
-	char	*new;
-
-	if (has_rest)
-		new = join_rest(var, env);
-	else
-	{
-		tmp = ft_substr(var, first_occur(var, '$') + 1,
-				ft_strlen(var) - 1);
-		if (!tmp)
-			return (perror("Malloc"), NULL);
-		new = search_env(env, tmp);
-	}
-	if (!new)
 		return (NULL);
-	return (new);
+	if (tmp[0] == '?')
+	{
+		tmp = ft_substr(var, start + 1, end - start);
+		expanded = ft_strjoin(ft_itoa(sh->exit_status), tmp);
+		return (expanded);
+	}
+	expanded = search_env(sh->env, tmp);
+	free(tmp);
+	return (expanded);
 }
 
-char	*is_status(char *var, t_shell *sh)
+char	*expand_multiple_vars(char *var, t_shell *sh)
 {
+	char	*result;
 	char	*tmp;
-	char	*new;
-	char	*rest;
+	int		i;
+	int		start;
 
-	tmp = ft_substr(var, first_occur(var, '$') + 1,
-			ft_strlen(var) - 1);
-	if (!ft_strncmp(tmp, "?", 2))
+	result = ft_strdup("");
+	i = 0;
+	while (var[i])
 	{
-		new = ft_itoa(sh->exit_status);
-		if (!new)
-			return (perror("Malloc"), NULL);
-		if (var[0] == '$')
-			return (new);
+		if (var[i] == '$')
+		{
+			start = ++i;
+			if (var[i] == '?')
+				i++;
+			while ((var[i] && ft_isalnum(var[i])))
+				i++;
+			tmp = expand_single_var(var, sh, start, i);
+			if (tmp)
+				result = ft_strjoin(result, tmp);
+		}
 		else
 		{
-			rest = ft_substr(var, 0, first_occur(var, '$'));
-			if (!rest)
-				return (perror("Malloc"), NULL);
-			new = ft_strjoin(rest, new);
-			if (!new)
-				return (perror("Malloc"), NULL);
-			return (new);
+			tmp = ft_substr(var, i, 1);
+			result = ft_strjoin(result, tmp);
+			i++;
 		}
 	}
-	return (NULL);
+	return (result);
 }
 
 char	**check_expand(char **args, t_shell *sh)
@@ -93,12 +74,9 @@ char	**check_expand(char **args, t_shell *sh)
 	{
 		if (ft_strchr(args[i], '$'))
 		{
-			if (is_status(args[i], sh))
-				new = is_status(args[i], sh);
-			else if (args[i][0] == '$')
-				new = expand_var(args[i], sh->env, 0);
-			else
-				new = expand_var(args[i], sh->env, 1);
+			new = expand_multiple_vars(args[i], sh);
+			if (!new)
+				return (NULL);
 			free(args[i]);
 			args[i] = new;
 		}

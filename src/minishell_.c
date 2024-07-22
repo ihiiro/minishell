@@ -46,7 +46,7 @@ int	main(int argc, char *argv[], char *env[])
 	t_shell	sh;
 	char	*str;
 
-	sh.doc_file = ".here_doc_tmp.txt";
+	sh.doc_file = "/tmp/.here_doc_tmp.txt";
 	init_envp(env, &sh.env);
 	command_loop(sh.env, env, sh);
 	free_envp(sh.env);

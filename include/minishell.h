@@ -120,12 +120,12 @@ int		is_operator(char *word);
 void	*gc_malloc(size_t size, int lever);
 
 /* libft */
-char	*ft_substr(char const *s, unsigned int start, size_t len);
+// char	*ft_substr(char const *s, unsigned int start, size_t len);
 char	**ft_split(char *str, char *charset);
-char	*ft_strchr(const char *s, int c);
-char	*ft_strdup(const char *s1);
-size_t	ft_strlcpy(char *dst, const char *src, size_t dstsize);
-size_t	ft_strlen(const char *s);
+// char	*ft_strchr(const char *s, int c);
+// char	*ft_strdup(const char *s1);
+// size_t	ft_strlcpy(char *dst, const char *src, size_t dstsize);
+// size_t	ft_strlen(const char *s);
 
 int		in_charset(char c, char *charset);
 
