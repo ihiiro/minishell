@@ -25,5 +25,6 @@ void	redirect_out(t_ast *ast, t_shell *sh);
 void	redirect_app(t_ast *ast, t_shell *sh);
 void	redirect_in(t_ast *ast, t_shell *sh);
 void	copy_to_stdin(char *tmp_file);
+char	**check_expand(char **args, t_shell *sh);
 
 #endif // !EXEC_H
