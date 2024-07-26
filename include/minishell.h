@@ -6,7 +6,7 @@
 /*   By: mrezki <mrezki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/05 18:48:14 by yel-yaqi          #+#    #+#             */
-/*   Updated: 2024/07/18 11:51:53 by mrezki           ###   ########.fr       */
+/*   Updated: 2024/07/26 23:14:04 by mrezki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@
 # include <unistd.h>
 # include <signal.h>
 # include <termios.h>
+# include <dirent.h>
 
 # include "../libft/libft.h"
 # include "structs.h"

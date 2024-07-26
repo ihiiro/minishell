@@ -6,7 +6,7 @@
 /*   By: mrezki <mrezki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/18 11:52:27 by mrezki            #+#    #+#             */
-/*   Updated: 2024/07/18 11:52:29 by mrezki           ###   ########.fr       */
+/*   Updated: 2024/07/26 23:14:19 by mrezki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,9 +31,7 @@ void	here_doc(t_ast *ast, t_shell *sh)
 			if (!str)
 				return (free(str));
 			if (!ft_strncmp(str, ast->right->token->word, ft_strlen(str) + 1))
-			{
 				return (close(fd), free(str));
-			}
 			ft_printf(fd, "%s\n", str);
 			free(str);
 		}

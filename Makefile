@@ -6,7 +6,7 @@
 #    By: mrezki <mrezki@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/05 20:21:35 by yel-yaqi          #+#    #+#              #
-#    Updated: 2024/07/18 11:53:09 by mrezki           ###   ########.fr        #
+#    Updated: 2024/07/26 23:15:30 by mrezki           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -43,7 +43,8 @@ MAIN_SOURCES 		= src/parser_engine/tokenizer/tokenize.c \
 			src/utils/envp_list.c src/utils/char_utils.c src/builtins/unset_append.c \
 			src/builtins/env_shlvl.c src/signal.c src/exec/traverse.c \
 			src/exec/path.c src/exec/here_doc.c src/exec/pipe.c \
-			src/exec/and_or.c src/exec/redirections.c src/exec/command.c
+			src/exec/and_or.c src/exec/redirections.c src/exec/command.c \
+			src/utils/wildcard.c src/utils/wildcard_utils.c src/utils/expand.c
 
 ALL_SOURCES = $(MAIN_SOURCES) $(TARGET_TEST_SOURCES)
 
