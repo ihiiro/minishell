@@ -6,7 +6,7 @@
 /*   By: yel-yaqi <yel-yaqi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/21 12:49:06 by yel-yaqi          #+#    #+#             */
-/*   Updated: 2024/07/27 15:41:59 by yel-yaqi         ###   ########.fr       */
+/*   Updated: 2024/07/27 15:43:14 by yel-yaqi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ void	set_tokens_expansion_indices(t_token *tokens)
 	while (tokens)
 	{
 		if (tokens->type == LIMITER && (ft_strchr(tokens->word, '\'')
-			|| ft_strchr(tokens->word, '"')))
+				|| ft_strchr(tokens->word, '"')))
 		{
 			tokens->expansion_indices = gc_malloc(sizeof(int), COLLECT);
 			tokens->expansion_indices[0] = 1;
