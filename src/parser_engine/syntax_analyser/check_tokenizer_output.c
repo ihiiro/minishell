@@ -6,7 +6,7 @@
 /*   By: yel-yaqi <yel-yaqi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/20 16:25:55 by yel-yaqi          #+#    #+#             */
-/*   Updated: 2024/07/21 10:10:11 by yel-yaqi         ###   ########.fr       */
+/*   Updated: 2024/07/28 23:22:23 by yel-yaqi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,9 @@ static int	check_operators(t_token *tokens)
 	else if ((is_redir_operator(tokens) || is_heredoc_operator(tokens))
 		&& !tokens->next)
 		return (syntax_error(NULL), 0);
+	else if (tokens->word[0] == '&' && !tokens->word[1] && tokens->prev
+		&& (tokens->prev->name == OR || tokens->prev->name == AND))
+		return (syntax_error(tokens), 0);
 	return (1);
 }
 
@@ -62,7 +65,8 @@ int	check_tokenizer_output(t_token *tokens)
 			&& strequal(")", tokens->word))
 			return (syntax_error(tokens), 0);
 		else if (tokens->prev && !is_operator(tokens->prev->word)
-			&& strequal("(", tokens->word))
+			&& strequal("(", tokens->word)
+			&& !strequal("(", tokens->prev->word))
 			return (syntax_error(tokens), 0);
 		tokens = tokens->next;
 	}

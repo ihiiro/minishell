@@ -6,7 +6,7 @@
 /*   By: yel-yaqi <yel-yaqi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/07 12:38:36 by yel-yaqi          #+#    #+#             */
-/*   Updated: 2024/07/21 13:34:37 by yel-yaqi         ###   ########.fr       */
+/*   Updated: 2024/07/28 23:15:10 by yel-yaqi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,7 @@ t_ast	*build_ast(void)
 	int		loop_entered;
 
 	line = readline("mini_bash_clone$ ");
+	add_history(line);
 	check = check_tokens(line);
 	if (!check)
 		return (free(line), NULL);
