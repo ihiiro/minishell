@@ -6,7 +6,7 @@
 #    By: mrezki <mrezki@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/05 20:21:35 by yel-yaqi          #+#    #+#              #
-#    Updated: 2024/07/26 23:15:30 by mrezki           ###   ########.fr        #
+#    Updated: 2024/07/29 21:29:43 by mrezki           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -30,13 +30,16 @@ MAIN_SOURCES 		= src/parser_engine/tokenizer/tokenize.c \
 			src/parser_engine/parser/para.c \
 			src/parser_engine/parser/build_list.c \
 			src/parser_engine/parser/put_args_into_cmd_tokens.c \
-			src/parser_engine/parse.c \
-			src/utils/gc.c \
+			src/parser_engine/parser/parse.c \
+			src/parser_engine/parser/remove_quotes.c \
+			src/parser_engine/parser/set_expansion_indices.c \
+			src/parser_engine/syntax_analyser/check_tokens.c \
+			src/parser_engine/syntax_analyser/check_tokenizer_output.c \
+			src/parser_engine/syntax_analyser/quotes_balanced.c src/utils/gc.c \
 			src/utils/split/split.c src/utils/split/strlen.c \
 			src/utils/split/substr.c src/utils/split/strdup.c \
-			src/utils/split/strlcpy.c src/utils/split/strchr.c\
-			src/utils/split/quoted.c src/list.c \
-			src/minishell_.c src/builtins/echo.c \
+			src/utils/split/strlcpy.c src/utils/split/quoted.c src/list.c \
+			src/utils/strequal.c src/minishell_.c src/builtins/echo.c \
 			src/builtins/builtins.c src/builtins/cd.c \
 			src/builtins/env.c src/builtins/pwd.c src/builtins/export.c \
 			src/builtins/unset.c src/builtins/exit.c src/utils/free.c \
@@ -72,7 +75,7 @@ $(NAME): $(MAIN_OBJ) $(LIBFT)
 	cc $(CFLAGS) $^ -o $@
 
 $(TARGET_TEST): $(ALL_OBJ) $(HEADER) $(LIBFT) Makefile
-	cc $(ALL_OBJ) -g $(LIBFT) -lreadline -L/Users/yel-yaqi/.brew/opt/readline/lib -o $@
+	cc $(ALL_OBJ)  -g $(LIBFT) -lreadline -L/Users/yel-yaqi/.brew/opt/readline/lib -o $@
 
 $(LIBFT):
 	$(MAKE) -C $(LIB_DIR)

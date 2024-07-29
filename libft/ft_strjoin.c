@@ -3,14 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strjoin.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mrezki <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: mrezki <mrezki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/08 10:08:20 by mrezki            #+#    #+#             */
-/*   Updated: 2023/12/06 01:48:17 by mrezki           ###   ########.fr       */
+/*   Updated: 2024/07/29 21:30:33 by mrezki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
+#include "../include/minishell.h"
 
 char	*ft_strjoin(char const *s1, char const *s2)
 {
@@ -24,7 +25,7 @@ char	*ft_strjoin(char const *s1, char const *s2)
 		return ((char *)s2);
 	len1 = ft_strlen(s1);
 	len2 = ft_strlen(s2);
-	ptr = gc_malloc(sizeof(char) * len1 + len2 + 1, 1);
+	ptr = gc_malloc(sizeof(char) * len1 + len2 + 1, COLLECT);
 	if (!ptr)
 		return (NULL);
 	ft_strlcpy(ptr, s1, len1 + 1);

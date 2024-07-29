@@ -4,15 +4,6 @@
 #include <readline/readline.h>
 #include "../include/minishell.h"
 
-bool	strequal(char *str0, char *str1)
-{
-	int	rslt = strcmp(str0, str1);
-	if (rslt)
-		return (false);
-	else
-		return (true);
-}
-
 void	in_order(t_ast* root)
 {
 	if (root == NULL)
@@ -292,15 +283,18 @@ int	main(void)
 	printf("PROMPT LOOP FOR DYNAMIC TESTING:\n\n");
 	while (1)
 	{
-		char *str = readline("\033[1;34mtest> \033[0m");
-		ast = parse(str);
-		if (!ft_strncmp(str, "exit", 5))
-			exit(0);
-		free(str);
-		rebuild_expr(ast);
-		printf("\n");
-		printf("\033[0;32mbottom-top: right-first\033[0m\n");
-		in_order(ast);
+		ast = build_ast();
+		// if (!ast)
+		// 	break ;
+		// char *str = readline("\033[1;34mtest> \033[0m");
+		// ast = parse(str);
+		// if (!ft_strncmp(str, "exit", 5))
+		// 	exit(0);
+		// free(str);
+		// rebuild_expr(ast);
+		// printf("\n");
+		// printf("\033[0;32mbottom-top: right-first\033[0m\n");
+		// in_order(ast);
 	}
 	gc_malloc(NO_SIZE, CLEAR);
 }
