@@ -12,7 +12,53 @@
 
 #include "../../include/minishell.h"
 
-void	here_doc(t_ast *ast, t_shell *sh)
+void	size_heredocs(t_ast *ast, int *size)
+{
+	if (!ast || !ast->token)
+		return ;
+	if (ast->token->name == HERE_DOC)
+	{
+		ast->token->doc_num = *size;
+		(*size)++;
+	}
+	size_heredocs(ast->left, size);
+	size_heredocs(ast->right, size);
+}
+
+char	*get_tmp_file_name(int i)
+{
+	char	*num;
+	char	*tmp_name;
+
+	num = ft_itoa(i + 69);
+	tmp_name = ft_strjoin("/tmp/here_doc_tmp_file", num);
+	if (!tmp_name)
+		return (perror("Malloc"), NULL);
+	return (tmp_name);
+}
+
+void	fill_doc_files(t_shell *sh)
+{
+	int	size;
+	int	i;
+
+	size = 0;
+	i = 0;
+	size_heredocs(sh->ast, &size);
+	if (size > 16)
+	{
+		print_error("here_doc", "maximum here-document count exceeded");
+		exit(EXIT_FAILURE);
+	}
+	while (i < size)
+	{
+		sh->doc_files[i] = get_tmp_file_name(i);
+		i++;
+	}
+	sh->doc_files[i] = NULL;
+}
+
+void	open_heredocs(t_ast *ast, t_shell *sh, int *i)
 {
 	char	*str;
 	int		fd;
@@ -21,10 +67,10 @@ void	here_doc(t_ast *ast, t_shell *sh)
 		return ;
 	if (ast->token->name == HERE_DOC)
 	{
-		fd = open(sh->doc_file, O_CREAT | O_TRUNC | O_RDWR, 0664);
+		fd = open(sh->doc_files[*i], O_CREAT | O_TRUNC | O_RDWR, 0664);
+		(*i)++;
 		if (fd < 0)
 			return (perror("open"));
-		sh->stdin_copy = dup(STDIN_FILENO);
 		while (1)
 		{
 			str = readline("> ");
@@ -36,28 +82,20 @@ void	here_doc(t_ast *ast, t_shell *sh)
 			free(str);
 		}
 	}
-	here_doc(ast->left, sh);
-	here_doc(ast->right, sh);
+	open_heredocs(ast->left, sh, i);
+	open_heredocs(ast->right, sh, i);
 }
 
-void	doc_close(t_ast *ast, t_shell *sh)
-{
-	if (!ast)
-		return ;
-	if (!access(sh->doc_file, F_OK))
-	{
-		dup2(sh->stdin_copy, STDIN_FILENO);
-		unlink(sh->doc_file);
-		close(sh->stdin_copy);
-	}
-}
-
-void	copy_to_stdin(char *tmp_file)
+void	here_doc(t_ast *ast, t_shell *sh)
 {
 	int	fd;
+	int	i;
 
-	fd = open(tmp_file, O_RDONLY);
-	if (fd < 0)
-		return (perror("open"));
-	dup2(fd, STDIN_FILENO);
+	if (!ast)
+		return ;
+	if (sh->stdin_copy == -1)
+		sh->stdin_copy = dup(STDIN_FILENO);
+	i = 0;
+	fill_doc_files(sh);
+	open_heredocs(ast, sh, &i);
 }

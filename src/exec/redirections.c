@@ -96,6 +96,11 @@ void	redirect_in(t_ast *ast, t_shell *sh)
 
 	if (!ast || ast->token->name != REDIR_IN)
 		return ;
+	if (ast->token->right_pipe)
+	{
+		traverse_tree(ast->left, sh);
+		return ;
+	}
 	file = ast->right->token->word;
 	fd = open(file, O_RDONLY);
 	if (!file_is_okay(file, &sh->exit_status, fd))

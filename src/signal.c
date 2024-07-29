@@ -20,6 +20,7 @@ void	disable_echo(void)
 	if (tcgetattr(STDIN_FILENO, &term) == -1)
 	{
 		perror("tcgetattr");
+		system("lsof -c minishell");
 		exit(EXIT_FAILURE);
 	}
 	term.c_lflag &= ~ECHOCTL;

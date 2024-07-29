@@ -24,6 +24,7 @@ void	second_child(t_ast *ast, t_shell *sh, int *fd, int *status)
 		close(fd[1]);
 		dup2(fd[0], STDIN_FILENO);
 		close(fd[0]);
+		ast->right->token->right_pipe = 1;
 		traverse_tree(ast->right, sh);
 		exit(sh->exit_status);
 	}
@@ -50,6 +51,7 @@ void	pipe_operator(t_ast *ast, t_shell *sh)
 		close(fd[0]);
 		dup2(fd[1], STDOUT_FILENO);
 		close(fd[1]);
+		ast->left->token->left_pipe = 1;
 		traverse_tree(ast->left, sh);
 		exit(sh->exit_status);
 	}

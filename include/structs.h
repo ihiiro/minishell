@@ -13,6 +13,8 @@
 #ifndef STRUCTS_H
 # define STRUCTS_H
 
+# define MAX_HEREDOCS 16
+
 typedef struct s_ast
 {
 	struct s_token	*token;
@@ -37,8 +39,11 @@ typedef struct s_token
 {
 	char			*word;
 	t_ast			*subtree;
+	int				doc_num;
 	int				type;
 	int				name;
+	int				left_pipe;
+	int				right_pipe;
 	char			**args;
 	struct s_token	*next;
 	struct s_token	*prev;
@@ -47,7 +52,7 @@ typedef struct s_token
 
 typedef struct s_shell
 {
-	char			*doc_file;
+	char			*doc_files[MAX_HEREDOCS + 1];
 	int				exit_status;
 	int				stdin_copy;
 	t_envp			*env;

@@ -35,8 +35,8 @@ void	command_loop(t_envp *envp, char *env[], t_shell sh)
 		sh.ast = parse(str);
 		here_doc(sh.ast, &sh);
 		traverse_tree(sh.ast, &sh);
-		if (!ft_strncmp(str, "pid", 4))
-			printf("%d\n", getpid());
+		close(sh.stdin_copy);
+		sh.stdin_copy = -1;
 		free(str);
 	}
 }
@@ -46,7 +46,7 @@ int	main(int argc, char *argv[], char *env[])
 	t_shell	sh;
 	char	*str;
 
-	sh.doc_file = "/tmp/.here_doc_tmp.txt";
+	sh.stdin_copy = -1;
 	init_envp(env, &sh.env);
 	command_loop(sh.env, env, sh);
 	free_envp(sh.env);
