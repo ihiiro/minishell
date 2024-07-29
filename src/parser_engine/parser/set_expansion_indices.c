@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   set_expansion_indices.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yel-yaqi <yel-yaqi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mrezki <mrezki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/21 12:49:06 by yel-yaqi          #+#    #+#             */
-/*   Updated: 2024/07/27 16:16:04 by yel-yaqi         ###   ########.fr       */
+/*   Updated: 2024/07/29 23:01:04 by mrezki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,11 @@ void	set_expansion_indices(t_token *token)
 	if (!var_count)
 		return ;
 	set_indices(token, var_count);
+	// 
+	for (size_t i = 0; i < var_count; i++)
+		printf("[%zu]", token->expansion_indices[i]);
+	printf("\n");
+	// 
 }
 
 void	set_tokens_expansion_indices(t_token *tokens)
@@ -59,7 +64,7 @@ void	set_tokens_expansion_indices(t_token *tokens)
 		if (tokens->type == LIMITER && (ft_strchr(tokens->word, '\'')
 				|| ft_strchr(tokens->word, '"')))
 		{
-			tokens->expansion_indices = gc_malloc(sizeof(int), COLLECT);
+			tokens->expansion_indices = gc_malloc(sizeof(size_t), COLLECT);
 			tokens->expansion_indices[0] = 0;
 		}
 		else

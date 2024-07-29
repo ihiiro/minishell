@@ -6,7 +6,7 @@
 /*   By: mrezki <mrezki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/29 18:45:07 by mrezki            #+#    #+#             */
-/*   Updated: 2024/07/26 23:15:15 by mrezki           ###   ########.fr       */
+/*   Updated: 2024/07/29 22:11:35 by mrezki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,9 @@ void	command_loop(t_envp *envp, char *env[], t_shell sh)
 		}
 		if (ft_strlen(str) > 0)
 			add_history(str);
-		sh.ast = parse(str);
+		sh.ast = build_ast(str);
+		if (!sh.ast)
+			continue ;
 		here_doc(sh.ast, &sh);
 		traverse_tree(sh.ast, &sh);
 		close(sh.stdin_copy);

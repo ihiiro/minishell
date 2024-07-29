@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yel-yaqi <yel-yaqi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mrezki <mrezki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/07 12:38:36 by yel-yaqi          #+#    #+#             */
-/*   Updated: 2024/07/28 23:15:10 by yel-yaqi         ###   ########.fr       */
+/*   Updated: 2024/07/29 22:30:50 by mrezki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,18 +21,13 @@ t_ast	*parse(char *expr)
 		return (NULL);
 	tokens = NULL;
 	word_list = ft_split(expr, " \t");
-	free(expr);
 	tokenize(word_list, &tokens);
 	name_operators(tokens);
 	type_files_and_limiters(tokens);
 	make_irregular_arguments(tokens);
-	put_args_into_cmd_tokens(tokens);
 	set_tokens_expansion_indices(tokens);
 	remove_quotes(tokens);
-	// 
-	for (t_token *ptr = tokens; ptr; ptr = ptr->next)
-			printf("=%s::%d::%d=\n", ptr->word, ptr->type, ptr->name);
-	// 
+	put_args_into_cmd_tokens(tokens);
 	tokens = simplify_para(tokens);
 	build_list(tokens);
 	connect_para(tokens);
@@ -63,34 +58,34 @@ static char	*complete(char *line)
 	static int	only_free_first_time;
 
 	read = readline("> ");
+	if (!read)
+		return (free(read), ft_printf(STDERR_FILENO,
+			"msh: syntax error: unexpected end of file\n"), NULL);
 	new_line = ft_strjoin(" ", read);
 	joint = ft_strjoin(line, new_line);
-	if (!only_free_first_time)
-		free(line);
 	free(read);
 	only_free_first_time++;
 	return (joint);
 }
 
-t_ast	*build_ast(void)
+t_ast	*build_ast(char *expr)
 {
-	char	*line;
 	int		check;
 	int		loop_entered;
 
-	line = readline("mini_bash_clone$ ");
-	add_history(line);
-	check = check_tokens(line);
+	check = check_tokens(expr);
 	if (!check)
-		return (free(line), NULL);
+		return (free(expr), NULL);
 	loop_entered = 0;
-	while (check == 2 || is_incomplete(line))
+	while (check == 2 || is_incomplete(expr))
 	{
-		line = complete(line);
-		check = check_tokens(line);
+		expr = complete(expr);
+		if (!expr)
+			return (NULL);
+		check = check_tokens(expr);
 		if (!check)
 			return (NULL);
 		loop_entered = 1;
 	}
-	return (parse(line));
+	return (parse(expr));
 }

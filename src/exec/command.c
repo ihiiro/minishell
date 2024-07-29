@@ -6,7 +6,7 @@
 /*   By: mrezki <mrezki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/18 11:52:22 by mrezki            #+#    #+#             */
-/*   Updated: 2024/07/26 23:14:15 by mrezki           ###   ########.fr       */
+/*   Updated: 2024/07/29 22:37:09 by mrezki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	command(t_ast *ast, t_shell *sh)
 
 	if (!ast || ast->token->type != COMMAND)
 		return ;
-	ast->token->args = check_expand(ast->token->args, sh);
+	ast->token->args = check_expand(ast->token->args, sh, ast->token->expansion_indices);
 	if (is_builtin(ast->token->word))
 		builtins_exe(ast->token->word, ast, sh);
 	else if (!ft_strncmp(ast->token->word, "./minishell", 12))

@@ -6,7 +6,7 @@
 /*   By: mrezki <mrezki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/26 23:15:03 by mrezki            #+#    #+#             */
-/*   Updated: 2024/07/26 23:15:04 by mrezki           ###   ########.fr       */
+/*   Updated: 2024/07/29 23:41:35 by mrezki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,19 +50,40 @@ char	*expand_(char *result, char *var, int *i, t_shell *sh)
 	return (result);
 }
 
-char	*expand_multiple_vars(char *var, t_shell *sh)
+char	*copy_char(int *i, char *var, char *result)
+{
+	char	*tmp;
+
+	tmp = ft_substr(var, *i, 1);
+	result = ft_strjoin(result, tmp);
+	if (!result)
+		return (perror("Malloc"), NULL);
+	(*i)++;
+	return (result);
+}
+
+char	*expand_multiple_vars(char *var, t_shell *sh, size_t *indices)
 {
 	char	*result;
 	char	*tmp;
 	int		i;
 	int		start;
+	int		j;
 
 	result = ft_strdup("");
 	i = 0;
+	j = 0;
 	while (var[i])
 	{
 		if (var[i] == '$')
-			result = expand_(result, var, &i, sh);
+		{
+			printf("%c %d %lu\n", var[i], j, indices[j]);
+			if (indices[j])
+				result = expand_(result, var, &i, sh);
+			else
+				result = copy_char(&i, var, result);
+			j++;
+		}
 		else
 		{
 			tmp = ft_substr(var, i, 1);
@@ -75,7 +96,7 @@ char	*expand_multiple_vars(char *var, t_shell *sh)
 	return (result);
 }
 
-char	**check_expand(char **args, t_shell *sh)
+char	**check_expand(char **args, t_shell *sh, size_t *indices)
 {
 	int		i;
 	char	*new;
@@ -86,9 +107,9 @@ char	**check_expand(char **args, t_shell *sh)
 	{
 		if (ft_strchr(args[i], '$'))
 		{
-			new = expand_multiple_vars(args[i], sh);
+			new = expand_multiple_vars(args[i], sh, indices);
 			if (!new)
-				return (NULL);
+				continue ;
 			free(args[i]);
 			args[i] = new;
 		}

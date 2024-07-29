@@ -6,7 +6,7 @@
 /*   By: mrezki <mrezki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/18 11:51:44 by mrezki            #+#    #+#             */
-/*   Updated: 2024/07/26 23:14:01 by mrezki           ###   ########.fr       */
+/*   Updated: 2024/07/29 22:30:59 by mrezki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void	command(t_ast *ast, t_shell *sh);
 void	copy_to_stdin(char *tmp_file);
 
 char	*find_path(char *cmd, char *env[], t_shell *sh, char *path_env);
-char	**check_expand(char **args, t_shell *sh);
+char	**check_expand(char **args, t_shell *sh, size_t *expansion_indices);
 char	**wildcard_expansion(char **args);
 
 size_t	entries_count(char **args);

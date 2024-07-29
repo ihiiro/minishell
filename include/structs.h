@@ -6,7 +6,7 @@
 /*   By: mrezki <mrezki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/18 11:51:59 by mrezki            #+#    #+#             */
-/*   Updated: 2024/07/26 23:14:08 by mrezki           ###   ########.fr       */
+/*   Updated: 2024/07/29 21:45:10 by mrezki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,8 @@ typedef struct s_token
 	int				left_pipe;
 	int				right_pipe;
 	char			**args;
+	int				subshell;
+	size_t			*expansion_indices;
 	struct s_token	*next;
 	struct s_token	*prev;
 	struct s_token	*last;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenize.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yel-yaqi <yel-yaqi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mrezki <mrezki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/07 00:56:13 by yel-yaqi          #+#    #+#             */
-/*   Updated: 2024/07/21 12:44:20 by yel-yaqi         ###   ########.fr       */
+/*   Updated: 2024/07/29 22:51:00 by mrezki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,10 @@ static void	classify(t_token *token_list)
 	{
 		token_list->subtree = NULL;
 		token_list->subshell = 0;
-		token_list->expansion_indices = NULL;
+		// 
+		token_list->expansion_indices = gc_malloc(sizeof(size_t), COLLECT);
+		token_list->expansion_indices[0] = 0;
+		// 
 		if (token_list->word[0] == '(')
 			token_list->type = PARA_OPEN;
 		else if (token_list->word[0] == ')')
