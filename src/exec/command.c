@@ -18,7 +18,7 @@ void	command(t_ast *ast, t_shell *sh)
 
 	if (!ast || ast->token->type != COMMAND)
 		return ;
-	ast->token->args = check_expand(ast->token->args, sh, ast->token->expansion_indices);
+	ast->token->args = check_expand(ast->token->args, sh, ast->token);
 	if (is_builtin(ast->token->word))
 		builtins_exe(ast->token->word, ast, sh);
 	else if (!ft_strncmp(ast->token->word, "./minishell", 12))

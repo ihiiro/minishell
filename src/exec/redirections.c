@@ -12,13 +12,14 @@
 
 #include "../../include/minishell.h"
 
-int	file_out_fd(char *token, t_shell *sh)
+int	file_out_fd(char *token, t_ast *ast, t_shell *sh)
 {
 	char	*file;
 	char	**expanded;
 	int		fd;
 
-	expanded = check_expand((char *[]){token, NULL}, sh);
+	expanded = check_expand((char *[]){token, NULL}, sh,
+		ast->right->token);
 	if (expanded[0][0] == '\0' || expanded[1])
 	{
 		sh->exit_status = print_error(token, "ambiguous redirect");
@@ -42,7 +43,7 @@ void	redirect_out(t_ast *ast, t_shell *sh)
 
 	if (!ast || ast->token->name != REDIR_OUT)
 		return ;
-	fd = file_out_fd(ast->right->token->word, sh);
+	fd = file_out_fd(ast->right->token->word, ast, sh);
 	if (fd == -1)
 		return ;
 	fd_out = dup(STDOUT_FILENO);

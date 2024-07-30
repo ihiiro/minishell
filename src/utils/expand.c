@@ -77,7 +77,6 @@ char	*expand_multiple_vars(char *var, t_shell *sh, size_t *indices)
 	{
 		if (var[i] == '$')
 		{
-			printf("%c %d %lu\n", var[i], j, indices[j]);
 			if (indices[j])
 				result = expand_(result, var, &i, sh);
 			else
@@ -96,7 +95,7 @@ char	*expand_multiple_vars(char *var, t_shell *sh, size_t *indices)
 	return (result);
 }
 
-char	**check_expand(char **args, t_shell *sh, size_t *indices)
+char	**check_expand(char **args, t_shell *sh, t_token *token)
 {
 	int		i;
 	char	*new;
@@ -107,12 +106,13 @@ char	**check_expand(char **args, t_shell *sh, size_t *indices)
 	{
 		if (ft_strchr(args[i], '$'))
 		{
-			new = expand_multiple_vars(args[i], sh, indices);
+			new = expand_multiple_vars(args[i], sh, token->expansion_indices);
 			if (!new)
 				continue ;
 			free(args[i]);
 			args[i] = new;
 		}
+		token = token->next;
 	}
 	return (wildcard_expansion(args));
 }

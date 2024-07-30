@@ -50,11 +50,6 @@ void	set_expansion_indices(t_token *token)
 	if (!var_count)
 		return ;
 	set_indices(token, var_count);
-	// 
-	for (size_t i = 0; i < var_count; i++)
-		printf("[%zu]", token->expansion_indices[i]);
-	printf("\n");
-	// 
 }
 
 void	set_tokens_expansion_indices(t_token *tokens)
