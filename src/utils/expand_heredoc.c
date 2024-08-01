@@ -1,32 +1,40 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   traverse.c                                         :+:      :+:    :+:   */
+/*   expand_heredoc.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mrezki <mrezki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/07/12 09:51:22 by mrezki            #+#    #+#             */
-/*   Updated: 2024/07/26 23:14:32 by mrezki           ###   ########.fr       */
+/*   Created: 2024/08/01 05:44:16 by mrezki            #+#    #+#             */
+/*   Updated: 2024/08/01 05:44:17 by mrezki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-void	traverse_tree(t_ast *ast, t_shell *sh)
+char	*expand_in_heredoc(char *var, t_shell *sh, int expand_flag)
 {
-	if (!ast)
-		return ;
-	and_or_operators(ast, sh);
-	pipe_operator(ast, sh);
-	redirect_out(ast, sh);
-	redirect_app(ast, sh);
-	redirect_in(ast, sh);
-	if (ast->token->name == HERE_DOC)
+	char	*result;
+	char	*tmp;
+	int		i;
+	int		start;
+	int		j;
+
+	result = ft_strdup("");
+	i = 0;
+	j = 0;
+	while (var[i])
 	{
-		copy_to_stdin(sh->doc_files[ast->token->doc_num]);
-		traverse_tree(ast->left, sh);
-		doc_close(ast, sh, ast->token->doc_num);
+		if (var[i] == '$')
+		{
+			if (expand_flag)
+				result = expand_(result, var, &i, sh);
+			else
+				result = copy_char(&i, var, result);
+			j++;
+		}
+		else
+			result = copy_char(&i, var, result);
 	}
-	command(ast, sh);
-	return ;
+	return (result);
 }

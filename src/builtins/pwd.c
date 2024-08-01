@@ -131,10 +131,7 @@ void	change_pwds(t_envp **env, char *pwd, char home)
 			tmp = head->value;
 			new_value = ft_strdup(search_env(*env, "PWD"));
 			if (new_value)
-			{
 				head->value = new_value;
-				free(tmp);
-			}
 		}
 		if (ft_strcmp(head->name, "PWD") == 0)
 			handle_pwd(home, pwd, head);

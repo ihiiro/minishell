@@ -57,6 +57,7 @@ typedef struct s_shell
 	char			*doc_files[MAX_HEREDOCS + 1];
 	int				exit_status;
 	int				stdin_copy;
+	int				heredoc_trap;
 	t_envp			*env;
 	t_ast			*ast;
 }		t_shell;

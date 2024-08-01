@@ -60,7 +60,7 @@ static char	*complete(char *line)
 	read = readline("> ");
 	if (!read)
 		return (free(read), ft_printf(STDERR_FILENO,
-			"msh: syntax error: unexpected end of file\n"), NULL);
+				"msh: syntax error: unexpected end of file\n"), NULL);
 	new_line = ft_strjoin(" ", read);
 	joint = ft_strjoin(line, new_line);
 	free(read);

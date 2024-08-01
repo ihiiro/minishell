@@ -12,31 +12,6 @@
 
 #include "../../include/minishell.h"
 
-void	size_heredocs(t_ast *ast, int *size)
-{
-	if (!ast || !ast->token)
-		return ;
-	if (ast->token->name == HERE_DOC)
-	{
-		ast->token->doc_num = *size;
-		(*size)++;
-	}
-	size_heredocs(ast->left, size);
-	size_heredocs(ast->right, size);
-}
-
-char	*get_tmp_file_name(int i)
-{
-	char	*num;
-	char	*tmp_name;
-
-	num = ft_itoa(i + 69);
-	tmp_name = ft_strjoin("/tmp/here_doc_tmp_file", num);
-	if (!tmp_name)
-		return (perror("Malloc"), NULL);
-	return (tmp_name);
-}
-
 void	fill_doc_files(t_shell *sh)
 {
 	int	size;
@@ -58,28 +33,52 @@ void	fill_doc_files(t_shell *sh)
 	sh->doc_files[i] = NULL;
 }
 
+void	heredoc_child_proc(t_shell *sh, char *tmp_file, t_ast *ast, int *i)
+{
+	char	*str;
+	int		fd;
+
+	signal(SIGINT, SIG_DFL);
+	fd = open(tmp_file, O_CREAT | O_TRUNC | O_RDWR, 0664);
+	(*i)++;
+	if (fd < 0)
+		return (perror("open"));
+	while (1)
+	{
+		str = readline("> ");
+		if (!str)
+			exit(0);
+		if (!ft_strncmp(str, ast->right->token->word, ft_strlen(str) + 1))
+			exit(0);
+		ft_printf(fd, "%s\n", expand_in_heredoc(str, sh,
+				ast->right->token->expansion_indices[0]));
+		free(str);
+	}
+}
+
 void	open_heredocs(t_ast *ast, t_shell *sh, int *i)
 {
 	char	*str;
 	int		fd;
+	int		pid;
 
 	if (!ast)
 		return ;
 	if (ast->token->name == HERE_DOC)
 	{
-		fd = open(sh->doc_files[*i], O_CREAT | O_TRUNC | O_RDWR, 0664);
-		(*i)++;
-		if (fd < 0)
-			return (perror("open"));
-		while (1)
+		pid = fork();
+		if (!pid)
+			heredoc_child_proc(sh, sh->doc_files[*i], ast, i);
+		else
 		{
-			str = readline("> ");
-			if (!str)
-				return (free(str));
-			if (!ft_strncmp(str, ast->right->token->word, ft_strlen(str) + 1))
-				return (close(fd), free(str));
-			ft_printf(fd, "%s\n", str);
-			free(str);
+			signal(SIGINT, SIG_IGN);
+			waitpid(pid, &sh->exit_status, 0);
+			if (WIFSIGNALED(sh->exit_status))
+			{
+				write(1, "\n", 1);
+				sh->exit_status = 1;
+				sh->heredoc_trap = 1;
+			}
 		}
 	}
 	open_heredocs(ast->left, sh, i);

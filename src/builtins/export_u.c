@@ -1,32 +1,42 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   traverse.c                                         :+:      :+:    :+:   */
+/*   export_u.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mrezki <mrezki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/07/12 09:51:22 by mrezki            #+#    #+#             */
-/*   Updated: 2024/07/26 23:14:32 by mrezki           ###   ########.fr       */
+/*   Created: 2024/08/01 15:57:17 by mrezki            #+#    #+#             */
+/*   Updated: 2024/08/01 15:57:18 by mrezki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-void	traverse_tree(t_ast *ast, t_shell *sh)
+int	args_empty(char **args)
 {
-	if (!ast)
-		return ;
-	and_or_operators(ast, sh);
-	pipe_operator(ast, sh);
-	redirect_out(ast, sh);
-	redirect_app(ast, sh);
-	redirect_in(ast, sh);
-	if (ast->token->name == HERE_DOC)
+	while (*args)
 	{
-		copy_to_stdin(sh->doc_files[ast->token->doc_num]);
-		traverse_tree(ast->left, sh);
-		doc_close(ast, sh, ast->token->doc_num);
+		if ((*args)[0])
+			return (0);
+		args++;
 	}
-	command(ast, sh);
-	return ;
+	return (1);
+}
+
+void	print_export_vars(t_envp *head)
+{
+	while (head)
+	{
+		if (!head->value)
+			printf("declare -x %s\n", head->name);
+		else if (head->name)
+			printf("declare -x %s=\"%s\"\n", head->name, head->value);
+		head = head->next;
+	}
+}
+
+void	add_empty(t_envp **env, char *var)
+{
+	if (search_env_name(*env, var) == NULL)
+		addnode(env, var, NULL);
 }

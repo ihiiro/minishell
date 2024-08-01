@@ -22,9 +22,11 @@ void	append_to_env(t_envp **env, char *name, char *value);
 void	change_pwds(t_envp **env, char *pwd, char home);
 void	shlvl_check(char *str, t_envp **env);
 void	init_envp(char *envp[], t_envp **en);
+void	add_empty(t_envp **env, char *var);
 void	exit_(char **strs, t_envp **env);
+void	print_export_vars(t_envp *head);
 
-int		export_(t_envp *env, char **args);
+int		export_(t_envp *env, char **args, char **old);
 int		unset_(t_envp **env, char **args);
 int		cd_(char **args, t_envp **env);
 int		is_spaces(char *str);
@@ -47,6 +49,7 @@ int		print_error(char *str, char *arg);
 int		first_occur(char *str, char h);
 int		count_char(char *str, char h);
 int		is_tilde(char *s1, char *s2);
+int		args_empty(char **args);
 int		count_dots(char **dirs);
 int		is_builtin(char *str);
 

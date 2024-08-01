@@ -24,12 +24,12 @@ void	builtins_(char *cmd, char **args, t_shell *sh)
 		exit_(args, &sh->env);
 }
 
-void	builtins_exe(char *cmd, t_ast *node, t_shell *sh)
+void	builtins_exe(char *cmd, t_ast *node, t_shell *sh, char **old)
 {
 	if (!ft_strcmp(cmd, "echo"))
 		sh->exit_status = echo_(++node->token->args);
 	else if (!ft_strcmp(cmd, "export"))
-		sh->exit_status = export_(sh->env, ++node->token->args);
+		sh->exit_status = export_(sh->env, ++node->token->args, old);
 	else if (!ft_strcmp(cmd, "unset"))
 		sh->exit_status = unset_(&sh->env, ++node->token->args);
 	else if (!ft_strncmp(cmd, "st", 3))

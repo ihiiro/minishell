@@ -86,6 +86,9 @@
 # define NOT_OP 7
 # define LIMITER 8
 
+# define ORANGE "\e[38;5;214m"
+# define RED	"\e[38;5;196m"
+
 /* parser */
 void	tokenize(char **word_list, t_token **token_list);
 void	build_simple(t_token *token, t_token *cmd);
@@ -146,7 +149,7 @@ void	disable_echo(void);
 
 /* Execution */
 
-void	builtins_exe(char *cmd, t_ast *node, t_shell *sh);
+void	builtins_exe(char *cmd, t_ast *node, t_shell *sh, char **old);
 void	traverse_tree(t_ast *ast, t_shell *sh);
 int		execute_cmd(char **cmd, char *env[], t_shell *sh);
 

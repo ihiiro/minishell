@@ -84,13 +84,7 @@ char	*expand_multiple_vars(char *var, t_shell *sh, size_t *indices)
 			j++;
 		}
 		else
-		{
-			tmp = ft_substr(var, i, 1);
-			result = ft_strjoin(result, tmp);
-			if (!result)
-				return (perror("Malloc"), NULL);
-			i++;
-		}
+			result = copy_char(&i, var, result);
 	}
 	return (result);
 }
@@ -109,7 +103,6 @@ char	**check_expand(char **args, t_shell *sh, t_token *token)
 			new = expand_multiple_vars(args[i], sh, token->expansion_indices);
 			if (!new)
 				continue ;
-			free(args[i]);
 			args[i] = new;
 		}
 		token = token->next;

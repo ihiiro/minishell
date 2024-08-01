@@ -71,7 +71,7 @@ int	only_chars_nums(char *arg, int *join_string)
 		if (!ft_isalnum(str[i]) && str[i] != '_'
 			&& (str[ft_strlen(str) - 1] == '+' && count_char(arg, '=') == 0))
 			err = 1;
-	if (err)
+	if (err && arg[0])
 		ft_printf(2, "Error: export: '%s' is not a valid identifier\n", str);
 	if (count_char(arg, '=') && arg[0] != '=')
 		free(str);
@@ -109,20 +109,18 @@ void	empty_value(t_envp *env, char *str)
 
 int	export_variables(char **args, t_envp *env)
 {
-	int	join_string;
-	int	err;
+	char	**tmp;
+	int		join_string;
+	int		err;
 
-	join_string = 0;
-	err = 0;
+	1 && ((join_string = 0) && (err = 0));
+	tmp = args;
 	while (*args)
 	{
 		if (!only_chars_nums(*args, &join_string))
 			err = 1;
 		else if (count_char(*args, '=') == 0)
-		{
-			if (search_env_name(env, *args) == NULL)
-				addnode(&env, *args, NULL);
-		}
+			add_empty(&env, *args);
 		else if (count_char(*args, '=') == 1
 			&& (*args)[ft_strlen(*args) - 1] == '='
 			&& !join_string)
@@ -131,6 +129,8 @@ int	export_variables(char **args, t_envp *env)
 			add_var_to_env(*args, env, join_string);
 		args++;
 	}
+	if (args_empty(tmp))
+		print_export_vars(env);
 	if (err)
 		return (1);
 	return (0);
@@ -153,22 +153,10 @@ int	export_variables(char **args, t_envp *env)
  * return: 0 on success.
  */
 
-int	export_(t_envp *env, char **args)
+int	export_(t_envp *env, char **args, char **old)
 {
-	t_envp	*head;
-
 	if (!args[0])
-	{
-		head = env;
-		while (head)
-		{
-			if (!head->value)
-				printf("declare -x %s\n", head->name);
-			else if (head->name)
-				printf("declare -x %s=\"%s\"\n", head->name, head->value);
-			head = head->next;
-		}
-	}
+		print_export_vars(env);
 	else
 		return (export_variables(args, env));
 	return (0);

@@ -12,6 +12,7 @@
 
 #include "../include/minishell.h"
 #include <sys/signal.h>
+#include <sys/wait.h>
 
 void	disable_echo(void)
 {

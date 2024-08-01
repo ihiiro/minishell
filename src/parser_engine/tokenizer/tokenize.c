@@ -41,10 +41,7 @@ static void	classify(t_token *token_list)
 	{
 		token_list->subtree = NULL;
 		token_list->subshell = 0;
-		// 
-		token_list->expansion_indices = gc_malloc(sizeof(size_t), COLLECT);
-		token_list->expansion_indices[0] = 0;
-		// 
+		token_list->expansion_indices = (size_t *){0};
 		if (token_list->word[0] == '(')
 			token_list->type = PARA_OPEN;
 		else if (token_list->word[0] == ')')

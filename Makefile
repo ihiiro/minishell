@@ -48,7 +48,8 @@ MAIN_SOURCES 		= src/parser_engine/tokenizer/tokenize.c \
 			src/exec/path.c src/exec/here_doc.c src/exec/pipe.c \
 			src/exec/and_or.c src/exec/redirections.c src/exec/command.c \
 			src/utils/wildcard.c src/utils/wildcard_utils.c src/utils/expand.c \
-			src/utils/heredoc_utils.c
+			src/utils/heredoc_utils.c src/utils/expand_heredoc.c \
+			src/utils/redir_utils.c src/builtins/export_u.c
 
 ALL_SOURCES = $(MAIN_SOURCES) $(TARGET_TEST_SOURCES)
 
