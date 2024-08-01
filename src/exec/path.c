@@ -27,7 +27,7 @@ char	*join_path(char *path, char *cmd)
 	return (new_path);
 }
 
-char	*find_path(char *cmd, char *env[], t_shell *sh, char *path_env)
+char	*find_path(char *cmd, char *path_env)
 {
 	char	**paths;
 	char	*path;

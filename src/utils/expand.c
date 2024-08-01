@@ -65,9 +65,7 @@ char	*copy_char(int *i, char *var, char *result)
 char	*expand_multiple_vars(char *var, t_shell *sh, size_t *indices)
 {
 	char	*result;
-	char	*tmp;
 	int		i;
-	int		start;
 	int		j;
 
 	result = ft_strdup("");
@@ -93,7 +91,6 @@ char	**check_expand(char **args, t_shell *sh, t_token *token)
 {
 	int		i;
 	char	*new;
-	char	*rest;
 
 	i = -1;
 	while (args[++i])

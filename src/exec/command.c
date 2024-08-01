@@ -15,14 +15,12 @@
 void	command(t_ast *ast, t_shell *sh)
 {
 	char	**env;
-	char	**old;
 
 	if (!ast || ast->token->type != COMMAND)
 		return ;
-	old = ast->token->args;
 	ast->token->args = check_expand(ast->token->args, sh, ast->token);
 	if (is_builtin(ast->token->word))
-		builtins_exe(ast->token->word, ast, sh, old);
+		builtins_exe(ast->token->word, ast, sh);
 	else if (!ft_strncmp(ast->token->word, "./minishell", 12))
 		shlvl_check(ast->token->word, &sh->env);
 	else if (ast->token->type == COMMAND)
@@ -33,7 +31,7 @@ void	command(t_ast *ast, t_shell *sh)
 	}
 }
 
-void	child_proc(char *path, char **cmd, char *env[], t_shell *sh)
+void	child_proc(char *path, char **cmd, char *env[])
 {
 	signal(SIGQUIT, SIG_DFL);
 	signal(SIGINT, SIG_DFL);
@@ -65,14 +63,14 @@ int	execute_cmd(char **cmd, char *env[], t_shell *sh)
 	path_env = search_env(sh->env, "PATH");
 	if (!path_env)
 		return (print_error(cmd[0], MSG_NOFILE), ERR_NOFILE);
-	path = find_path(cmd[0], env, sh, path_env);
+	path = find_path(cmd[0], path_env);
 	if (!path)
 		return (free(path), print_error(cmd[0], MSG_NOCMD), ERR_NOCMD);
 	signal(SIGINT, SIG_IGN);
 	signal(SIGQUIT, SIG_IGN);
 	pid = fork();
 	if (!pid)
-		child_proc(path, cmd, env, sh);
+		child_proc(path, cmd, env);
 	else
 		if (waitpid(pid, &sh->exit_status, 0) < 0)
 			return (free(path), print_error("waitpid", NULL));

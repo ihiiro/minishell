@@ -153,7 +153,7 @@ int	export_variables(char **args, t_envp *env)
  * return: 0 on success.
  */
 
-int	export_(t_envp *env, char **args, char **old)
+int	export_(t_envp *env, char **args)
 {
 	if (!args[0])
 		print_export_vars(env);

@@ -29,11 +29,11 @@ void	here_doc(t_ast *ast, t_shell *sh);
 void	command(t_ast *ast, t_shell *sh);
 void	copy_to_stdin(char *tmp_file);
 
-char	*find_path(char *cmd, char *env[], t_shell *sh, char *path_env);
 char	*expand_in_heredoc(char *var, t_shell *sh, int expand_flag);
 char	**check_expand(char **args, t_shell *sh, t_token *token);
 char	*expand_(char *result, char *var, int *i, t_shell *sh);
 char	*copy_char(int *i, char *var, char *result);
+char	*find_path(char *cmd, char *path_env);
 char	**wildcard_expansion(char **args);
 char	*get_tmp_file_name(int i);
 

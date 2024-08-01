@@ -15,9 +15,7 @@
 char	*expand_in_heredoc(char *var, t_shell *sh, int expand_flag)
 {
 	char	*result;
-	char	*tmp;
 	int		i;
-	int		start;
 	int		j;
 
 	result = ft_strdup("");

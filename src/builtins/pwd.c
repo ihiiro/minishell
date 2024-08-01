@@ -94,6 +94,7 @@ void	handle_pwd(char home, char *pwd, t_envp *head)
 
 	i = 0;
 	tmp = head->value;
+	new_value = NULL;
 	if (home == 'h' || (pwd[0] == '/' && !pwd[1]))
 	{
 		new_value = ft_strdup(pwd);
@@ -121,7 +122,6 @@ void	change_pwds(t_envp **env, char *pwd, char home)
 	t_envp	*head;
 	char	*tmp;
 	char	*new_value;
-	char	*full_path;
 
 	head = *env;
 	while (head)

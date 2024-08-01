@@ -10,12 +10,11 @@
 #                                                                              #
 # **************************************************************************** #
 
-CFLAGS			=  -O3 -Wall -Wextra -Werror -g -lreadline -L/Users/mrezki/.brew/opt/readline/lib
+USER			:= $(shell whoami)
+CFLAGS			= -O3 -Wall -Wextra -Werror -g -lreadline 
 NAME			= minishell
 LIB_DIR			= ./libft
 LIBFT			= $(LIB_DIR)/libft.a
-TARGET_TEST 		= test
-TARGET_TEST_SOURCES	= checks/tests.c
 MAIN_SOURCES 		= src/parser_engine/tokenizer/tokenize.c \
 			src/parser_engine/tokenizer/name_operators.c \
 			src/parser_engine/tokenizer/is_operator.c \
@@ -51,32 +50,27 @@ MAIN_SOURCES 		= src/parser_engine/tokenizer/tokenize.c \
 			src/utils/heredoc_utils.c src/utils/expand_heredoc.c \
 			src/utils/redir_utils.c src/builtins/export_u.c
 
-ALL_SOURCES = $(MAIN_SOURCES) $(TARGET_TEST_SOURCES)
-
 MAIN_OBJ 	= $(MAIN_SOURCES:.c=.o)
-TEST_OBJ 	= $(TARGET_TEST_SOURCES:.c=.o)
-ALL_OBJ 	= $(MAIN_OBJ) $(TEST_OBJ)
 
-HEADER 		= include/minishell.h
+HEADER 		= include/minishell.h include/structs.h include/exec.h include/builtins.h
+
+ifeq ($(USER), mrezki)
+	CFLAGS += -L/Users/mrezki/.brew/opt/readline/lib
+else
+	CFLAGS += -L/Users/yel-yaqi/.brew/opt/readline/lib
+endif
 
 all: $(NAME)
-	@echo "\033[032mminihell is ready for SEGFAULTS"
 
 check: $(TARGET_TEST)
 
 libft: $(LIBFT)
 
 src/%.o: src/%.c $(HEADER) Makefile
-	cc -c -g $< -o $@
-
-checks/%.o: checks/%.c $(HEADER) Makefile
-	@cc -g -c $< -o $@
+	cc -c -Wall -Wextra -Werror $< -o $@
 
 $(NAME): $(MAIN_OBJ) $(LIBFT)
 	cc $(CFLAGS) $^ -o $@
-
-$(TARGET_TEST): $(ALL_OBJ) $(HEADER) $(LIBFT) Makefile
-	cc $(ALL_OBJ)  -g $(LIBFT) -lreadline -L/Users/yel-yaqi/.brew/opt/readline/lib -o $@
 
 $(LIBFT):
 	$(MAKE) -C $(LIB_DIR)

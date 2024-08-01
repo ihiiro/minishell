@@ -54,7 +54,7 @@ char	*ps1_prompt(char *pwd)
 
 	tmp = ORANGE"┏━ "RED" 🔥MSH🔥"ORANGE" ━━━━━━━\n┃\e[30m"RED;
 	prompt = ft_strjoin(tmp, pwd);
-	prompt = ft_strjoin(prompt, "\e[0m"ORANGE"┃\n┗━ $\e[0m ");
+	prompt = ft_strjoin(prompt, "\e[0m"ORANGE"┃\n┗━ $>\e[0m ");
 	if (!prompt)
 		return (NULL);
 	return (prompt);
@@ -78,9 +78,12 @@ void	command_loop(t_envp *envp, char *str, t_shell sh)
 
 int	main(int argc, char *argv[], char *env[])
 {
+	(void)argc;
+	(void)argv;
 	t_shell	sh;
 	char	*str;
 
+	str = NULL;
 	sh.stdin_copy = -1;
 	init_envp(env, &sh.env);
 	command_loop(sh.env, str, sh);

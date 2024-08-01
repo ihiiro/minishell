@@ -97,8 +97,6 @@ static void	append_multi(char *word, t_token **token_list)
 
 void	tokenize(char **word_list, t_token **token_list)
 {
-	t_token	*node;
-
 	if (!*word_list)
 	{
 		classify(*token_list);

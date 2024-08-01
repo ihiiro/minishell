@@ -26,7 +26,7 @@ void	add_empty(t_envp **env, char *var);
 void	exit_(char **strs, t_envp **env);
 void	print_export_vars(t_envp *head);
 
-int		export_(t_envp *env, char **args, char **old);
+int		export_(t_envp *env, char **args);
 int		unset_(t_envp **env, char **args);
 int		cd_(char **args, t_envp **env);
 int		is_spaces(char *str);

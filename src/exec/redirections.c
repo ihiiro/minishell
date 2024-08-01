@@ -14,7 +14,6 @@
 
 void	redirect_out(t_ast *ast, t_shell *sh)
 {
-	char	*file;
 	int		fd;
 	int		fd_out;
 
@@ -33,7 +32,6 @@ void	redirect_out(t_ast *ast, t_shell *sh)
 
 void	redirect_app(t_ast *ast, t_shell *sh)
 {
-	char	*file;
 	int		fd;
 	int		fd_out;
 

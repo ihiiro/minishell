@@ -73,7 +73,7 @@ void	remove_node_mid(t_envp **tmp, t_envp **prev, int *i, int position)
  * @position: position of the variable.
  */
 
-void	remove_node(t_envp **env, char *name, int position)
+void	remove_node(t_envp **env, int position)
 {
 	t_envp	*tmp;
 	t_envp	*prev;
@@ -152,7 +152,7 @@ int	unset_(t_envp **env, char **args)
 			err = 1;
 		}
 		if (search_env_name(*env, args[i]) != NULL)
-			remove_node(env, args[i], node_position(*env, args[i]));
+			remove_node(env, node_position(*env, args[i]));
 		i++;
 	}
 	if (err)

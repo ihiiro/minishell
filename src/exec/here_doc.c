@@ -58,8 +58,6 @@ void	heredoc_child_proc(t_shell *sh, char *tmp_file, t_ast *ast, int *i)
 
 void	open_heredocs(t_ast *ast, t_shell *sh, int *i)
 {
-	char	*str;
-	int		fd;
 	int		pid;
 
 	if (!ast)
@@ -87,7 +85,6 @@ void	open_heredocs(t_ast *ast, t_shell *sh, int *i)
 
 void	here_doc(t_ast *ast, t_shell *sh)
 {
-	int	fd;
 	int	i;
 
 	if (!ast)
