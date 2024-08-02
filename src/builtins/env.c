@@ -111,14 +111,12 @@ void	init_envp(char *envp[], t_envp **en)
 void	change_env_value(t_envp **env, char *name, char *new_value)
 {
 	t_envp	*head;
-	char	*tmp;
 
 	head = *env;
 	while (head)
 	{
 		if (ft_strcmp(head->name, name) == 0)
 		{
-			tmp = head->value;
 			if (new_value)
 				head->value = ft_strdup(new_value);
 			else

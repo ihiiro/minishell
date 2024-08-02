@@ -73,6 +73,7 @@ int	main(int argc, char *argv[], char *env[])
 	(void)argv;
 	str = NULL;
 	sh.stdin_copy = -1;
+	sh.heredoc_trap = 0;
 	init_envp(env, &sh.env);
 	command_loop(sh.env, str, sh);
 	free_envp(sh.env);
