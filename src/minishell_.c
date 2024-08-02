@@ -12,22 +12,10 @@
 
 #include "../include/minishell.h"
 
-int	check_line(const char *str)
-{
-	while (*str)
-	{
-		if (*str != ' ' && *str != '\t')
-			return (1);
-		str++;
-	}
-	return (0);
-}
-
 int	process_commands(t_shell *sh, char *str)
 {
 	if (check_line(str))
 	{
-		add_history(str);
 		sh->ast = build_ast(str);
 		if (!sh->ast)
 		{
@@ -47,29 +35,24 @@ int	process_commands(t_shell *sh, char *str)
 	return (0);
 }
 
-char	*ps1_prompt(char *pwd)
-{
-	char	*prompt;
-	char	*tmp;
-
-	tmp = ORANGE"┏━ "RED" 🔥MSH🔥"ORANGE" ━━━━━━━\n┃\e[30m"RED;
-	prompt = ft_strjoin(tmp, pwd);
-	prompt = ft_strjoin(prompt, "\e[0m"ORANGE"┃\n┗━ $>\e[0m ");
-	if (!prompt)
-		return (NULL);
-	return (prompt);
-}
-
 void	command_loop(t_envp *envp, char *str, t_shell sh)
 {
-	int		sigint;
+	char	*prev_line;
 
+	prev_line = NULL;
 	while (1)
 	{
-		init_signal(&sigint);
-		str = readline(ps1_prompt(search_env(envp, "PWD")));
+		init_signal(&sh.exit_status);
+		str = readline(ps1_prompt(search_env(envp, "PWD"),
+					search_env(envp, "HOME")));
 		if (!str)
 			exit_(NULL, &envp);
+		if (!prev_line || ft_strncmp(prev_line, str, ft_strlen(prev_line) + 1))
+		{
+			add_history(str);
+			if (ft_strncmp(str, "", 1))
+				prev_line = ft_strdup(str);
+		}
 		if (process_commands(&sh, str))
 			continue ;
 		free(str);
@@ -78,11 +61,11 @@ void	command_loop(t_envp *envp, char *str, t_shell sh)
 
 int	main(int argc, char *argv[], char *env[])
 {
-	(void)argc;
-	(void)argv;
 	t_shell	sh;
 	char	*str;
 
+	(void)argc;
+	(void)argv;
 	str = NULL;
 	sh.stdin_copy = -1;
 	init_envp(env, &sh.env);

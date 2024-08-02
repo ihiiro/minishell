@@ -26,9 +26,11 @@ void	check_arg(char *arg, char **strs, t_envp *env, short *status)
 	int	i;
 
 	i = -1;
+	if ((arg[0] == '-' || arg[0] == '+') && ft_strlen(arg) != 1)
+		i++;
 	while (arg[++i])
 	{
-		if (!ft_isdigit(arg[i]))
+		if (!ft_isdigit(arg[i]) || (ft_atoi(arg) == -1 && ft_strlen(arg) > 15))
 		{
 			free_envp(env);
 			printf("exit\n");
@@ -57,10 +59,14 @@ void	exit_(char **strs, t_envp **env)
 		printf("exit\n");
 		exit(EXIT_SUCCESS);
 	}
-	if (strs[1] && strs[2])
+	if (strs[1])
 	{
-		printf("exit\nminishell: exit: too many arguments\n");
-		return ;
+		check_arg(strs[1], strs, *env, &exit_status);
+		if (strs[2])
+		{
+			printf("exit\nminishell: exit: too many arguments\n");
+			return ;
+		}
 	}
 	exit_status = 0;
 	if (strs[1])

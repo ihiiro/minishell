@@ -26,7 +26,8 @@ void	command(t_ast *ast, t_shell *sh)
 	else if (ast->token->type == COMMAND)
 	{
 		env = copy_env_to_arr(sh->env);
-		sh->exit_status = execute_cmd(ast->token->args, env, sh);
+		if (ft_strncmp(ast->token->args[0], "", 1))
+			sh->exit_status = execute_cmd(ast->token->args, env, sh);
 		free_split(env);
 	}
 }

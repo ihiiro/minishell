@@ -20,8 +20,6 @@ void	builtins_(char *cmd, char **args, t_shell *sh)
 		sh->exit_status = pwd_(sh->env);
 	else if (!ft_strcmp(cmd, "env"))
 		sh->exit_status = env_(sh->env);
-	else if (!ft_strcmp(cmd, "exit"))
-		exit_(args, &sh->env);
 }
 
 void	builtins_exe(char *cmd, t_ast *node, t_shell *sh)
@@ -32,8 +30,8 @@ void	builtins_exe(char *cmd, t_ast *node, t_shell *sh)
 		sh->exit_status = export_(sh->env, ++node->token->args);
 	else if (!ft_strcmp(cmd, "unset"))
 		sh->exit_status = unset_(&sh->env, ++node->token->args);
-	else if (!ft_strncmp(cmd, "st", 3))
-		printf("%d\n", sh->exit_status);
+	else if (!ft_strcmp(cmd, "exit"))
+		exit_(node->token->args, &sh->env);
 	builtins_(cmd, ++node->token->args, sh);
 }
 

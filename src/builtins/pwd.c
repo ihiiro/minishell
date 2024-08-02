@@ -120,22 +120,26 @@ void	handle_pwd(char home, char *pwd, t_envp *head)
 void	change_pwds(t_envp **env, char *pwd, char home)
 {
 	t_envp	*head;
-	char	*tmp;
+	t_envp	*tmp;
 	char	*new_value;
 
 	head = *env;
+	tmp = head;
 	while (head)
 	{
 		if (ft_strcmp(head->name, "OLDPWD") == 0)
 		{
-			tmp = head->value;
 			new_value = ft_strdup(search_env(*env, "PWD"));
 			if (new_value)
 				head->value = new_value;
 		}
-		if (ft_strcmp(head->name, "PWD") == 0)
-			handle_pwd(home, pwd, head);
 		head = head->next;
+	}
+	while (tmp)
+	{
+		if (ft_strcmp(tmp->name, "PWD") == 0)
+			handle_pwd(home, pwd, tmp);
+		tmp = tmp->next;
 	}
 }
 

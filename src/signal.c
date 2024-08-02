@@ -11,8 +11,18 @@
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
-#include <sys/signal.h>
-#include <sys/wait.h>
+
+int	g_sig = SIGINT;
+
+void	signal_handler(int sig)
+{
+	if (sig == SIGINT)
+		g_sig = 0;
+	printf("\n");
+	rl_on_new_line();
+	rl_replace_line("", 1);
+	rl_redisplay();
+}
 
 void	disable_echo(void)
 {
@@ -21,7 +31,6 @@ void	disable_echo(void)
 	if (tcgetattr(STDIN_FILENO, &term) == -1)
 	{
 		perror("tcgetattr");
-		system("lsof -c minishell");
 		exit(EXIT_FAILURE);
 	}
 	term.c_lflag &= ~ECHOCTL;
@@ -32,17 +41,7 @@ void	disable_echo(void)
 	}
 }
 
-void	signal_handler(int sig)
-{
-	if (sig != SIGINT)
-		return ;
-	printf("\n");
-	rl_on_new_line();
-	rl_replace_line("", 1);
-	rl_redisplay();
-}
-
-void	init_signal(int *sigint)
+void	init_signal(int *status)
 {
 	disable_echo();
 	if (signal(SIGQUIT, SIG_IGN) == SIG_ERR
@@ -52,5 +51,9 @@ void	init_signal(int *sigint)
 		perror("signal");
 		exit(EXIT_FAILURE);
 	}
-	*sigint = 1;
+	if (!g_sig)
+	{
+		*status = 1;
+		g_sig = SIGINT;
+	}
 }

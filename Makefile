@@ -48,7 +48,8 @@ MAIN_SOURCES 		= src/parser_engine/tokenizer/tokenize.c \
 			src/exec/and_or.c src/exec/redirections.c src/exec/command.c \
 			src/utils/wildcard.c src/utils/wildcard_utils.c src/utils/expand.c \
 			src/utils/heredoc_utils.c src/utils/expand_heredoc.c \
-			src/utils/redir_utils.c src/builtins/export_u.c
+			src/utils/redir_utils.c src/builtins/export_u.c \
+			src/utils/prompt_line.c
 
 MAIN_OBJ 	= $(MAIN_SOURCES:.c=.o)
 
@@ -67,7 +68,7 @@ check: $(TARGET_TEST)
 libft: $(LIBFT)
 
 src/%.o: src/%.c $(HEADER) Makefile
-	cc -c -Wall -Wextra -Werror $< -o $@
+	cc -c -Wall -Wextra -Werror -g $< -o $@
 
 $(NAME): $(MAIN_OBJ) $(LIBFT)
 	cc $(CFLAGS) $^ -o $@

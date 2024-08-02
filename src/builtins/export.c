@@ -68,8 +68,8 @@ int	only_chars_nums(char *arg, int *join_string)
 	(str[ft_strlen(str) - 1] == '+') && (*join_string = 1);
 	(!ft_isalpha(str[0]) && str[0] != '_' && (err = 1));
 	while (str[++i])
-		if (!ft_isalnum(str[i]) && str[i] != '_'
-			&& (str[ft_strlen(str) - 1] == '+' && count_char(arg, '=') == 0))
+		if (!ft_isalnum(str[i]) && str[i] != '_' && !(str[i] == '+'
+				&& (i == (int)ft_strlen(str) - 1) && count_char(arg, '=') == 0))
 			err = 1;
 	if (err && arg[0])
 		ft_printf(2, "Error: export: '%s' is not a valid identifier\n", str);
@@ -107,17 +107,16 @@ void	empty_value(t_envp *env, char *str)
  * @env: A pointer to the head of a linked list containing environment variables.
  */
 
-int	export_variables(char **args, t_envp *env)
+int	export_variables(char **args, t_envp *env, int *join_string)
 {
 	char	**tmp;
-	int		join_string;
 	int		err;
 
-	1 && ((join_string = 0) && (err = 0));
 	tmp = args;
+	err = 0;
 	while (*args)
 	{
-		if (!only_chars_nums(*args, &join_string))
+		if (!only_chars_nums(*args, join_string))
 			err = 1;
 		else if (count_char(*args, '=') == 0)
 			add_empty(&env, *args);
@@ -126,7 +125,7 @@ int	export_variables(char **args, t_envp *env)
 			&& !join_string)
 			empty_value(env, *args);
 		else
-			add_var_to_env(*args, env, join_string);
+			add_var_to_env(*args, env, *join_string);
 		args++;
 	}
 	if (args_empty(tmp))
@@ -155,9 +154,12 @@ int	export_variables(char **args, t_envp *env)
 
 int	export_(t_envp *env, char **args)
 {
+	int	join_string;
+
+	join_string = 0;
 	if (!args[0])
 		print_export_vars(env);
 	else
-		return (export_variables(args, env));
+		return (export_variables(args, env, &join_string));
 	return (0);
 }
