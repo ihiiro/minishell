@@ -43,7 +43,7 @@ void	disable_echo(void)
 
 void	init_signal(int *status)
 {
-	// disable_echo();
+	disable_echo();
 	if (signal(SIGQUIT, SIG_IGN) == SIG_ERR
 		|| signal(SIGINT, signal_handler) == SIG_ERR
 		|| signal(SIGTSTP, SIG_IGN) == SIG_ERR)

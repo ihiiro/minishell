@@ -59,7 +59,7 @@ MAIN_SOURCES 		= src/parser_engine/tokenizer/tokenize.c \
 
 MAIN_OBJ 	= $(MAIN_SOURCES:.c=.o)
 
-HEADER 		= include/minishell.h include/structs.h include/exec.h include/builtins.h
+HEADER 		= include/minishell.h include/structs.h include/exec.h include/builtins.h libft/libft.h
 
 define PRINT_LOADING
 	@printf "$(COLOR)Compiling src/$*.c... ["
@@ -78,6 +78,7 @@ else
 endif
 
 all: $(NAME)
+	@echo "$(GREEN)Compiling completed$(RESET)"
 
 check: $(TARGET_TEST)
 
@@ -91,8 +92,9 @@ $(NAME): $(MAIN_OBJ) $(LIBFT)
 	@cc $(CFLAGS) $^ -o $@
 
 $(LIBFT):
-	@$(MAKE) -C $(LIB_DIR)
-	@echo "$(COLOR)Compiling libft Library$(RESET)"
+	$(PRINT_LOADING)
+	$(MAKE) -C $(LIB_DIR)
+	@echo "$(COLOR)libft Compiled$(RESET)"
 clean:
 	@echo "$(RED)Cleaning up...$(RESET)"
 	@$(RM) $(MAIN_OBJ)

@@ -31,14 +31,12 @@ SRCS		= ft_isalpha.c ft_isdigit.c ft_isalnum.c \
 		utils.c print_char.c print_int.c print_hex.c get_next_line_bonus.c \
 		get_next_line_utils_bonus.c ft_fd_printf.c atoi_base.c ft_strcmp.c\
 
-
 OBJS		= $(SRCS:.c=.o)
-
 
 all: $(NAME)
 
 %.o: %.c libft.h
-	@$(CC) -c -o $@ $< $(CFLAGS)
+	$(CC) -c -o $@ $< $(CFLAGS)
 
 $(NAME): $(OBJS)
 	@$(AR) rcs $(NAME) $(OBJS)
