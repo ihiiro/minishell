@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signal.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mrezki <mrezki@student.42.fr>              +#+  +:+       +#+        */
+/*   By: yel-yaqi <yel-yaqi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/08 05:08:59 by mrezki            #+#    #+#             */
-/*   Updated: 2024/07/26 23:15:19 by mrezki           ###   ########.fr       */
+/*   Updated: 2024/08/02 21:25:34 by yel-yaqi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ void	disable_echo(void)
 
 void	init_signal(int *status)
 {
-	disable_echo();
+	// disable_echo();
 	if (signal(SIGQUIT, SIG_IGN) == SIG_ERR
 		|| signal(SIGINT, signal_handler) == SIG_ERR
 		|| signal(SIGTSTP, SIG_IGN) == SIG_ERR)

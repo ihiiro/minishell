@@ -6,7 +6,7 @@
 /*   By: yel-yaqi <yel-yaqi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/07 00:56:13 by yel-yaqi          #+#    #+#             */
-/*   Updated: 2024/08/02 01:27:40 by yel-yaqi         ###   ########.fr       */
+/*   Updated: 2024/08/02 16:11:03 by yel-yaqi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,9 +35,6 @@ static char	*strdup_quoted(char *str, size_t *i)
 			break ;
 		quoted_len++;
 	}
-	if (!is_operator(&str[quoted_len]) && str[quoted_len] != '('
-		&& str[quoted_len] != ')')
-		quoted_len++;
 	size = sizeof(char) * (quoted_len + 1);
 	quoted = gc_malloc(size, COLLECT);
 	ft_strlcpy(quoted, str, size);

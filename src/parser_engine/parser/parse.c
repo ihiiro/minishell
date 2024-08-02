@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mrezki <mrezki@student.42.fr>              +#+  +:+       +#+        */
+/*   By: yel-yaqi <yel-yaqi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/07 12:38:36 by yel-yaqi          #+#    #+#             */
-/*   Updated: 2024/07/29 22:30:50 by mrezki           ###   ########.fr       */
+/*   Updated: 2024/08/02 21:29:36 by yel-yaqi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ t_ast	*build_ast(char *expr)
 
 	check = check_tokens(expr);
 	if (!check)
-		return (free(expr), NULL);
+		return (NULL);
 	loop_entered = 0;
 	while (check == 2 || is_incomplete(expr))
 	{

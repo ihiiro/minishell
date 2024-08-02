@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mrezki <mrezki@student.42.fr>              +#+  +:+       +#+        */
+/*   By: yel-yaqi <yel-yaqi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/29 18:45:07 by mrezki            #+#    #+#             */
-/*   Updated: 2024/07/29 22:11:35 by mrezki           ###   ########.fr       */
+/*   Updated: 2024/08/02 21:09:39 by yel-yaqi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,17 @@
 
 int	process_commands(t_shell *sh, char *str)
 {
+	int	size;
+
+	size = 0;
 	if (check_line(str))
 	{
 		sh->ast = build_ast(str);
 		if (!sh->ast)
 		{
 			sh->exit_status = 258;
-			return (1);
+			if (size == 0)
+				return (1);
 		}
 		here_doc(sh->ast, sh);
 		if (sh->heredoc_trap == 1)
@@ -47,7 +51,8 @@ void	command_loop(t_envp *envp, char *str, t_shell sh)
 					search_env(envp, "HOME")));
 		if (!str)
 			exit_(NULL, &envp);
-		if (!prev_line || ft_strncmp(prev_line, str, ft_strlen(prev_line) + 1))
+		if ((!prev_line || ft_strncmp(prev_line, str, ft_strlen(prev_line) + 1))
+			&& ft_strlen(str) > 1)
 		{
 			add_history(str);
 			if (ft_strncmp(str, "", 1))

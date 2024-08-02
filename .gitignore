@@ -60,3 +60,8 @@ test
 .vscode/
 a.tldr
 .DS_Store
+
+
+# misc
+Bomb
+:w

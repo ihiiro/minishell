@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   here_doc.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mrezki <mrezki@student.42.fr>              +#+  +:+       +#+        */
+/*   By: yel-yaqi <yel-yaqi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/18 11:52:27 by mrezki            #+#    #+#             */
-/*   Updated: 2024/07/26 23:14:19 by mrezki           ###   ########.fr       */
+/*   Updated: 2024/08/02 21:08:10 by yel-yaqi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,14 +33,13 @@ void	fill_doc_files(t_shell *sh)
 	sh->doc_files[i] = NULL;
 }
 
-void	heredoc_child_proc(t_shell *sh, char *tmp_file, t_ast *ast, int *i)
+void	heredoc_child_proc(t_shell *sh, char *tmp_file, t_ast *ast)
 {
 	char	*str;
 	int		fd;
 
 	signal(SIGINT, SIG_DFL);
 	fd = open(tmp_file, O_CREAT | O_TRUNC | O_RDWR, 0664);
-	(*i)++;
 	if (fd < 0)
 		return (perror("open"));
 	while (1)
@@ -60,13 +59,15 @@ void	open_heredocs(t_ast *ast, t_shell *sh, int *i)
 {
 	int		pid;
 
-	if (!ast)
+	if (!ast || sh->heredoc_trap)
 		return ;
 	if (ast->token->name == HERE_DOC)
 	{
 		pid = fork();
+		if (pid < 0)
+			return (perror("fork"));
 		if (!pid)
-			heredoc_child_proc(sh, sh->doc_files[*i], ast, i);
+			heredoc_child_proc(sh, sh->doc_files[*i], ast);
 		else
 		{
 			signal(SIGINT, SIG_IGN);
@@ -78,6 +79,7 @@ void	open_heredocs(t_ast *ast, t_shell *sh, int *i)
 				sh->heredoc_trap = 1;
 			}
 		}
+		(*i)++;
 	}
 	open_heredocs(ast->left, sh, i);
 	open_heredocs(ast->right, sh, i);
