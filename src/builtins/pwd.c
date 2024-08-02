@@ -90,9 +90,7 @@ void	handle_pwd(char home, char *pwd, t_envp *head)
 {
 	char	*tmp;
 	char	*new_value;
-	int		i;
 
-	i = 0;
 	tmp = head->value;
 	new_value = NULL;
 	if (home == 'h' || (pwd[0] == '/' && !pwd[1]))

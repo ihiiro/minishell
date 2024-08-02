@@ -71,12 +71,10 @@ static char	*complete(char *line)
 t_ast	*build_ast(char *expr)
 {
 	int		check;
-	int		loop_entered;
 
 	check = check_tokens(expr);
 	if (!check)
 		return (NULL);
-	loop_entered = 0;
 	while (check == 2 || is_incomplete(expr))
 	{
 		expr = complete(expr);
@@ -85,7 +83,6 @@ t_ast	*build_ast(char *expr)
 		check = check_tokens(expr);
 		if (!check)
 			return (NULL);
-		loop_entered = 1;
 	}
 	return (parse(expr));
 }
