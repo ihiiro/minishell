@@ -94,7 +94,7 @@ $(NAME): $(MAIN_OBJ) $(LIBFT)
 
 $(LIBFT):
 	$(PRINT_LOADING)
-	$(MAKE) -C $(LIB_DIR)
+	@$(MAKE) -C $(LIB_DIR)
 	@echo "$(COLOR)libft Compiled$(RESET)"
 clean:
 	@echo "$(RED)Cleaning up...$(RESET)"
