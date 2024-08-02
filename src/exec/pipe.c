@@ -16,7 +16,6 @@ void	second_child(t_ast *ast, t_shell *sh, int *fd, int *status)
 {
 	int	pid;
 
-	(void)(status);
 	pid = fork();
 	if (pid < 0)
 		return (perror("fork"));
@@ -44,6 +43,7 @@ void	pipe_operator(t_ast *ast, t_shell *sh)
 		return ;
 	if (pipe(fd) < 0)
 		return (perror("pipe"));
+	signal(SIGINT, SIG_IGN);
 	pid = fork();
 	if (pid < 0)
 		return (perror("fork"));
