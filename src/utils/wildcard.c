@@ -33,7 +33,7 @@ void	expand_arg_entries(char **args, size_t *entry_i, char *pattern)
 	closedir(cur_dir);
 }
 
-char	**wildcard_expansion(char **args)
+char	**wildcard_expansion(char **args, t_token *token)
 {
 	char	**expanded;
 	size_t	args_count;
@@ -48,11 +48,12 @@ char	**wildcard_expansion(char **args)
 	entry_i = 0;
 	while (args[i])
 	{
-		if (!ft_strchr(args[i], '*'))
+		if (ft_strchr(args[i], '*') == NULL || token->expand_wild)
 			expanded[entry_i++] = ft_strdup(args[i]);
 		else
 			expand_arg_entries(expanded, &entry_i, args[i]);
 		i++;
+		token = token->next;
 	}
 	expanded[entry_i] = NULL;
 	return (expanded);

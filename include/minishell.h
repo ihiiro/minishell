@@ -106,6 +106,8 @@ void	rl_replace_line(char *str, int a);
 void	name_operators(t_token *tokens);
 void	remove_quotes(t_token *tokens);
 void	connect_para(t_token *tokens);
+void	multi(char *word, t_token **token_list);
+void	classify(t_token *token_list);
 void	build_list(t_token *start);
 
 t_token	*search(t_token *from, int name, int direction);
@@ -132,13 +134,7 @@ bool	strequal(char *str0, char *str1);
 /* garbage collector */
 void	*gc_malloc(size_t size, int lever);
 
-/* libft */
-// char	*ft_substr(char const *s, unsigned int start, size_t len);
 char	**ft_split(char *str, char *charset);
-// char	*ft_strchr(const char *s, int c);
-// char	*ft_strdup(const char *s1);
-// size_t	ft_strlcpy(char *dst, const char *src, size_t dstsize);
-// size_t	ft_strlen(const char *s);
 
 int		in_charset(char c, char *charset);
 

@@ -56,12 +56,12 @@ void	set_tokens_expansion_indices(t_token *tokens)
 {
 	while (tokens)
 	{
+		if ((ft_strchr(tokens->word, '\'') || ft_strchr(tokens->word, '"'))
+			&& (tokens->type == ARGUMENT || tokens->type == COMMAND))
+			tokens->expand_wild = 69420;
 		if (tokens->type == LIMITER && (!ft_strchr(tokens->word, '\'')
 				&& !ft_strchr(tokens->word, '"')))
-		{
-			tokens->expansion_indices = gc_malloc(sizeof(size_t), COLLECT);
 			tokens->expansion_indices[0] = 1;
-		}
 		else
 			set_expansion_indices(tokens);
 		tokens = tokens->next;

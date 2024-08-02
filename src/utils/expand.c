@@ -90,9 +90,11 @@ char	*expand_multiple_vars(char *var, t_shell *sh, size_t *indices)
 char	**check_expand(char **args, t_shell *sh, t_token *token)
 {
 	int		i;
+	t_token	*head;
 	char	*new;
 
 	i = -1;
+	head = token;
 	while (args[++i])
 	{
 		if (ft_strchr(args[i], '$'))
@@ -104,5 +106,5 @@ char	**check_expand(char **args, t_shell *sh, t_token *token)
 		}
 		token = token->next;
 	}
-	return (wildcard_expansion(args));
+	return (wildcard_expansion(args, head));
 }

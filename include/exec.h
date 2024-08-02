@@ -34,7 +34,7 @@ char	**check_expand(char **args, t_shell *sh, t_token *token);
 char	*expand_(char *result, char *var, int *i, t_shell *sh);
 char	*copy_char(int *i, char *var, char *result);
 char	*find_path(char *cmd, char *path_env);
-char	**wildcard_expansion(char **args);
+char	**wildcard_expansion(char **args, t_token *tokens);
 char	*get_tmp_file_name(int i);
 
 size_t	entries_count(char **args);

@@ -11,6 +11,11 @@
 # **************************************************************************** #
 
 USER			:= $(shell whoami)
+ORANGE			= \033[38;5;214m
+COLOR			= \033[38;5;51m
+RED			= \033[38;5;196m
+GREEN			= \033[32m
+RESET			= \033[0m
 CFLAGS			= -O3 -Wall -Wextra -Werror -g -lreadline 
 NAME			= minishell
 LIB_DIR			= ./libft
@@ -49,11 +54,22 @@ MAIN_SOURCES 		= src/parser_engine/tokenizer/tokenize.c \
 			src/utils/wildcard.c src/utils/wildcard_utils.c src/utils/expand.c \
 			src/utils/heredoc_utils.c src/utils/expand_heredoc.c \
 			src/utils/redir_utils.c src/builtins/export_u.c \
-			src/utils/prompt_line.c
+			src/utils/prompt_line.c src/parser_engine/tokenizer/classify.c \
+			src/parser_engine/tokenizer/multi.c
 
 MAIN_OBJ 	= $(MAIN_SOURCES:.c=.o)
 
 HEADER 		= include/minishell.h include/structs.h include/exec.h include/builtins.h
+
+define PRINT_LOADING
+	@printf "$(COLOR)Compiling src/$*.c... ["
+	@for i in $(shell seq 0 10); do \
+		printf "\r$(COLOR)Compiling src/$*.c... ["; \
+		for j in $$(seq 1 $$i); do printf "▓"; done; \
+		printf "]$(RESET)"; \
+	done; \
+	printf "$(GREEN)Done\n$(RESET)"
+endef
 
 ifeq ($(USER), mrezki)
 	CFLAGS += -L/Users/mrezki/.brew/opt/readline/lib
@@ -68,20 +84,25 @@ check: $(TARGET_TEST)
 libft: $(LIBFT)
 
 src/%.o: src/%.c $(HEADER) Makefile
-	cc -c -Wall -Wextra -Werror -g $< -o $@
+	$(PRINT_LOADING)
+	@cc -c -Wall -Wextra -Werror -g $< -o $@
 
 $(NAME): $(MAIN_OBJ) $(LIBFT)
-	cc $(CFLAGS) $^ -o $@
+	@cc $(CFLAGS) $^ -o $@
 
 $(LIBFT):
-	$(MAKE) -C $(LIB_DIR)
+	@$(MAKE) -C $(LIB_DIR)
+	@echo "$(COLOR)Compiling libft Library$(RESET)"
 clean:
-	@$(RM) $(ALL_OBJ)
+	@echo "$(RED)Cleaning up...$(RESET)"
+	@$(RM) $(MAIN_OBJ)
 	@$(MAKE) -C libft/ clean
+	@echo "$(RED)clean finished$(RESET)"
 
 fclean: clean
-	@$(RM) $(NAME) $(TARGET_TEST)
+	@$(RM) $(NAME)
 	@$(MAKE) -C libft/ fclean
+	@echo "$(RED)fclean finished$(RESET)"
 
 re: fclean all
 

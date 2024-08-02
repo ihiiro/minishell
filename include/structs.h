@@ -45,6 +45,7 @@ typedef struct s_token
 	int				left_pipe;
 	int				right_pipe;
 	char			**args;
+	int				expand_wild;
 	int				subshell;
 	size_t			*expansion_indices;
 	struct s_token	*next;

@@ -3,96 +3,60 @@
 /*                                                        :::      ::::::::   */
 /*   tokenize.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mrezki <mrezki@student.42.fr>              +#+  +:+       +#+        */
+/*   By: yel-yaqi <yel-yaqi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/07 00:56:13 by yel-yaqi          #+#    #+#             */
-/*   Updated: 2024/07/29 22:51:00 by mrezki           ###   ########.fr       */
+/*   Updated: 2024/08/02 01:27:40 by yel-yaqi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
 #include "../../../include/minishell.h"
 
-static char	*operator(char *word)
+int	isspace_(char c)
 {
-	if (word[0] == '&' && word[1] == '&')
-		return (ft_substr("&&", 0, 2));
-	else if (word[0] == '|' && word[1] == '|')
-		return (ft_substr("||", 0, 2));
-	else if (word[0] == '|')
-		return (ft_substr("|", 0, 1));
-	else if (word[0] == '>' && word[1] == '>')
-		return (ft_substr(">>", 0, 2));
-	else if (word[0] == '>')
-		return (ft_substr(">", 0, 1));
-	else if (word[0] == '<' && word[1] == '<')
-		return (ft_substr("<<", 0, 2));
-	else if (word[0] == '<')
-		return (ft_substr("<", 0, 1));
-	return (NULL);
+	if (c == ' ' || c == '\t')
+		return (1);
+	return (0);
 }
 
-static void	classify(t_token *token_list)
+static char	*strdup_quoted(char *str, size_t *i)
 {
-	int	prev_type;
+	size_t		quoted_len;
+	size_t		size;
+	char		*quoted;
 
-	prev_type = NOTHING_TYPED;
-	while (token_list)
+	quoted_len = 0;
+	while (str[quoted_len])
 	{
-		token_list->subtree = NULL;
-		token_list->subshell = 0;
-		token_list->expansion_indices = (size_t *){0};
-		if (token_list->word[0] == '(')
-			token_list->type = PARA_OPEN;
-		else if (token_list->word[0] == ')')
-			token_list->type = PARA_CLOSE;
-		else if (is_operator(token_list->word))
-			token_list->type = OPERATOR;
-		else if (prev_type == NOTHING_TYPED)
-			token_list->type = COMMAND;
-		else if (prev_type == COMMAND)
-			token_list->type = ARGUMENT;
-		else if (prev_type == ARGUMENT)
-			token_list->type = ARGUMENT;
-		else if (prev_type == OPERATOR || prev_type == PARA_OPEN)
-			token_list->type = COMMAND;
-		prev_type = token_list->type;
-		token_list = token_list->next;
+		if (!is_quoted(str[quoted_len])
+			&& (isspace_(str[quoted_len]) || is_operator(&str[quoted_len])
+				|| str[quoted_len] == '(' || str[quoted_len] == ')'))
+			break ;
+		quoted_len++;
 	}
-}
-
-static char	*extract(char *str)
-{
-	int	i;
-
-	i = 0;
-	while (str[i] && !operator(&str[i])
-		&& str[i] != '('
-		&& str[i] != ')')
-		i++;
-	return (ft_substr(str, 0, i));
+	if (!is_operator(&str[quoted_len]) && str[quoted_len] != '('
+		&& str[quoted_len] != ')')
+		quoted_len++;
+	size = sizeof(char) * (quoted_len + 1);
+	quoted = gc_malloc(size, COLLECT);
+	ft_strlcpy(quoted, str, size);
+	*i = quoted_len;
+	return (quoted);
 }
 
 static void	append_multi(char *word, t_token **token_list)
 {
-	int		i;
-	char	*str;
-	t_token	*node;
+	size_t		i;
+	t_token		*node;
 
 	i = 0;
-	while (word[i])
+	if (ft_strchr(word, '\'') || ft_strchr(word, '"'))
 	{
-		str = operator(&word[i]);
-		if (word[i] == '(')
-			str = ft_substr("(", 0, 1);
-		else if (word[i] == ')')
-			str = ft_substr(")", 0, 1);
-		else if (!str)
-			str = extract(&word[i]);
-		node = init_node(str);
+		node = init_node(strdup_quoted(word, &i));
 		append(node, token_list);
-		i += ft_strlen(str);
 	}
+	multi(&word[i], token_list);
 }
 
 void	tokenize(char **word_list, t_token **token_list)
