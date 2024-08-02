@@ -23,6 +23,7 @@ void	fill_doc_files(t_shell *sh)
 	if (size > 16)
 	{
 		print_error("here_doc", "maximum here-document count exceeded");
+		gc_malloc(0, 0);
 		exit(EXIT_FAILURE);
 	}
 	while (i < size)
@@ -55,10 +56,8 @@ void	heredoc_child_proc(t_shell *sh, char *tmp_file, t_ast *ast)
 	}
 }
 
-void	open_heredocs(t_ast *ast, t_shell *sh, int *i)
+void	open_heredocs(t_ast *ast, t_shell *sh, int *i, int pid)
 {
-	int		pid;
-
 	if (!ast || sh->heredoc_trap)
 		return ;
 	if (ast->token->name == HERE_DOC)
@@ -81,19 +80,21 @@ void	open_heredocs(t_ast *ast, t_shell *sh, int *i)
 		}
 		(*i)++;
 	}
-	open_heredocs(ast->left, sh, i);
-	open_heredocs(ast->right, sh, i);
+	open_heredocs(ast->left, sh, i, pid);
+	open_heredocs(ast->right, sh, i, pid);
 }
 
 void	here_doc(t_ast *ast, t_shell *sh)
 {
 	int	i;
+	int	pid;
 
 	if (!ast)
 		return ;
 	if (sh->stdin_copy == -1)
 		sh->stdin_copy = dup(STDIN_FILENO);
 	i = 0;
+	pid = 0;
 	fill_doc_files(sh);
-	open_heredocs(ast, sh, &i);
+	open_heredocs(ast, sh, &i, pid);
 }

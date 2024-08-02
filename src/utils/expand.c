@@ -27,7 +27,6 @@ char	*expand_single_var(char *var, t_shell *sh, int start, int end)
 		return (expanded);
 	}
 	expanded = search_env(sh->env, tmp);
-	free(tmp);
 	return (expanded);
 }
 

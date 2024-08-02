@@ -20,5 +20,4 @@ void	append_to_env(t_envp **env, char *name, char *value)
 	tmp = search_env(*env, name);
 	new_env = ft_strjoin(tmp, value);
 	change_env_value(env, name, new_env);
-	free(new_env);
 }

@@ -16,7 +16,8 @@ COLOR			= \033[38;5;51m
 RED			= \033[38;5;196m
 GREEN			= \033[32m
 RESET			= \033[0m
-CFLAGS			= -O3 -Wall -Wextra -Werror -g -lreadline 
+CFLAGS_R		= -O3 -Wall -Wextra -Werror -g -lreadline 
+CFLAGS			= -O3 -Wall -Wextra -Werror
 NAME			= minishell
 LIB_DIR			= ./libft
 LIBFT			= $(LIB_DIR)/libft.a
@@ -72,9 +73,9 @@ define PRINT_LOADING
 endef
 
 ifeq ($(USER), mrezki)
-	CFLAGS += -L/Users/mrezki/.brew/opt/readline/lib
+	CFLAGS_R += -L/Users/mrezki/.brew/opt/readline/lib
 else
-	CFLAGS += -L/Users/yel-yaqi/.brew/opt/readline/lib
+	CFLAGS_R += -L/Users/yel-yaqi/.brew/opt/readline/lib
 endif
 
 all: $(NAME)
@@ -86,10 +87,10 @@ libft: $(LIBFT)
 
 src/%.o: src/%.c $(HEADER) Makefile
 	$(PRINT_LOADING)
-	@cc -c -Wall -Wextra -Werror -g $< -o $@
+	@cc -c $< -o $@ $(CFLAGS)
 
 $(NAME): $(MAIN_OBJ) $(LIBFT)
-	@cc $(CFLAGS) $^ -o $@
+	@cc $^ -o $@ $(CFLAGS_R)
 
 $(LIBFT):
 	$(PRINT_LOADING)

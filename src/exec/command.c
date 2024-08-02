@@ -28,7 +28,6 @@ void	command(t_ast *ast, t_shell *sh)
 		env = copy_env_to_arr(sh->env);
 		if (ft_strncmp(ast->token->args[0], "", 1))
 			sh->exit_status = execute_cmd(ast->token->args, env, sh);
-		free_split(env);
 	}
 }
 
@@ -37,8 +36,8 @@ void	child_proc(char *path, char **cmd, char *env[])
 	signal(SIGQUIT, SIG_DFL);
 	signal(SIGINT, SIG_DFL);
 	execve(path, cmd, env);
-	free(path);
 	print_error(cmd[0], MSG_NOPERM);
+	gc_malloc(0, 0);
 	exit(ERR_NOPERM);
 }
 
@@ -66,7 +65,7 @@ int	execute_cmd(char **cmd, char *env[], t_shell *sh)
 		return (print_error(cmd[0], MSG_NOFILE), ERR_NOFILE);
 	path = find_path(cmd[0], path_env);
 	if (!path)
-		return (free(path), print_error(cmd[0], MSG_NOCMD), ERR_NOCMD);
+		return (print_error(cmd[0], MSG_NOCMD), ERR_NOCMD);
 	signal(SIGINT, SIG_IGN);
 	signal(SIGQUIT, SIG_IGN);
 	pid = fork();
@@ -74,6 +73,6 @@ int	execute_cmd(char **cmd, char *env[], t_shell *sh)
 		child_proc(path, cmd, env);
 	else
 		if (waitpid(pid, &sh->exit_status, 0) < 0)
-			return (free(path), print_error("waitpid", NULL));
+			return (print_error("waitpid", NULL));
 	return (exit_status_code(sh->exit_status));
 }

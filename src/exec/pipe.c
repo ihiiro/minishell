@@ -26,11 +26,19 @@ void	second_child(t_ast *ast, t_shell *sh, int *fd, int *status)
 		close(fd[0]);
 		ast->right->token->right_pipe = 1;
 		traverse_tree(ast->right, sh);
+		gc_malloc(0, 0);
 		exit(sh->exit_status);
 	}
 	close(fd[0]);
 	close(fd[1]);
 	waitpid(pid, status, 0);
+}
+
+void	dup_stin(int *fd)
+{
+	close(fd[0]);
+	dup2(fd[1], STDOUT_FILENO);
+	close(fd[1]);
 }
 
 void	pipe_operator(t_ast *ast, t_shell *sh)
@@ -49,15 +57,14 @@ void	pipe_operator(t_ast *ast, t_shell *sh)
 		return (perror("fork"));
 	if (pid == 0)
 	{
-		close(fd[0]);
-		dup2(fd[1], STDOUT_FILENO);
-		close(fd[1]);
+		dup_stin(fd);
 		ast->left->token->left_pipe = 1;
 		traverse_tree(ast->left, sh);
+		gc_malloc(0, 0);
 		exit(sh->exit_status);
 	}
 	second_child(ast, sh, fd, &status);
-	while(wait(NULL) < 0)
+	while (wait(NULL) < 0)
 		;
 	sh->exit_status = WEXITSTATUS(status);
 }

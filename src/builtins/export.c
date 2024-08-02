@@ -34,16 +34,12 @@ void	add_var_to_env(char *arg, t_envp *env, int join_string)
 	tvalue = ft_substr(arg, first_occur(arg, '=') + 1, ft_strlen(arg));
 	name = ft_strdup(tname);
 	value = ft_strdup(tvalue);
-	free(tname);
-	free(tvalue);
 	if (search_env_name(env, name) && join_string)
 		append_to_env(&env, name, value);
 	else if (search_env_name(env, name) && !join_string)
 		change_env_value(&env, name, value);
 	else
 		addnode(&env, name, value);
-	free(name);
-	free(value);
 }
 
 /*
@@ -73,8 +69,6 @@ int	only_chars_nums(char *arg, int *join_string)
 			err = 1;
 	if (err && arg[0])
 		ft_printf(2, "Error: export: '%s' is not a valid identifier\n", str);
-	if (count_char(arg, '=') && arg[0] != '=')
-		free(str);
 	if (err)
 		return (0);
 	return (1);
@@ -96,7 +90,6 @@ void	empty_value(t_envp *env, char *str)
 		addnode(&env, trimmed_str, "");
 	else
 		change_env_value(&env, trimmed_str, "");
-	free(trimmed_str);
 }
 
 /*

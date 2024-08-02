@@ -20,7 +20,7 @@ t_envp	*create_node(char *name, char *value)
 {
 	t_envp	*node;
 
-	node = malloc(sizeof(t_envp));
+	node = gc_malloc(sizeof(t_envp), 1);
 	if (!node)
 		return (ft_printf(2, "Error: Allocation\n"), NULL);
 	node->name = ft_strdup(name);

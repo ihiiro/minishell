@@ -43,7 +43,7 @@ char	**copy_env_to_arr(t_envp *env)
 	char	*tmp;
 	size_t	i;
 
-	env_copy = malloc(sizeof(char *) * (env_len(env) + 1));
+	env_copy = gc_malloc(sizeof(char *) * (env_len(env) + 1), 1);
 	if (!env_copy)
 		print_error("Malloc", NULL);
 	i = 0;
@@ -53,10 +53,10 @@ char	**copy_env_to_arr(t_envp *env)
 		{
 			tmp = ft_strjoin(env->name, "=");
 			if (!tmp)
-				return (free_split(env_copy), NULL);
+				return (NULL);
 			env_copy[i] = ft_strjoin(tmp, env->value);
 			if (!env_copy[i])
-				return (free_split(env_copy), NULL);
+				return (NULL);
 		}
 		else
 			env_copy[i] = ft_strdup(env->name);
@@ -108,7 +108,4 @@ void	shlvl_check(char *str, t_envp **env)
 	}
 	else
 		wait(NULL);
-	free_split(args);
-	free_split(envp);
-	free(new_shlvl);
 }

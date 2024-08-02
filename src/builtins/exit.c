@@ -21,7 +21,7 @@
  * @env: linked list containing environment variables.
  */
 
-void	check_arg(char *arg, char **strs, t_envp *env, short *status)
+void	check_arg(char *arg, short *status)
 {
 	int	i;
 
@@ -32,10 +32,9 @@ void	check_arg(char *arg, char **strs, t_envp *env, short *status)
 	{
 		if (!ft_isdigit(arg[i]) || (ft_atoi(arg) == -1 && ft_strlen(arg) > 15))
 		{
-			free_envp(env);
+			gc_malloc(0, 0);
 			printf("exit\n");
 			printf("minishell: exit: %s: numeric argument required\n", arg);
-			free_split(strs);
 			exit(255);
 		}
 	}
@@ -53,15 +52,16 @@ void	exit_(char **strs, t_envp **env)
 {
 	short	exit_status;
 
+	(void)env;
 	if (!strs)
 	{
-		free_envp(*env);
+		gc_malloc(0, 0);
 		printf("exit\n");
 		exit(EXIT_SUCCESS);
 	}
 	if (strs[1])
 	{
-		check_arg(strs[1], strs, *env, &exit_status);
+		check_arg(strs[1], &exit_status);
 		if (strs[2])
 		{
 			printf("exit\nminishell: exit: too many arguments\n");
@@ -70,9 +70,8 @@ void	exit_(char **strs, t_envp **env)
 	}
 	exit_status = 0;
 	if (strs[1])
-		check_arg(strs[1], strs, *env, &exit_status);
-	free_split(strs);
-	free_envp(*env);
+		check_arg(strs[1], &exit_status);
+	gc_malloc(0, 0);
 	printf("exit\n");
 	exit(exit_status);
 }

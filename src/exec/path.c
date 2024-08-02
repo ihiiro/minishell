@@ -23,7 +23,6 @@ char	*join_path(char *path, char *cmd)
 	new_path = ft_strjoin(tmp, cmd);
 	if (!new_path)
 		return (perror("Malloc"), NULL);
-	free(tmp);
 	return (new_path);
 }
 
@@ -45,10 +44,8 @@ char	*find_path(char *cmd, char *path_env)
 		if (!path)
 			return (NULL);
 		if (!access(path, F_OK))
-			return (free_split(paths), path);
-		free(path);
+			return (path);
 		i++;
 	}
-	free_split(paths);
 	return (NULL);
 }

@@ -49,13 +49,11 @@ char	*add_dir(char *pwd, char *dir)
 	if (!full_path)
 		return (NULL);
 	new_value = ft_strjoin(full_path, dir);
-	free(full_path);
-	free(pwd);
 	return (new_value);
 }
 
 /*
- * trim_string: Replace '/' with one '/' if there's multiple '/'.
+ * trim_string: Replace '/' withfree(new_dir),  one '/' if there's multiple '/'.
  *
  * @str: The argument passed to cd.
  * @dirs: str splitted with '/'
@@ -71,7 +69,7 @@ char	*trim_string(char *str, char **dirs)
 	int		i;
 
 	if (!ft_strcmp(str, "-") || count_char(str, '/') < 2)
-		return (free_split(dirs), ft_strdup(str));
+		return (ft_strdup(str));
 	trimmed = ft_strdup(dirs[0]);
 	i = 0;
 	while (dirs[++i])
@@ -79,18 +77,15 @@ char	*trim_string(char *str, char **dirs)
 		if (ft_strlen(dirs[i]) > 0)
 		{
 			tmp = ft_strjoin(trimmed, "/");
-			free(trimmed);
 			trimmed = ft_strjoin(tmp, dirs[i]);
-			free(tmp);
 		}
 	}
 	if (str[0] == '/' && trimmed[0] != '/')
 	{
 		tmp = ft_strjoin("/", trimmed);
-		free(trimmed);
 		trimmed = tmp;
 	}
-	return (free_split(dirs), trimmed);
+	return (trimmed);
 }
 
 /*
@@ -112,22 +107,22 @@ int	change_dir(char *pwd, t_envp **env)
 	if (!access(new_dir, F_OK))
 	{
 		if (chdir(new_dir) < 0)
-			return (free(new_dir), print_error("chdir", NULL));
+			return (print_error("chdir", NULL));
 		change_pwds(env, new_dir, 'd');
 	}
 	else if (ft_strcmp(new_dir, "-") == 0)
 	{
 		dir = search_env(*env, "OLDPWD");
 		if (!dir)
-			return (free(new_dir), print_error("cd", "OLDPWD not set"));
+			return (print_error("cd", "OLDPWD not set"));
 		if (chdir(dir) < 0)
 			print_error("chdir", NULL);
 		change_pwds(env, dir, 'd');
 		printf("%s\n", dir);
 	}
 	else
-		return (free(new_dir), print_error("cd", "No such file or directory"));
-	return (free(new_dir), 0);
+		return (print_error("cd", "No such file or directory"));
+	return (0);
 }
 
 /*
@@ -157,7 +152,6 @@ int	cd_(char **args, t_envp **env)
 			return (print_error("chdir", NULL));
 		dir = ft_strdup(dir);
 		change_pwds(env, dir, 'h');
-		free(dir);
 		return (0);
 	}
 	if (args[1] && args[0])

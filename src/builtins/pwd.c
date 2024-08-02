@@ -29,7 +29,7 @@ char	*remove_last_dir(char *pwd)
 
 	if (!ft_strncmp(pwd, "/", 2) || (count_char(pwd, '/') == 1
 			&& pwd[0] == '/'))
-		return (free(pwd), ft_strdup("/"));
+		return (ft_strdup("/"));
 	last_pos = 0;
 	i = 0;
 	while (pwd[i])
@@ -41,7 +41,7 @@ char	*remove_last_dir(char *pwd)
 	new_value = ft_substr(pwd, 0, last_pos);
 	if (!new_value)
 		return (NULL);
-	return (free(pwd), new_value);
+	return (new_value);
 }
 
 /*
@@ -75,7 +75,7 @@ char	*new_pwd(char *pwd, char *tmp, char *new_value, char **dirs)
 		else if (dirs[i] && ft_strncmp(dirs[i], ".", 2))
 			new_value = add_dir(new_value, dirs[i]);
 	}
-	return (free_split(dirs), new_value);
+	return (new_value);
 }
 
 /*
@@ -106,7 +106,6 @@ void	handle_pwd(char home, char *pwd, t_envp *head)
 	if (!new_value)
 		return ;
 	head->value = new_value;
-	free(tmp);
 }
 
 /*

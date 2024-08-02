@@ -49,9 +49,7 @@ void	remove_node_mid(t_envp **tmp, t_envp **prev, int *i, int position)
 	if (*i == position - 1 && *tmp)
 	{
 		(*prev)->next = (*tmp)->next;
-		free((*tmp)->name);
-		free((*tmp)->value);
-		free(*tmp);
+		(*tmp) = NULL;
 	}
 	else
 	{
@@ -87,9 +85,7 @@ void	remove_node(t_envp **env, int position)
 		if (i == 0 && position == 1)
 		{
 			*env = (*env)->next;
-			free(tmp->name);
-			free(tmp->value);
-			free(tmp);
+			tmp = NULL;
 		}
 		else
 			remove_node_mid(&tmp, &prev, &i, position);

@@ -95,7 +95,6 @@ void	init_envp(char *envp[], t_envp **en)
 		vals = ft_split(envp[i], "=");
 		if (vals[0] && vals[1])
 			addnode(&env, vals[0], vals[1]);
-		free_split(vals);
 		i++;
 	}
 	change_env_value(&env, "SHELL", "minishell");
@@ -124,7 +123,6 @@ void	change_env_value(t_envp **env, char *name, char *new_value)
 				head->value = ft_strdup(new_value);
 			else
 				head->value = NULL;
-			free(tmp);
 		}
 		head = head->next;
 	}
