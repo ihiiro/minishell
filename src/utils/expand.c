@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mrezki <mrezki@student.42.fr>              +#+  +:+       +#+        */
+/*   By: yel-yaqi <yel-yaqi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/26 23:15:03 by mrezki            #+#    #+#             */
-/*   Updated: 2024/07/29 23:41:35 by mrezki           ###   ########.fr       */
+/*   Updated: 2024/08/04 07:16:29 by yel-yaqi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,9 +72,12 @@ char	*expand_multiple_vars(char *var, t_shell *sh, size_t *indices)
 	j = 0;
 	while (var[i])
 	{
-		if (var[i] == '$')
+		if (var[i] == '$' && indices[j] == 2)
+			i++;
+		else if (var[i] == '$')
 		{
-			if (indices[j])
+			printf("%s %lu\n", var, indices[j]);
+			if (indices[j] == 1)
 				result = expand_(result, var, &i, sh);
 			else
 				result = copy_char(&i, var, result);

@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: mrezki <mrezki@student.42.fr>              +#+  +:+       +#+         #
+#    By: yel-yaqi <yel-yaqi@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/05 20:21:35 by yel-yaqi          #+#    #+#              #
-#    Updated: 2024/07/29 21:29:43 by mrezki           ###   ########.fr        #
+#    Updated: 2024/08/04 05:56:16 by yel-yaqi         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -56,7 +56,7 @@ MAIN_SOURCES 		= src/parser_engine/tokenizer/tokenize.c \
 			src/utils/heredoc_utils.c src/utils/expand_heredoc.c \
 			src/utils/redir_utils.c src/builtins/export_u.c \
 			src/utils/prompt_line.c src/parser_engine/tokenizer/classify.c \
-			src/parser_engine/tokenizer/multi.c
+			src/parser_engine/tokenizer/multi.c \
 
 MAIN_OBJ 	= $(MAIN_SOURCES:.c=.o)
 
