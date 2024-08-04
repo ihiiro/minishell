@@ -66,8 +66,6 @@ size_t	entry_count(char *pattern)
 		entry = readdir(cur_dir);
 	}
 	closedir(cur_dir);
-	if (!len)
-		return (1);
 	return (len);
 }
 

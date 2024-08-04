@@ -48,7 +48,8 @@ char	**wildcard_expansion(char **args, t_token *token)
 	entry_i = 0;
 	while (args[i])
 	{
-		if (ft_strchr(args[i], '*') == NULL || token->expand_wild)
+		if (ft_strchr(args[i], '*') == NULL || token->expand_wild
+			|| !entry_count(args[i]))
 			expanded[entry_i++] = ft_strdup(args[i]);
 		else
 			expand_arg_entries(expanded, &entry_i, args[i]);

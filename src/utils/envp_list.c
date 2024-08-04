@@ -24,7 +24,7 @@ t_envp	*create_node(char *name, char *value)
 	if (!node)
 		return (ft_printf(2, "Error: Allocation\n"), NULL);
 	node->name = ft_strdup(name);
-	if (!strncmp(node->name, "OLDPWD", ft_strlen(node->name)))
+	if (!strncmp(node->name, "OLDPWD", ft_strlen(node->name) + 1))
 		node->value = NULL;
 	else if (!value)
 		node->value = NULL;

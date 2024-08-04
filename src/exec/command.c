@@ -19,10 +19,13 @@ void	command(t_ast *ast, t_shell *sh)
 	if (!ast || ast->token->type != COMMAND)
 		return ;
 	ast->token->args = check_expand(ast->token->args, sh, ast->token);
+	if (!ast->token->args
+		|| !ast->token->args[0])
+		return ;
 	if (is_builtin(ast->token->word))
 		builtins_exe(ast->token->word, ast, sh);
 	else if (!ft_strncmp(ast->token->word, "./minishell", 12))
-		shlvl_check(ast->token->word, &sh->env);
+		shlvl_check(ast->token->word, &sh->env, sh);
 	else if (ast->token->type == COMMAND)
 	{
 		env = copy_env_to_arr(sh->env);

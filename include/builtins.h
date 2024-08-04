@@ -20,7 +20,7 @@
 void	change_env_value(t_envp **env, char *name, char *new_value);
 void	append_to_env(t_envp **env, char *name, char *value);
 void	change_pwds(t_envp **env, char *pwd, char home);
-void	shlvl_check(char *str, t_envp **env);
+void	shlvl_check(char *str, t_envp **env, t_shell *sh);
 void	init_envp(char *envp[], t_envp **en);
 void	add_empty(t_envp **env, char *var);
 void	exit_(char **strs, t_envp **env);
@@ -54,5 +54,6 @@ int		count_dots(char **dirs);
 int		is_builtin(char *str);
 
 t_envp	*create_node(char *name, char *value);
+t_envp	*setup_basic_env(void);
 
 #endif // !BUILTINS_H

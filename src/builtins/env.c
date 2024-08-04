@@ -90,6 +90,8 @@ void	init_envp(char *envp[], t_envp **en)
 
 	env = NULL;
 	i = 0;
+	if (!envp[0])
+		env = setup_basic_env();
 	while (envp[i])
 	{
 		vals = ft_split(envp[i], "=");

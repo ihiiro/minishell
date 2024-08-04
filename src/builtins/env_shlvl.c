@@ -13,6 +13,20 @@
 #include "../../include/minishell.h"
 #include <stdlib.h>
 
+t_envp	*setup_basic_env(void)
+{
+	t_envp	*en;
+	char	pwd[1024];
+
+	en = NULL;
+	addnode(&en, "OLDPWD", NULL);
+	addnode(&en, "SHLVL", "1");
+	addnode(&en, "PATH", "/usr/bin:/usr/local/bin:/bin:/use/gnu/bin:.");
+	if (getcwd(pwd, sizeof(pwd)))
+		addnode(&en, "PWD", pwd);
+	return (en);
+}
+
 size_t	env_len(t_envp *env)
 {
 	t_envp	*tmp;
@@ -86,7 +100,7 @@ char	*shlvl_new_value(t_envp *env)
  * @env: list of environment variables.
  */
 
-void	shlvl_check(char *str, t_envp **env)
+void	shlvl_check(char *str, t_envp **env, t_shell *sh)
 {
 	char	**args;
 	char	**envp;
@@ -99,13 +113,15 @@ void	shlvl_check(char *str, t_envp **env)
 	if (!args)
 		return (perror("Malloc"));
 	envp = copy_env_to_arr(*env);
+	signal(SIGINT, SIG_IGN);
 	pid = fork();
 	if (pid == 0)
 	{
 		execve("./minishell", &args[1], envp);
-		perror("minishell");
+		perror("execve");
 		exit(EXIT_FAILURE);
 	}
 	else
-		wait(NULL);
+		waitpid(pid, &sh->exit_status, 0);
+	sh->exit_status = WEXITSTATUS(sh->exit_status);
 }
