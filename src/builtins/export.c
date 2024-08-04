@@ -43,31 +43,30 @@ void	add_var_to_env(char *arg, t_envp *env, int join_string)
 }
 
 /*
- * only_chars_nums: Checks if the string contails only characters
+ * is_valid_identifier: Checks if the string contails only characters
  * or number or = sign.
  * return: 1 if true.
  *	0 if not.
  */
 
-int	only_chars_nums(char *arg, int *join_string)
+static int	is_valid_identifier(char *input, int *join_string)
 {
 	char	*str;
-	int		i;
+	size_t	i;
 	int		err;
 
 	i = -1;
 	err = 0;
-	if (count_char(arg, '=') == 0 || arg[0] == '=')
-		str = arg;
+	if (count_char(input, '=') == 0 || input[0] == '=')
+		str = input;
 	else
-		str = ft_substr(arg, 0, first_occur(arg, '='));
-	(str[ft_strlen(str) - 1] == '+') && (*join_string = 1);
-	(!ft_isalpha(str[0]) && str[0] != '_' && (err = 1));
+		str = ft_substr(input, 0, first_occur(input, '='));
+	*join_string = (str[ft_strlen(str) - 1] == '+');
+	err = !(ft_isalpha(str[0]) || str[0] == '_');
 	while (str[++i])
-		if (!ft_isalnum(str[i]) && str[i] != '_' && !(str[i] == '+'
-				&& (i == (int)ft_strlen(str) - 1) && count_char(arg, '=') == 0))
+		if (!character_valid(str[i], i == ft_strlen(str) - 1, *join_string))
 			err = 1;
-	if (err && arg[0])
+	if (err && input[0])
 		ft_printf(2, "Error: export: '%s' is not a valid identifier\n", str);
 	if (err)
 		return (0);
@@ -109,7 +108,7 @@ int	export_variables(char **args, t_envp *env, int *join_string)
 	err = 0;
 	while (*args)
 	{
-		if (!only_chars_nums(*args, join_string))
+		if (!is_valid_identifier(*args, join_string))
 			err = 1;
 		else if (count_char(*args, '=') == 0)
 			add_empty(&env, *args);

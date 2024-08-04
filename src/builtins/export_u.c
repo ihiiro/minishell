@@ -40,3 +40,12 @@ void	add_empty(t_envp **env, char *var)
 	if (search_env_name(*env, var) == NULL)
 		addnode(env, var, NULL);
 }
+
+int	character_valid(char c, int is_last, int join_string)
+{
+	if (ft_isalnum(c) || c == '_')
+		return (1);
+	if (c == '+' && is_last && join_string)
+		return (1);
+	return (0);
+}

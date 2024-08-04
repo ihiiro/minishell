@@ -34,6 +34,8 @@ char	*ps1_prompt(char *pwd, char *home)
 	char	*tmp;
 
 	tmp = ORANGE"┏━"RED"🅼.🆂.🅷 "ORANGE"════«\e[30m"RED;
+	if (!pwd)
+		pwd = ft_strdup("");
 	prompt = ft_strjoin(tmp, simple_pwd(pwd, home));
 	prompt = ft_strjoin(prompt, "\e[0m"ORANGE"»\n┗━☿️\e[0m ");
 	if (!prompt)

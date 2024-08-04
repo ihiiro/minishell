@@ -68,6 +68,8 @@ char	*expand_multiple_vars(char *var, t_shell *sh, size_t *indices)
 	int		j;
 
 	result = ft_strdup("");
+	if (!result)
+		return (NULL);
 	i = 0;
 	j = 0;
 	while (var[i])
