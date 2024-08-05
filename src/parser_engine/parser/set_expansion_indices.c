@@ -6,7 +6,7 @@
 /*   By: yel-yaqi <yel-yaqi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/21 12:49:06 by yel-yaqi          #+#    #+#             */
-/*   Updated: 2024/08/04 07:43:34 by yel-yaqi         ###   ########.fr       */
+/*   Updated: 2024/08/05 21:22:49 by yel-yaqi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ void	set_tokens_expansion_indices(t_token *tokens)
 		if (tokens->type == LIMITER && (!ft_strchr(tokens->word, '\'')
 				&& !ft_strchr(tokens->word, '"')))
 			tokens->expansion_indices[0] = 1;
-		else
+		else if (tokens->type != LIMITER)
 			set_expansion_indices(tokens);
 		tokens = tokens->next;
 	}
