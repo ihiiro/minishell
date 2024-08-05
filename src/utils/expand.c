@@ -6,7 +6,7 @@
 /*   By: yel-yaqi <yel-yaqi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/26 23:15:03 by mrezki            #+#    #+#             */
-/*   Updated: 2024/08/04 07:16:29 by yel-yaqi         ###   ########.fr       */
+/*   Updated: 2024/08/05 01:14:23 by yel-yaqi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,6 @@ char	*expand_multiple_vars(char *var, t_shell *sh, size_t *indices)
 			i++;
 		else if (var[i] == '$')
 		{
-			printf("%s %lu\n", var, indices[j]);
 			if (indices[j] == 1)
 				result = expand_(result, var, &i, sh);
 			else
