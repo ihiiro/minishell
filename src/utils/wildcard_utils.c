@@ -78,7 +78,8 @@ size_t	entries_count(char **args)
 	len = 0;
 	while (args[i])
 	{
-		len += entry_count(args[i]);
+		if (ft_strchr(args[i], '*'))
+			len += entry_count(args[i]);
 		i++;
 	}
 	return (len);

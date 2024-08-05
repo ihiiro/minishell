@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
+#include <sys/syslimits.h>
 
 /*
  * remove_last_dir: removes the last directory in the pwd path.
@@ -126,9 +127,10 @@ void	change_pwds(t_envp **env, char *pwd, char home)
 	{
 		if (ft_strcmp(head->name, "OLDPWD") == 0)
 		{
-			new_value = ft_strdup(search_env(*env, "PWD"));
-			if (new_value)
-				head->value = new_value;
+			new_value = oldpwd_(*env);
+			if (!new_value)
+				return (perror("malloc"));
+			head->value = new_value;
 		}
 		head = head->next;
 	}
@@ -152,6 +154,8 @@ void	change_pwds(t_envp **env, char *pwd, char home)
 
 int	pwd_(t_envp *env)
 {
+	char	buffer[PATH_MAX];
+
 	while (env)
 	{
 		if (!ft_strncmp(env->name, "PWD", 3))
@@ -161,6 +165,8 @@ int	pwd_(t_envp *env)
 		}
 		env = env->next;
 	}
-	ft_printf(2, "Error: PWD is not set\n");
+	if (!getcwd(buffer, sizeof(buffer)))
+		return (perror("getcwd"), 1);
+	printf("%s\n", buffer);
 	return (1);
 }

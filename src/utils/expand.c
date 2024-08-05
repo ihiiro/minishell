@@ -22,7 +22,7 @@ char	*expand_single_var(char *var, t_shell *sh, int start, int end)
 		return (NULL);
 	if (tmp[0] == '?')
 	{
-		tmp = ft_substr(var, start + 1, end - start);
+		tmp = ft_substr(var, start + 1, end - (start + 1));
 		expanded = ft_strjoin(ft_itoa(sh->exit_status), tmp);
 		return (expanded);
 	}
@@ -37,9 +37,7 @@ char	*expand_(char *result, char *var, int *i, t_shell *sh)
 
 	(*i)++;
 	start = (*i);
-	if (var[*i] == '?')
-		(*i)++;
-	while ((var[*i] && ft_isalnum(var[*i])) || var[*i] == '_')
+	while ((var[*i] && ft_isalnum(var[*i])) || var[*i] == '_' || var[*i] == '?')
 		(*i)++;
 	tmp = expand_single_var(var, sh, start, *i);
 	if (tmp)

@@ -12,9 +12,29 @@
 
 #include "../../include/minishell.h"
 
-/*
- * create_node: Creates 
- */
+char	*hereoc_lim(t_ast *ast)
+{
+	char	*limiter;
+
+	limiter = ast->right->token->word;
+	if (ast->right->token->expansion_indices[0]
+		== 2)
+		limiter = ft_substr(limiter, 1, ft_strlen(limiter) - 1);
+	return (limiter);
+}
+
+char	*oldpwd_(t_envp *env)
+{
+	char	*buffer;
+	char	*new_value;
+
+	buffer = search_env(env, "PWD");
+	if (!buffer)
+		new_value = ft_strdup("");
+	else
+		new_value = ft_strdup(buffer);
+	return (new_value);
+}
 
 t_envp	*create_node(char *name, char *value)
 {

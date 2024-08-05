@@ -36,6 +36,7 @@ char	*copy_char(int *i, char *var, char *result);
 char	*find_path(char *cmd, char *path_env);
 char	**wildcard_expansion(char **args, t_token *tokens);
 char	*get_tmp_file_name(int i);
+char	*hereoc_lim(t_ast *ast);
 
 size_t	entries_count(char **args);
 size_t	entry_count(char *pattern);

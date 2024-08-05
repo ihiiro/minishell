@@ -19,8 +19,7 @@ void	command(t_ast *ast, t_shell *sh)
 	if (!ast || ast->token->type != COMMAND)
 		return ;
 	ast->token->args = check_expand(ast->token->args, sh, ast->token);
-	if (!ast->token->args
-		|| !ast->token->args[0])
+	if (!ast->token->args)
 		return ;
 	if (is_builtin(ast->token->word))
 		builtins_exe(ast->token->word, ast, sh);
@@ -29,8 +28,7 @@ void	command(t_ast *ast, t_shell *sh)
 	else if (ast->token->type == COMMAND)
 	{
 		env = copy_env_to_arr(sh->env);
-		if (ft_strncmp(ast->token->args[0], "", 1))
-			sh->exit_status = execute_cmd(ast->token->args, env, sh);
+		sh->exit_status = execute_cmd(ast->token->args, env, sh);
 	}
 }
 

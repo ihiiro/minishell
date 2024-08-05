@@ -32,7 +32,7 @@ char	*find_path(char *cmd, char *path_env)
 	char	*path;
 	int		i;
 
-	if (cmd[0] == '/')
+	if (cmd[0] == '/' || cmd[0] == '.')
 		return (cmd);
 	paths = ft_split(path_env, ":");
 	if (!paths)

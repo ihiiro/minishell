@@ -37,6 +37,7 @@ int		pwd_(t_envp *env);
 char	*search_env_name(t_envp *env, char *val);
 char	*search_env(t_envp *env, char *val);
 char	*add_dir(char *pwd, char *dir);
+char	*oldpwd_(t_envp *env);
 
 /* Utils */
 

@@ -48,7 +48,7 @@ void	heredoc_child_proc(t_shell *sh, char *tmp_file, t_ast *ast)
 		str = readline("> ");
 		if (!str)
 			exit(0);
-		if (!ft_strncmp(str, ast->right->token->word, ft_strlen(str) + 1))
+		if (!ft_strncmp(str, hereoc_lim(ast), ft_strlen(str) + 1))
 			exit(0);
 		ft_printf(fd, "%s\n", expand_in_heredoc(str, sh,
 				ast->right->token->expansion_indices[0]));
