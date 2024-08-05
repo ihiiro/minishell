@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   wildcard.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mrezki <mrezki@student.42.fr>              +#+  +:+       +#+        */
+/*   By: yel-yaqi <yel-yaqi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/26 23:15:12 by mrezki            #+#    #+#             */
-/*   Updated: 2024/07/26 23:15:12 by mrezki           ###   ########.fr       */
+/*   Updated: 2024/08/05 04:45:11 by yel-yaqi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ char	**wildcard_expansion(char **args, t_token *token)
 	args_count = entries_count(args);
 	if (!args_count)
 		return (args);
-	expanded = gc_malloc(sizeof(char *) * (args_count + 1), 1);
+	expanded = gc_malloc(sizeof(char *) * (args_count + 2), 1);
 	if (!expanded)
 		return (perror("Malloc"), NULL);
 	i = -1;
@@ -58,6 +58,6 @@ char	**wildcard_expansion(char **args, t_token *token)
 		if (token)
 			token = token->next;
 	}
-	expanded[args_count] = NULL;
+	expanded[entry_i] = NULL;
 	return (expanded);
 }
