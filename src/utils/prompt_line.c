@@ -28,7 +28,7 @@ char	*simple_pwd(char *pwd, char *home)
 	return (simplified);
 }
 
-char	*ps1_prompt(char *pwd, char *home)
+char	*ps1_prompt(char *pwd, char *home, int exit_status)
 {
 	char	*prompt;
 	char	*tmp;
@@ -37,7 +37,10 @@ char	*ps1_prompt(char *pwd, char *home)
 	if (!pwd)
 		pwd = ft_strdup("");
 	prompt = ft_strjoin(tmp, simple_pwd(pwd, home));
-	prompt = ft_strjoin(prompt, "\e[0m"ORANGE"»\n┗━☿️\e[0m ");
+	if (!exit_status)
+		prompt = ft_strjoin(prompt, "\e[0m"ORANGE"»\n┗━"GREEN"☿️➠\e[0m ");
+	else
+		prompt = ft_strjoin(prompt, "\e[0m"ORANGE"»\n┗━"REDD"☿️➠\e[0m ");
 	if (!prompt)
 		return (NULL);
 	return (prompt);

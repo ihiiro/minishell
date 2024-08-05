@@ -75,10 +75,9 @@ char	*expand_multiple_vars(char *var, t_shell *sh, size_t *indices)
 	while (var[i])
 	{
 		if (var[i] == '$' && indices[j] == 2)
-			i++;
+			1 && ((i++) && (j++));
 		else if (var[i] == '$')
 		{
-			printf("%s %lu\n", var, indices[j]);
 			if (indices[j] == 1)
 				result = expand_(result, var, &i, sh);
 			else

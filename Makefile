@@ -16,8 +16,8 @@ COLOR			= \033[38;5;51m
 RED			= \033[38;5;196m
 GREEN			= \033[32m
 RESET			= \033[0m
-CFLAGS_R		= -O3 -Wall -Wextra -Werror -g -lreadline 
-CFLAGS			= -O3 -Wall -Wextra -Werror -g
+CFLAGS_R		= -O3 -Wall -Wextra -Werror -g -lreadline -fsanitize=address
+CFLAGS			= -O3 -Wall -Wextra -Werror -g -fsanitize=address
 NAME			= minishell
 LIB_DIR			= ./libft
 LIBFT			= $(LIB_DIR)/libft.a

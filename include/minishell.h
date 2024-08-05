@@ -88,6 +88,8 @@
 
 # define YELLOW "\e[38;5;214m"
 # define RED	"\e[38;5;226m"
+# define REDD	"\e[31m"
+# define GREEN "\e[32m"
 # define ORANGE "\e[38;5;51m"
 
 /* parser */
@@ -150,7 +152,7 @@ void	builtins_exe(char *cmd, t_ast *node, t_shell *sh);
 void	traverse_tree(t_ast *ast, t_shell *sh);
 int		execute_cmd(char **cmd, char *env[], t_shell *sh);
 
-char	*ps1_prompt(char *pwd, char *home);
+char	*ps1_prompt(char *pwd, char *home, int exit_status);
 
 int		check_line(const char *str);
 
