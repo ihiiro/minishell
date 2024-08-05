@@ -12,6 +12,24 @@
 
 #include "../../../include/minishell.h"
 
+/*
+* a=s
+* Test echo "$a" "$"a $"a" '$a' '$'a $'a' $a
+*
+* 3
+* 0
+* 2
+* 0
+* 0
+* 2
+* 1
+*
+* s $a a $a $a a s
+*
+* echo "$a""$"a$"a"'$a''$'a$'a'$a
+* s$aa$a$aas
+*/
+
 static void	set_indices(t_token *token, size_t var_count)
 {
 	size_t	i;

@@ -47,7 +47,8 @@ int	quotes_balanced(char *line)
 			single_count++;
 		if (line[i] == '\'' || line[i] == '"')
 			skip_to_closing(line, &i, &single_count, &double_count);
-		i++;
+		if (line[i])
+			i++;
 	}
 	if (single_count % 2 != 0 || double_count % 2 != 0)
 		return (printf("msh: syntax error {unclosed quotes}\n"), 0);

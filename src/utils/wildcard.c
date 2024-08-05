@@ -41,21 +41,23 @@ char	**wildcard_expansion(char **args, t_token *token)
 	size_t	entry_i;
 
 	args_count = entries_count(args);
+	if (!args_count)
+		return (args);
 	expanded = gc_malloc(sizeof(char *) * (args_count + 1), 1);
 	if (!expanded)
 		return (perror("Malloc"), NULL);
-	i = 0;
+	i = -1;
 	entry_i = 0;
-	while (args[i])
+	while (args[++i])
 	{
 		if (ft_strchr(args[i], '*') == NULL || token->expand_wild
 			|| !entry_count(args[i]))
 			expanded[entry_i++] = ft_strdup(args[i]);
 		else
 			expand_arg_entries(expanded, &entry_i, args[i]);
-		i++;
-		token = token->next;
+		if (token)
+			token = token->next;
 	}
-	expanded[entry_i] = NULL;
+	expanded[args_count] = NULL;
 	return (expanded);
 }
