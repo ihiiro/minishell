@@ -6,7 +6,7 @@
 /*   By: yel-yaqi <yel-yaqi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/29 18:45:07 by mrezki            #+#    #+#             */
-/*   Updated: 2024/08/02 21:09:39 by yel-yaqi         ###   ########.fr       */
+/*   Updated: 2024/08/07 15:21:06 by yel-yaqi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int	process_commands(t_shell *sh, char *str)
 		{
 			sh->exit_status = 258;
 			if (size == 0)
-				return (1);
+				return (free(str), 1);
 		}
 		here_doc(sh->ast, sh);
 		if (sh->heredoc_trap == 1)
