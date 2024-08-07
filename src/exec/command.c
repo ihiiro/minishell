@@ -6,7 +6,7 @@
 /*   By: yel-yaqi <yel-yaqi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/18 11:52:22 by mrezki            #+#    #+#             */
-/*   Updated: 2024/08/05 04:43:11 by yel-yaqi         ###   ########.fr       */
+/*   Updated: 2024/08/07 11:37:28 by yel-yaqi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,12 +55,25 @@ int	exit_status_code(int exit_code)
 	return (WEXITSTATUS(exit_code));
 }
 
+static int	handle_pid_error(int pid, t_shell *sh)
+{
+	if (pid < 0)
+	{
+		perror("fork");
+		sh->fork_err = 1;
+		return (0);
+	}
+	return (1);
+}
+
 int	execute_cmd(char **cmd, char *env[], t_shell *sh)
 {
 	char	*path;
 	char	*path_env;
 	int		pid;
 
+	if (!cmd[0])
+		return (exit_status_code(0));
 	path_env = search_env(sh->env, "PATH");
 	if (!path_env)
 		return (print_error(cmd[0], MSG_NOFILE), ERR_NOFILE);
@@ -70,12 +83,8 @@ int	execute_cmd(char **cmd, char *env[], t_shell *sh)
 	signal(SIGINT, SIG_IGN);
 	signal(SIGQUIT, SIG_IGN);
 	pid = fork();
-	if (pid < 0)
-	{
-		perror("fork");
-		sh->fork_err = 1;
+	if (!handle_pid_error(pid, sh))
 		return (1);
-	}
 	if (!pid)
 		child_proc(path, cmd, env);
 	else
