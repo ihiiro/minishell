@@ -30,16 +30,12 @@
 * s$aa$a$aas
 */
 
-static void	set_indices(t_token *token, size_t var_count)
+static void	set_indices(t_token *token, size_t var_count, size_t i, size_t j)
 {
-	size_t	i;
-	size_t	j;
 	int		is_quoted_rslt;
 
 	token->expansion_indices = gc_malloc(sizeof(size_t) * var_count, COLLECT);
 	ft_memset(token->expansion_indices, 0, sizeof(size_t) * var_count);
-	i = 0;
-	j = 0;
 	while (token->word[i])
 	{
 		is_quoted_rslt = is_quoted(token->word[i]);
@@ -48,7 +44,9 @@ static void	set_indices(t_token *token, size_t var_count)
 		{
 			if (!is_quoted_rslt)
 				token->expansion_indices[j] = 2;
-			if ((token->word[i] == '$' && token->word[i + 1]
+			if (is_quoted_rslt && token->word[i + 1] && token->word[i + 1] != '"')
+				token->expansion_indices[j] = 3;
+			else if ((token->word[i] == '$' && token->word[i + 1]
 					&& token->word[i + 1] != '"' && token->word[i + 1] != '\''))
 				token->expansion_indices[j] = 1;
 			j++;
@@ -63,6 +61,8 @@ void	set_expansion_indices(t_token *token)
 {
 	size_t	var_count;
 	size_t	i;
+	size_t	j;
+	size_t	e;
 
 	var_count = 0;
 	i = -1;
@@ -71,7 +71,9 @@ void	set_expansion_indices(t_token *token)
 			var_count++;
 	if (!var_count)
 		return ;
-	set_indices(token, var_count);
+	j = 0;
+	e = 0;
+	set_indices(token, var_count, j, e);
 }
 
 void	set_tokens_expansion_indices(t_token *tokens)

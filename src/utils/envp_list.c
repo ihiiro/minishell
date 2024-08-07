@@ -15,12 +15,28 @@
 char	*hereoc_lim(t_ast *ast)
 {
 	char	*limiter;
+	char	*res;
+	size_t	*indices;
+	size_t	j;
+	int		i;
 
 	limiter = ast->right->token->word;
-	if (ast->right->token->expansion_indices[0]
-		== 2)
-		limiter = ft_substr(limiter, 1, ft_strlen(limiter) - 1);
-	return (limiter);
+	indices = ast->right->token->expansion_indices;
+	i = 0;
+	j = 0;
+	res = ft_strdup("");
+	while (limiter[i])
+	{
+		if (limiter[i] == '$' && indices[j] == 2)
+		{
+			i++;
+			j++;
+		}
+		else if (limiter[i] == '$')
+			j++;
+		res = copy_char(&i, limiter, res);
+	}
+	return (res);
 }
 
 char	*oldpwd_(t_envp *env)

@@ -35,6 +35,7 @@ int	process_commands(t_shell *sh, char *str)
 		traverse_tree(sh->ast, sh);
 		close(sh->stdin_copy);
 		sh->stdin_copy = -1;
+		sh->fork_err = 0;
 	}
 	return (0);
 }
@@ -51,7 +52,7 @@ void	command_loop(t_envp *envp, char *str, t_shell sh)
 					search_env(envp, "HOME"), sh.exit_status));
 		init_signal(&sh.exit_status);
 		if (!str)
-			exit_(NULL, &envp);
+			exit_(NULL, &envp, sh.exit_status);
 		if ((!prev_line || ft_strncmp(prev_line, str, ft_strlen(prev_line) + 1))
 			&& ft_strlen(str) > 1)
 		{
@@ -76,6 +77,7 @@ int	main(int argc, char *argv[], char *env[])
 	sh.stdin_copy = -1;
 	sh.heredoc_trap = 0;
 	sh.exit_status = 0;
+	sh.fork_err = 0;
 	init_envp(env, &sh.env);
 	command_loop(sh.env, str, sh);
 	free_envp(sh.env);

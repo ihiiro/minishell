@@ -14,7 +14,7 @@
 
 void	traverse_tree(t_ast *ast, t_shell *sh)
 {
-	if (!ast)
+	if (!ast || sh->fork_err)
 		return ;
 	and_or_operators(ast, sh);
 	pipe_operator(ast, sh);

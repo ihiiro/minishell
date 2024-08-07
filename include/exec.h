@@ -32,9 +32,10 @@ void	copy_to_stdin(char *tmp_file);
 char	*expand_in_heredoc(char *var, t_shell *sh, int expand_flag);
 char	**check_expand(char **args, t_shell *sh, t_token *token);
 char	*expand_(char *result, char *var, int *i, t_shell *sh);
+char	**wildcard_expansion(char **args, t_token *tokens);
+char	**remove_null_values(char **args, int *is_null);
 char	*copy_char(int *i, char *var, char *result);
 char	*find_path(char *cmd, char *path_env);
-char	**wildcard_expansion(char **args, t_token *tokens);
 char	*get_tmp_file_name(int i);
 char	*hereoc_lim(t_ast *ast);
 
@@ -48,5 +49,6 @@ int		character_valid(char c, int is_last, int join_string);
 int		set_exit_error(t_shell *sh, char *file, char *msg);
 int		file_in_fd(t_ast *ast, t_shell *sh, char *file);
 int		include_hidden(char first, char *entry);
+int		*new_arr(char **args);
 
 #endif // !EXEC_H

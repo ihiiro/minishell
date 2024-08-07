@@ -70,10 +70,16 @@ int	execute_cmd(char **cmd, char *env[], t_shell *sh)
 	signal(SIGINT, SIG_IGN);
 	signal(SIGQUIT, SIG_IGN);
 	pid = fork();
+	if (pid < 0)
+	{
+		perror("fork");
+		sh->fork_err = 1;
+		return (1);
+	}
 	if (!pid)
 		child_proc(path, cmd, env);
 	else
 		if (waitpid(pid, &sh->exit_status, 0) < 0)
-			return (print_error("waitpid", NULL));
+			return (perror("waitpid"), 1);
 	return (exit_status_code(sh->exit_status));
 }

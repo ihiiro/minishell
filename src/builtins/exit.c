@@ -48,7 +48,7 @@ void	check_arg(char *arg, short *status)
  * @env: linked list containing environment variables.
  */
 
-void	exit_(char **strs, t_envp **env)
+void	exit_(char **strs, t_envp **env, int last_exit_stat)
 {
 	short	exit_status;
 
@@ -57,7 +57,7 @@ void	exit_(char **strs, t_envp **env)
 	{
 		gc_malloc(0, 0);
 		printf("exit\n");
-		exit(EXIT_SUCCESS);
+		exit(last_exit_stat);
 	}
 	if (strs[1])
 	{

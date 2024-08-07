@@ -59,6 +59,7 @@ typedef struct s_shell
 	int				exit_status;
 	int				stdin_copy;
 	int				heredoc_trap;
+	int				fork_err;
 	t_envp			*env;
 	t_ast			*ast;
 }		t_shell;

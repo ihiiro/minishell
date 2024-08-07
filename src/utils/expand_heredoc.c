@@ -25,7 +25,7 @@ char	*expand_in_heredoc(char *var, t_shell *sh, int expand_flag)
 	{
 		if (var[i] == '$')
 		{
-			if (expand_flag)
+			if (expand_flag == 1)
 				result = expand_(result, var, &i, sh);
 			else
 				result = copy_char(&i, var, result);

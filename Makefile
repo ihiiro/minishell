@@ -16,8 +16,8 @@ COLOR			= \033[38;5;51m
 RED			= \033[38;5;196m
 GREEN			= \033[32m
 RESET			= \033[0m
-CFLAGS_R		= -O3 -Wall -Wextra -Werror -g -lreadline -fsanitize=address
-CFLAGS			= -O3 -Wall -Wextra -Werror -g -fsanitize=address
+CFLAGS_R		= -O3 -Wall -Wextra -Werror -g -lreadline 
+CFLAGS			= -O3 -Wall -Wextra -Werror -g 
 NAME			= minishell
 LIB_DIR			= ./libft
 LIBFT			= $(LIB_DIR)/libft.a
@@ -56,7 +56,7 @@ MAIN_SOURCES 		= src/parser_engine/tokenizer/tokenize.c \
 			src/utils/heredoc_utils.c src/utils/expand_heredoc.c \
 			src/utils/redir_utils.c src/builtins/export_u.c \
 			src/utils/prompt_line.c src/parser_engine/tokenizer/classify.c \
-			src/parser_engine/tokenizer/multi.c \
+			src/parser_engine/tokenizer/multi.c src/utils/expand_remove.c \
 
 MAIN_OBJ 	= $(MAIN_SOURCES:.c=.o)
 
