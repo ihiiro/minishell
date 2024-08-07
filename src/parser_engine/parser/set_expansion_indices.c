@@ -86,7 +86,7 @@ void	set_tokens_expansion_indices(t_token *tokens)
 		if (tokens->type == LIMITER && (!ft_strchr(tokens->word, '\'')
 				&& !ft_strchr(tokens->word, '"')))
 			tokens->expansion_indices[0] = 1;
-		else if (tokens->type != LIMITER)
+		else
 			set_expansion_indices(tokens);
 		tokens = tokens->next;
 	}
