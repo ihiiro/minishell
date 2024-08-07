@@ -6,7 +6,7 @@
 /*   By: yel-yaqi <yel-yaqi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/21 12:49:06 by yel-yaqi          #+#    #+#             */
-/*   Updated: 2024/08/05 21:22:49 by yel-yaqi         ###   ########.fr       */
+/*   Updated: 2024/08/07 14:17:06 by yel-yaqi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,8 @@ static void	set_indices(t_token *token, size_t var_count, size_t i, size_t j)
 		{
 			if (!is_quoted_rslt)
 				token->expansion_indices[j] = 2;
-			if (is_quoted_rslt && token->word[i + 1] && token->word[i + 1] != '"')
+			if (is_quoted_rslt && token->word[i + 1]
+				&& token->word[i + 1] != '"')
 				token->expansion_indices[j] = 3;
 			else if ((token->word[i] == '$' && token->word[i + 1]
 					&& token->word[i + 1] != '"' && token->word[i + 1] != '\''))
