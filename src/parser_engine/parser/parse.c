@@ -6,7 +6,7 @@
 /*   By: yel-yaqi <yel-yaqi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/07 12:38:36 by yel-yaqi          #+#    #+#             */
-/*   Updated: 2024/08/08 10:02:15 by yel-yaqi         ###   ########.fr       */
+/*   Updated: 2024/08/08 12:09:53 by yel-yaqi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,11 +33,6 @@ static t_ast	*parse(char *expr, t_shell *sh)
 	tokens = simplify_para(tokens);
 	build_list(tokens);
 	connect_para(tokens);
-	// 
-	// for (t_token *ptr = tokens; ptr; ptr = ptr->next)
-	// 	printf("%s::%d::%d\n", ptr->word, ptr->type, ptr->name);
-	// printf("\n");
-	// 
 	return (fetch_ast(tokens));
 }
 

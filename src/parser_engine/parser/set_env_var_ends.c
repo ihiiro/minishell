@@ -6,21 +6,11 @@
 /*   By: yel-yaqi <yel-yaqi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 19:29:56 by yel-yaqi          #+#    #+#             */
-/*   Updated: 2024/08/08 10:30:35 by yel-yaqi         ###   ########.fr       */
+/*   Updated: 2024/08/08 11:45:48 by yel-yaqi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../include/minishell.h"
-
-/*
-
-set_env_var_ends( expr, arr )
-	arr = malloc(var_count)
-	loop ( expr )
-		if (expr == $)
-			arr[i] = end
-
-*/
 
 size_t	count_vars(char *expr)
 {
@@ -41,7 +31,6 @@ void	set_env_var_ends(char *expr, size_t *var_ends_arr)
 	size_t	i;
 	size_t	end;
 
-	// char	*expr_start = expr;
 	i = 0;
 	while (*expr)
 	{
@@ -60,9 +49,4 @@ void	set_env_var_ends(char *expr, size_t *var_ends_arr)
 		else
 			expr++;
 	}
-	// 
-	// for (size_t j = 0; j < count_vars(expr_start); j++)
-	// 	printf("%zu ends at %zu\n", j, var_ends_arr[j]);
-	// printf("\n");
-	// 
 }

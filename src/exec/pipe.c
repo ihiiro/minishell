@@ -12,6 +12,15 @@
 
 #include "../../include/minishell.h"
 #include <stdlib.h>
+#include <unistd.h>
+
+void	fork_failed(int fork_err)
+{
+	if (!fork_err)
+		perror("fork");
+	fork_err = 1;
+	return ;
+}
 
 void	second_child(t_ast *ast, t_shell *sh, int *fd, int *status)
 {
@@ -19,11 +28,7 @@ void	second_child(t_ast *ast, t_shell *sh, int *fd, int *status)
 
 	pid = fork();
 	if (pid < 0)
-	{
-		perror("fork");
-		sh->fork_err = 1;
-		return ;
-	}
+		return (fork_failed(sh->fork_err));
 	if (pid == 0)
 	{
 		close(fd[1]);
@@ -59,10 +64,7 @@ void	pipe_operator(t_ast *ast, t_shell *sh)
 	signal(SIGINT, SIG_IGN);
 	pid = fork();
 	if (pid < 0)
-	{
-		sh->fork_err = 1;
-		return (perror("fork"));
-	}
+		return (fork_failed(sh->fork_err));
 	if (pid == 0)
 	{
 		dup_stin(fd);
@@ -70,7 +72,8 @@ void	pipe_operator(t_ast *ast, t_shell *sh)
 		traverse_tree(ast->left, sh);
 		exit(sh->exit_status);
 	}
-	second_child(ast, sh, fd, &status);
-	while (wait(NULL) < 0)
+	if (!sh->fork_err)
+		second_child(ast, sh, fd, &status);
+	while (wait(NULL) < 0 && !sh->fork_err)
 		;
 }

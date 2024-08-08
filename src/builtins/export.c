@@ -66,7 +66,7 @@ static int	is_valid_identifier(char *input, int *join_string)
 	while (str[++i])
 		if (!character_valid(str[i], i == ft_strlen(str) - 1, *join_string))
 			err = 1;
-	if (err && input[0])
+	if (err)
 		ft_printf(2, "Error: export: '%s' is not a valid identifier\n", str);
 	if (err)
 		return (0);
@@ -120,8 +120,6 @@ int	export_variables(char **args, t_envp *env, int *join_string)
 			add_var_to_env(*args, env, *join_string);
 		args++;
 	}
-	if (args_empty(tmp))
-		print_export_vars(env);
 	if (err)
 		return (1);
 	return (0);

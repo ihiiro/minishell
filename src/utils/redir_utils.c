@@ -27,6 +27,8 @@ int	file_out_fd(char *token, t_ast *ast, t_shell *sh, char flag)
 
 	expanded = check_expand((char *[]){token, NULL}, sh,
 			ast->right->token);
+	if (!expanded[0])
+		return (set_exit_error(sh, token, "ambiguous redirect"));
 	tmp = ft_split(expanded[0], " \t");
 	if (expanded[0][0] == '\0' || expanded[1] || tmp[1])
 		return (set_exit_error(sh, token, "ambiguous redirect"));
@@ -48,6 +50,8 @@ int	file_in_fd(t_ast *ast, t_shell *sh, char *file)
 
 	expanded = check_expand((char *[]){file, NULL}, sh,
 			ast->right->token);
+	if (!expanded[0])
+		return (set_exit_error(sh, file, "ambiguous redirect"));
 	tmp = ft_split(expanded[0], " \t");
 	if (expanded[0][0] == '\0' || tmp[1] || expanded[1])
 		return (set_exit_error(sh, file, "ambiguous redirect"));

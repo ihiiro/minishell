@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand_remove.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mrezki <mrezki@student.42.fr>              +#+  +:+       +#+        */
+/*   By: yel-yaqi <yel-yaqi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 08:01:01 by mrezki            #+#    #+#             */
-/*   Updated: 2024/08/07 08:01:03 by mrezki           ###   ########.fr       */
+/*   Updated: 2024/08/08 12:14:51 by yel-yaqi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,7 @@ char	*copy_char(int *i, char *var, char *result)
 	char	*tmp;
 
 	tmp = ft_substr(var, *i, 1);
+	printf("[%s]", result);
 	result = ft_strjoin(result, tmp);
 	if (!result)
 		return (perror("Malloc"), NULL);

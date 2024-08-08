@@ -6,23 +6,12 @@
 /*   By: yel-yaqi <yel-yaqi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/05 18:48:14 by yel-yaqi          #+#    #+#             */
-/*   Updated: 2024/08/08 10:02:53 by yel-yaqi         ###   ########.fr       */
+/*   Updated: 2024/08/08 11:37:15 by yel-yaqi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
-
-/* PARSE ENGINE
-					SYNTAX ANALYZER
-			 		     |
-					WORD SPLITTER
-						 |
-					 TOKENIZER
-					     |
-					 PARSER
-
- */
 
 # include <stddef.h>
 # include <readline/history.h>
@@ -113,7 +102,6 @@ void	classify(t_token *token_list);
 void	build_list(t_token *start);
 void	set_env_var_ends(char *expr, size_t *var_ends_arr);
 
-
 t_token	*search(t_token *from, int name, int direction);
 t_token	*simplify_para(t_token *tokens);
 t_token	*init_node(char *word);
@@ -153,7 +141,8 @@ void	disable_echo(void);
 
 void	builtins_exe(char *cmd, t_ast *node, t_shell *sh);
 void	traverse_tree(t_ast *ast, t_shell *sh);
-int		execute_cmd(char **cmd, char *env[], t_shell *sh);
+void	ignore_sigs(void);
+int		execute_cmd(char **cmd, char *env[], t_shell *sh, t_ast *ast);
 
 char	*ps1_prompt(char *pwd, char *home, int exit_status);
 

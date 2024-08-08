@@ -6,7 +6,7 @@
 /*   By: yel-yaqi <yel-yaqi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/29 18:45:07 by mrezki            #+#    #+#             */
-/*   Updated: 2024/08/08 09:50:31 by yel-yaqi         ###   ########.fr       */
+/*   Updated: 2024/08/08 12:09:13 by yel-yaqi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,23 +14,16 @@
 
 int	process_commands(t_shell *sh, char *str)
 {
-	int	size;
-
-	size = 0;
 	if (check_line(str))
 	{
 		sh->ast = build_ast(str, sh);
 		if (!sh->ast)
-		{
 			sh->exit_status = 258;
-			if (size == 0)
-				return (free(str), 1);
-		}
 		here_doc(sh->ast, sh);
 		if (sh->heredoc_trap == 1)
 		{
 			sh->heredoc_trap = 0;
-			return (1);
+			return (free(str), 1);
 		}
 		traverse_tree(sh->ast, sh);
 		close(sh->stdin_copy);
