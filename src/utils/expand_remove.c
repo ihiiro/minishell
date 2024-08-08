@@ -80,7 +80,6 @@ char	*copy_char(int *i, char *var, char *result)
 	char	*tmp;
 
 	tmp = ft_substr(var, *i, 1);
-	printf("[%s]", result);
 	result = ft_strjoin(result, tmp);
 	if (!result)
 		return (perror("Malloc"), NULL);
