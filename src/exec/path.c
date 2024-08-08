@@ -32,6 +32,8 @@ char	*find_path(char *cmd, char *path_env)
 	char	*path;
 	int		i;
 
+	if (cmd[0] == '/' && access(cmd, F_OK))
+		return (NULL);
 	if (cmd[0] == '/' || cmd[0] == '.')
 		return (cmd);
 	if (!path_env)
