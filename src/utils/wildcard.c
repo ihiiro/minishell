@@ -6,7 +6,7 @@
 /*   By: yel-yaqi <yel-yaqi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/26 23:15:12 by mrezki            #+#    #+#             */
-/*   Updated: 2024/08/05 04:45:11 by yel-yaqi         ###   ########.fr       */
+/*   Updated: 2024/08/08 17:57:38 by yel-yaqi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	expand_arg_entries(char **args, size_t *entry_i, char *pattern)
 		if (entry_pattern_match(entry->d_name, pattern))
 		{
 			if (include_hidden(pattern[0], entry->d_name))
-				args[(*entry_i)++] = strdup(entry->d_name);
+				args[(*entry_i)++] = ft_strdup(entry->d_name);
 		}
 		entry = readdir(cur_dir);
 	}

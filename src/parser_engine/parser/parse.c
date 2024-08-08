@@ -6,13 +6,13 @@
 /*   By: yel-yaqi <yel-yaqi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/07 12:38:36 by yel-yaqi          #+#    #+#             */
-/*   Updated: 2024/08/05 04:01:26 by yel-yaqi         ###   ########.fr       */
+/*   Updated: 2024/08/08 12:09:53 by yel-yaqi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../include/minishell.h"
 
-t_ast	*parse(char *expr)
+static t_ast	*parse(char *expr, t_shell *sh)
 {
 	t_token	*tokens;
 	char	**word_list;
@@ -20,6 +20,8 @@ t_ast	*parse(char *expr)
 	if (!expr)
 		return (NULL);
 	tokens = NULL;
+	sh->env_var_ends = gc_malloc(sizeof(size_t) * count_vars(expr), COLLECT);
+	set_env_var_ends(expr, sh->env_var_ends);
 	word_list = ft_split(expr, " \t");
 	tokenize(word_list, &tokens);
 	name_operators(tokens);
@@ -68,7 +70,7 @@ static char	*complete(char *line)
 	return (joint);
 }
 
-t_ast	*build_ast(char *expr)
+t_ast	*build_ast(char *expr, t_shell *sh)
 {
 	int		check;
 
@@ -84,5 +86,5 @@ t_ast	*build_ast(char *expr)
 		if (!check)
 			return (NULL);
 	}
-	return (parse(expr));
+	return (parse(expr, sh));
 }

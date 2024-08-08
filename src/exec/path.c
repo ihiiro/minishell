@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   path.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mrezki <mrezki@student.42.fr>              +#+  +:+       +#+        */
+/*   By: yel-yaqi <yel-yaqi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 16:29:31 by mrezki            #+#    #+#             */
-/*   Updated: 2024/07/26 23:14:22 by mrezki           ###   ########.fr       */
+/*   Updated: 2024/08/08 20:11:33 by yel-yaqi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,8 @@ char	*find_path(char *cmd, char *path_env)
 
 	if (cmd[0] == '/' || cmd[0] == '.')
 		return (cmd);
+	if (!path_env)
+		return (NULL);
 	paths = ft_split(path_env, ":");
 	if (!paths)
 		return (perror("Malloc"), NULL);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   envp_list.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mrezki <mrezki@student.42.fr>              +#+  +:+       +#+        */
+/*   By: yel-yaqi <yel-yaqi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/02 23:45:01 by mrezki            #+#    #+#             */
-/*   Updated: 2024/07/02 23:45:01 by mrezki           ###   ########.fr       */
+/*   Updated: 2024/08/08 17:58:46 by yel-yaqi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ t_envp	*create_node(char *name, char *value)
 	if (!node)
 		return (ft_printf(2, "Error: Allocation\n"), NULL);
 	node->name = ft_strdup(name);
-	if (!strncmp(node->name, "OLDPWD", ft_strlen(node->name) + 1))
+	if (!ft_strncmp(node->name, "OLDPWD", ft_strlen(node->name) + 1))
 		node->value = NULL;
 	else if (!value)
 		node->value = NULL;

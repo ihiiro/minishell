@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipe.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mrezki <mrezki@student.42.fr>              +#+  +:+       +#+        */
+/*   By: yel-yaqi <yel-yaqi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/18 11:52:35 by mrezki            #+#    #+#             */
-/*   Updated: 2024/07/18 11:52:35 by mrezki           ###   ########.fr       */
+/*   Updated: 2024/08/08 20:15:47 by yel-yaqi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ void	second_child(t_ast *ast, t_shell *sh, int *fd, int *status)
 	close(fd[0]);
 	close(fd[1]);
 	waitpid(pid, status, 0);
-	sh->exit_status = WEXITSTATUS(*status);
+	sh->exit_status = exit_status_code(*status);
 }
 
 void	dup_stin(int *fd)

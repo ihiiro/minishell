@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   structs.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mrezki <mrezki@student.42.fr>              +#+  +:+       +#+        */
+/*   By: yel-yaqi <yel-yaqi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/18 11:51:59 by mrezki            #+#    #+#             */
-/*   Updated: 2024/07/29 21:45:10 by mrezki           ###   ########.fr       */
+/*   Updated: 2024/08/08 18:43:21 by yel-yaqi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,9 @@ typedef struct s_shell
 	int				stdin_copy;
 	int				heredoc_trap;
 	int				fork_err;
+	size_t			*env_var_ends;
+	size_t			ends_arr_index;
+	int				is_heredoc;
 	t_envp			*env;
 	t_ast			*ast;
 }		t_shell;

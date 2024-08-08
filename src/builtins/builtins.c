@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mrezki <mrezki@student.42.fr>              +#+  +:+       +#+        */
+/*   By: yel-yaqi <yel-yaqi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/02 18:09:06 by mrezki            #+#    #+#             */
-/*   Updated: 2024/07/08 05:08:09 by mrezki           ###   ########.fr       */
+/*   Updated: 2024/08/08 17:56:45 by yel-yaqi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ int	is_builtin(char *str)
 	builtins[8] = NULL;
 	i = -1;
 	while (builtins[++i])
-		if (!strncmp(str, builtins[i], strlen(builtins[i]) + 1))
+		if (!ft_strncmp(str, builtins[i], ft_strlen(builtins[i]) + 1))
 			return (1);
 	return (0);
 }
