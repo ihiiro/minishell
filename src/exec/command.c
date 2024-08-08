@@ -77,11 +77,7 @@ int	execute_cmd(char **cmd, char *env[], t_shell *sh, t_ast *ast)
 	path_env = search_env(sh->env, "PATH");
 	path = find_path(cmd[0], path_env);
 	if (!path)
-<<<<<<< HEAD
 		return (print_error(cmd[0], MSG_NOFILE), ERR_NOCMD);
-=======
-		return (ERR_NOCMD);
->>>>>>> d9dce44490a2605e7e055be3c770af11803e5922
 	ignore_sigs();
 	if (ast->token->left_pipe == 1 || ast->token->right_pipe == 1)
 		executes(path, cmd, env);

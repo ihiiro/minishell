@@ -36,10 +36,10 @@ OBJS		= $(SRCS:.c=.o)
 all: $(NAME)
 
 %.o: %.c libft.h
-	$(CC) -c -o $@ $< $(CFLAGS)
+	@$(CC) -c -o $@ $< $(CFLAGS)
 
 $(NAME): $(OBJS)
-	$(AR) rcs $(NAME) $(OBJS)
+	@$(AR) rcs $(NAME) $(OBJS)
 
 clean:
 	@$(RM) $(OBJS)
