@@ -88,3 +88,14 @@ void	addnode(t_envp **head, char *name, char *value)
 		curr->next = node;
 	}
 }
+
+char	*init_vars(int *i, int *j, char **tmp, char **result)
+{
+	*i = 0;
+	*j = 0;
+	*result = ft_strdup("");
+	if (!*result)
+		return (NULL);
+	*tmp = *result;
+	return (*tmp);
+}

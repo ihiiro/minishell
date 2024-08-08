@@ -14,18 +14,11 @@
 
 int	process_commands(t_shell *sh, char *str)
 {
-	int	size;
-
-	size = 0;
 	if (check_line(str))
 	{
 		sh->ast = build_ast(str);
 		if (!sh->ast)
-		{
 			sh->exit_status = 258;
-			if (size == 0)
-				return (1);
-		}
 		here_doc(sh->ast, sh);
 		if (sh->heredoc_trap == 1)
 		{

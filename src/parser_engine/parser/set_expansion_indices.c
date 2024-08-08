@@ -44,7 +44,8 @@ static void	set_indices(t_token *token, size_t var_count, size_t i, size_t j)
 		{
 			if (!is_quoted_rslt)
 				token->expansion_indices[j] = 2;
-			if (is_quoted_rslt && token->word[i + 1] && token->word[i + 1] != '"')
+			if (is_quoted_rslt && token->word[i + 1]
+				&& token->word[i + 1] != '"')
 				token->expansion_indices[j] = 3;
 			else if ((token->word[i] == '$' && token->word[i + 1]
 					&& token->word[i + 1] != '"' && token->word[i + 1] != '\''))

@@ -28,10 +28,12 @@ void	redirect_in(t_ast *ast, t_shell *sh);
 void	here_doc(t_ast *ast, t_shell *sh);
 void	command(t_ast *ast, t_shell *sh);
 void	copy_to_stdin(char *tmp_file);
+void	fork_failed(int fork_err);
 
 char	*expand_in_heredoc(char *var, t_shell *sh, int expand_flag);
 char	**check_expand(char **args, t_shell *sh, t_token *token);
 char	*expand_(char *result, char *var, int *i, t_shell *sh);
+char	*init_vars(int *i, int *j, char **tmp, char **result);
 char	**wildcard_expansion(char **args, t_token *tokens);
 char	**remove_null_values(char **args, int *is_null);
 char	*copy_char(int *i, char *var, char *result);
@@ -50,5 +52,6 @@ int		set_exit_error(t_shell *sh, char *file, char *msg);
 int		file_in_fd(t_ast *ast, t_shell *sh, char *file);
 int		include_hidden(char first, char *entry);
 int		*new_arr(char **args);
+int		args_len(char **args);
 
 #endif // !EXEC_H

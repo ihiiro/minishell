@@ -64,7 +64,7 @@ void	open_heredocs(t_ast *ast, t_shell *sh, int *i, int pid)
 	{
 		pid = fork();
 		if (pid < 0)
-			return (perror("fork"));
+			return (fork_failed(sh->fork_err));
 		if (!pid)
 			heredoc_child_proc(sh, sh->doc_files[*i], ast);
 		else

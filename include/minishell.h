@@ -150,7 +150,8 @@ void	disable_echo(void);
 
 void	builtins_exe(char *cmd, t_ast *node, t_shell *sh);
 void	traverse_tree(t_ast *ast, t_shell *sh);
-int		execute_cmd(char **cmd, char *env[], t_shell *sh);
+void	ignore_sigs(void);
+int		execute_cmd(char **cmd, char *env[], t_shell *sh, t_ast *ast);
 
 char	*ps1_prompt(char *pwd, char *home, int exit_status);
 

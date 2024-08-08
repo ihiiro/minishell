@@ -14,6 +14,12 @@
 
 int	g_sig = SIGINT;
 
+void	ignore_sigs(void)
+{
+	signal(SIGINT, SIG_IGN);
+	signal(SIGQUIT, SIG_IGN);
+}
+
 void	signal_handler(int sig)
 {
 	if (sig == SIGINT)
