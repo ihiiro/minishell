@@ -6,7 +6,7 @@
 /*   By: yel-yaqi <yel-yaqi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/05 18:48:14 by yel-yaqi          #+#    #+#             */
-/*   Updated: 2024/08/08 20:15:14 by yel-yaqi         ###   ########.fr       */
+/*   Updated: 2024/08/09 00:27:50 by yel-yaqi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -140,6 +140,7 @@ void	disable_echo(void);
 /* Execution */
 
 void	builtins_exe(char *cmd, t_ast *node, t_shell *sh);
+void	increment_vars(int *i, int *j, size_t *arr_index);
 void	traverse_tree(t_ast *ast, t_shell *sh);
 void	ignore_sigs(void);
 int		execute_cmd(char **cmd, char *env[], t_shell *sh, t_ast *ast);

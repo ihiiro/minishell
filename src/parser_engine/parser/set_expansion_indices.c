@@ -6,29 +6,11 @@
 /*   By: yel-yaqi <yel-yaqi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/21 12:49:06 by yel-yaqi          #+#    #+#             */
-/*   Updated: 2024/08/07 14:17:06 by yel-yaqi         ###   ########.fr       */
+/*   Updated: 2024/08/09 00:30:35 by yel-yaqi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../include/minishell.h"
-
-/*
-* a=s
-* Test echo "$a" "$"a $"a" '$a' '$'a $'a' $a
-*
-* 3
-* 0
-* 2
-* 0
-* 0
-* 2
-* 1
-*
-* s $a a $a $a a s
-*
-* echo "$a""$"a$"a"'$a''$'a$'a'$a
-* s$aa$a$aas
-*/
 
 static void	set_indices(t_token *token, size_t var_count, size_t i, size_t j)
 {

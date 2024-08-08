@@ -6,7 +6,7 @@
 /*   By: yel-yaqi <yel-yaqi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/26 23:15:03 by mrezki            #+#    #+#             */
-/*   Updated: 2024/08/08 20:23:33 by yel-yaqi         ###   ########.fr       */
+/*   Updated: 2024/08/09 00:30:48 by yel-yaqi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,20 +60,19 @@ char	*expand_multiple_vars(char *var, t_shell *sh,
 	int		i;
 	int		j;
 
-	sh->ends_arr_index = 0;
 	init_vars(&i, &j, &tmp, &result);
 	while (var[i])
 	{
-		if (var[i] == '$' && indices[j] == 2
-			&& var[i + 1])
-			1 && ((i++) && (j++));
+		if (var[i] == '$' && indices[j] == 2)
+			increment_vars(&i, &j, &sh->ends_arr_index);
 		else if (var[i] == '$')
 		{
 			if (indices[j] == 1 || (indices[j] == 3 && var[i + 1] != ' '))
 				result = expand_(result, var, &i, sh);
 			else
 				result = copy_char(&i, var, result);
-			1 && ((j++) && (sh->env_var_ends++));
+			j++;
+			sh->ends_arr_index++;
 		}
 		else
 			result = copy_char(&i, var, result);
@@ -90,6 +89,7 @@ char	**loop_expand(char **args, t_shell *sh, t_token *token, int *is_null)
 
 	i = -1;
 	null_var = 0;
+	sh->ends_arr_index = 0;
 	while (args[++i])
 	{
 		if (ft_strchr(args[i], '$'))

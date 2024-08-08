@@ -6,7 +6,7 @@
 /*   By: yel-yaqi <yel-yaqi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/01 05:44:16 by mrezki            #+#    #+#             */
-/*   Updated: 2024/08/08 18:44:06 by yel-yaqi         ###   ########.fr       */
+/*   Updated: 2024/08/09 00:27:34 by yel-yaqi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,4 +36,11 @@ char	*expand_in_heredoc(char *var, t_shell *sh, int expand_flag)
 			result = copy_char(&i, var, result);
 	}
 	return (result);
+}
+
+void	increment_vars(int *i, int *j, size_t *arr_index)
+{
+	(*i)++;
+	(*j)++;
+	(*arr_index)++;
 }
