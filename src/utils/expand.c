@@ -6,7 +6,7 @@
 /*   By: yel-yaqi <yel-yaqi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/26 23:15:03 by mrezki            #+#    #+#             */
-/*   Updated: 2024/08/05 04:37:45 by yel-yaqi         ###   ########.fr       */
+/*   Updated: 2024/08/08 10:30:26 by yel-yaqi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,14 +32,17 @@ char	*expand_single_var(char *var, t_shell *sh, int start, int end)
 
 char	*expand_(char *result, char *var, int *i, t_shell *sh)
 {
-	char	*tmp;
-	int		start;
+	char			*tmp;
+	int				start;
 
 	(*i)++;
 	start = (*i);
-	while ((var[*i] && ft_isalnum(var[*i])) || var[*i] == '_' || var[*i] == '?')
-		(*i)++;
-	tmp = expand_single_var(var, sh, start, *i);
+	// while ((var[*i] && ft_isalnum(var[*i])) || var[*i] == '_' || var[*i] == '?')
+	// 	(*i)++;
+	*i += sh->env_var_ends[sh->ends_arr_index] - 1;
+	// printf("[%zu] , [sh->ends_arr_index=%zu]\n", sh->env_var_ends[sh->ends_arr_index], sh->ends_arr_index);
+	tmp = expand_single_var(var, sh, start, sh->env_var_ends[sh->ends_arr_index]);
+	// sh->ends_arr_index++;
 	if (tmp)
 		result = ft_strjoin(result, tmp);
 	if (!result)
@@ -61,6 +64,7 @@ char	*expand_multiple_vars(char *var, t_shell *sh,
 		return (NULL);
 	i = 0;
 	j = 0;
+	sh->ends_arr_index = 0;
 	while (var[i])
 	{
 		if (var[i] == '$' && indices[j] == 2)
@@ -72,6 +76,7 @@ char	*expand_multiple_vars(char *var, t_shell *sh,
 			else
 				result = copy_char(&i, var, result);
 			j++;
+			sh->env_var_ends++;
 		}
 		else
 			result = copy_char(&i, var, result);

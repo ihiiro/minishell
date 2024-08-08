@@ -6,7 +6,7 @@
 #    By: yel-yaqi <yel-yaqi@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/05 20:21:35 by yel-yaqi          #+#    #+#              #
-#    Updated: 2024/08/05 04:43:20 by yel-yaqi         ###   ########.fr        #
+#    Updated: 2024/08/08 10:33:04 by yel-yaqi         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,8 +16,8 @@ COLOR			= \033[38;5;51m
 RED			= \033[38;5;196m
 GREEN			= \033[32m
 RESET			= \033[0m
-CFLAGS_R		= -O3 -Wall -Wextra -Werror -g -lreadline 
-CFLAGS			= -O3 -Wall -Wextra -Werror -g 
+CFLAGS_R		= -O3 -Wall -Wextra -Werror -g -lreadline
+CFLAGS			= -O3 -Wall -Wextra -Werror -g
 NAME			= minishell
 LIB_DIR			= ./libft
 LIBFT			= $(LIB_DIR)/libft.a
@@ -57,6 +57,7 @@ MAIN_SOURCES 		= src/parser_engine/tokenizer/tokenize.c \
 			src/utils/redir_utils.c src/builtins/export_u.c \
 			src/utils/prompt_line.c src/parser_engine/tokenizer/classify.c \
 			src/parser_engine/tokenizer/multi.c src/utils/expand_remove.c \
+			src/parser_engine/parser/set_env_var_ends.c \
 
 MAIN_OBJ 	= $(MAIN_SOURCES:.c=.o)
 

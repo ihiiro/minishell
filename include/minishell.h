@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mrezki <mrezki@student.42.fr>              +#+  +:+       +#+        */
+/*   By: yel-yaqi <yel-yaqi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/05 18:48:14 by yel-yaqi          #+#    #+#             */
-/*   Updated: 2024/07/29 21:44:00 by mrezki           ###   ########.fr       */
+/*   Updated: 2024/08/08 10:02:53 by yel-yaqi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,14 +111,15 @@ void	connect_para(t_token *tokens);
 void	multi(char *word, t_token **token_list);
 void	classify(t_token *token_list);
 void	build_list(t_token *start);
+void	set_env_var_ends(char *expr, size_t *var_ends_arr);
+
 
 t_token	*search(t_token *from, int name, int direction);
 t_token	*simplify_para(t_token *tokens);
 t_token	*init_node(char *word);
 
-t_ast	*build_ast(char *expr);
+t_ast	*build_ast(char *expr, t_shell *sh);
 t_ast	*fetch_ast(t_token *tokens);
-t_ast	*parse(char *expr);
 
 int		check_builtins(char *str, t_envp **env, t_shell *sh);
 int		check_tokenizer_output(t_token *tokens);
@@ -130,6 +131,8 @@ int		quotes_balanced(char *line);
 int		check_tokens(char *line);
 int		is_operator(char *word);
 int		is_quoted(char c);
+
+size_t	count_vars(char *expr);
 
 bool	strequal(char *str0, char *str1);
 
