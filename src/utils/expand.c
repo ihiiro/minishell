@@ -6,7 +6,7 @@
 /*   By: yel-yaqi <yel-yaqi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/26 23:15:03 by mrezki            #+#    #+#             */
-/*   Updated: 2024/08/08 19:19:24 by yel-yaqi         ###   ########.fr       */
+/*   Updated: 2024/08/08 20:23:33 by yel-yaqi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,16 +64,16 @@ char	*expand_multiple_vars(char *var, t_shell *sh,
 	init_vars(&i, &j, &tmp, &result);
 	while (var[i])
 	{
-		if (var[i] == '$' && indices[j] == 2)
+		if (var[i] == '$' && indices[j] == 2
+			&& var[i + 1])
 			1 && ((i++) && (j++));
 		else if (var[i] == '$')
 		{
-			if (indices[j] == 3 || indices[j] == 1)
+			if (indices[j] == 1 || (indices[j] == 3 && var[i + 1] != ' '))
 				result = expand_(result, var, &i, sh);
 			else
 				result = copy_char(&i, var, result);
-			j++;
-			sh->env_var_ends++;
+			1 && ((j++) && (sh->env_var_ends++));
 		}
 		else
 			result = copy_char(&i, var, result);

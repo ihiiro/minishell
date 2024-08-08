@@ -6,7 +6,7 @@
 /*   By: yel-yaqi <yel-yaqi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/18 11:52:22 by mrezki            #+#    #+#             */
-/*   Updated: 2024/08/08 12:28:45 by yel-yaqi         ###   ########.fr       */
+/*   Updated: 2024/08/08 20:13:19 by yel-yaqi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,11 +75,9 @@ int	execute_cmd(char **cmd, char *env[], t_shell *sh, t_ast *ast)
 	int		pid;
 
 	path_env = search_env(sh->env, "PATH");
-	if (!path_env)
-		return (print_error(cmd[0], MSG_NOFILE), ERR_NOFILE);
 	path = find_path(cmd[0], path_env);
 	if (!path)
-		return (print_error(cmd[0], MSG_NOCMD), ERR_NOCMD);
+		return (ERR_NOCMD);
 	ignore_sigs();
 	if (ast->token->left_pipe == 1 || ast->token->right_pipe == 1)
 		executes(path, cmd, env);
@@ -93,6 +91,7 @@ int	execute_cmd(char **cmd, char *env[], t_shell *sh, t_ast *ast)
 		else
 			if (waitpid(pid, &sh->exit_status, 0) < 0)
 				return (perror("waitpid"), 1);
+		return (exit_status_code(sh->exit_status));
 	}
-	return (exit_status_code(sh->exit_status));
+	return (sh->exit_status);
 }

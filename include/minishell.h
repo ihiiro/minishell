@@ -6,7 +6,7 @@
 /*   By: yel-yaqi <yel-yaqi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/05 18:48:14 by yel-yaqi          #+#    #+#             */
-/*   Updated: 2024/08/08 11:37:15 by yel-yaqi         ###   ########.fr       */
+/*   Updated: 2024/08/08 20:15:14 by yel-yaqi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -147,5 +147,6 @@ int		execute_cmd(char **cmd, char *env[], t_shell *sh, t_ast *ast);
 char	*ps1_prompt(char *pwd, char *home, int exit_status);
 
 int		check_line(const char *str);
+int		exit_status_code(int exit_code);
 
 #endif
