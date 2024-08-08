@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand_heredoc.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mrezki <mrezki@student.42.fr>              +#+  +:+       +#+        */
+/*   By: yel-yaqi <yel-yaqi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/01 05:44:16 by mrezki            #+#    #+#             */
-/*   Updated: 2024/08/01 05:44:17 by mrezki           ###   ########.fr       */
+/*   Updated: 2024/08/08 18:44:06 by yel-yaqi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ char	*expand_in_heredoc(char *var, t_shell *sh, int expand_flag)
 	result = ft_strdup("");
 	i = 0;
 	j = 0;
+	sh->is_heredoc = 1;
 	while (var[i])
 	{
 		if (var[i] == '$')

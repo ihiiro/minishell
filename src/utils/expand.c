@@ -6,7 +6,7 @@
 /*   By: yel-yaqi <yel-yaqi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/26 23:15:03 by mrezki            #+#    #+#             */
-/*   Updated: 2024/08/08 12:17:44 by yel-yaqi         ###   ########.fr       */
+/*   Updated: 2024/08/08 19:19:24 by yel-yaqi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,12 +37,18 @@ char	*expand_(char *result, char *var, int *i, t_shell *sh)
 
 	(*i)++;
 	start = (*i);
-	*i += sh->env_var_ends[sh->ends_arr_index] - 1;
+	if (sh->is_heredoc)
+		while ((var[*i] && ft_isalnum(var[*i])) || var[*i] == '_'
+			|| var[*i] == '?')
+			(*i)++;
+	else
+		*i += sh->env_var_ends[sh->ends_arr_index] - 1;
 	tmp = expand_single_var(var, sh, start, *i);
 	if (tmp)
 		result = ft_strjoin(result, tmp);
 	if (!result)
 		return (perror("Malloc"), NULL);
+	sh->is_heredoc = 0;
 	return (result);
 }
 
