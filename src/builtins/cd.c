@@ -121,7 +121,7 @@ int	change_dir(char *pwd, t_envp **env)
 		printf("%s\n", dir);
 	}
 	else
-		return (print_error("cd", "No such file or directory"));
+		return (print_error(pwd, "No such file or directory"));
 	return (0);
 }
 
@@ -154,9 +154,5 @@ int	cd_(char **args, t_envp **env)
 		change_pwds(env, dir, 'h');
 		return (0);
 	}
-	if (args[1] && args[0])
-		return (print_error("cd", "Too many arguments"));
-	else
-		return (change_dir(args[0], env));
-	return (0);
+	return (change_dir(args[0], env));
 }
