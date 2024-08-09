@@ -71,6 +71,8 @@ void	exit_(char **strs, t_envp **env, int last_exit_stat)
 	exit_status = 0;
 	if (strs[1])
 		check_arg(strs[1], &exit_status);
+	else
+		exit_status = last_exit_stat;
 	gc_malloc(0, 0);
 	printf("exit\n");
 	exit(exit_status);

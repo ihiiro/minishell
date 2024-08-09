@@ -156,6 +156,11 @@ int	pwd_(t_envp *env)
 {
 	char	buffer[PATH_MAX];
 
+	if (getcwd(buffer, sizeof(buffer)))
+	{
+		printf("%s\n", buffer);
+		return (0);
+	}
 	while (env)
 	{
 		if (!ft_strncmp(env->name, "PWD", 3))
@@ -165,8 +170,5 @@ int	pwd_(t_envp *env)
 		}
 		env = env->next;
 	}
-	if (!getcwd(buffer, sizeof(buffer)))
-		return (perror("getcwd"), 1);
-	printf("%s\n", buffer);
 	return (1);
 }
