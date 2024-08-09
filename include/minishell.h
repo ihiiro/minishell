@@ -143,6 +143,7 @@ void	builtins_exe(char *cmd, t_ast *node, t_shell *sh);
 void	increment_vars(int *i, int *j, size_t *arr_index);
 void	traverse_tree(t_ast *ast, t_shell *sh);
 void	ignore_sigs(void);
+void	increment_shlvl(t_envp **env);
 int		execute_cmd(char **cmd, char *env[], t_shell *sh, t_ast *ast);
 
 char	*ps1_prompt(char *pwd, char *home, int exit_status);

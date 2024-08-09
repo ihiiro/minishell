@@ -45,7 +45,7 @@ void	command_loop(t_envp *envp, char *str, t_shell sh)
 					search_env(envp, "HOME"), sh.exit_status));
 		init_signal(&sh.exit_status);
 		if (!str)
-			exit_(NULL, &envp, sh.exit_status);
+			exit_(NULL, sh.exit_status);
 		if ((!prev_line || ft_strncmp(prev_line, str, ft_strlen(prev_line) + 1))
 			&& ft_strlen(str) > 1)
 		{
@@ -72,6 +72,7 @@ int	main(int argc, char *argv[], char *env[])
 	sh.exit_status = 0;
 	sh.fork_err = 0;
 	init_envp(env, &sh.env);
+	increment_shlvl(&sh.env);
 	command_loop(sh.env, str, sh);
 	free_envp(sh.env);
 	return (0);

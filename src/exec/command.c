@@ -37,8 +37,6 @@ void	command(t_ast *ast, t_shell *sh)
 		return ;
 	if (is_builtin(ast->token->args[0]))
 		builtins_exe(ast->token->args[0], ast, sh);
-	else if (!ft_strncmp(ast->token->word, "./minishell", 12))
-		shlvl_check(ast->token->word, &sh->env, sh);
 	else if (ast->token->type == COMMAND)
 	{
 		env = copy_env_to_arr(sh->env);

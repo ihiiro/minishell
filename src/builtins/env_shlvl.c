@@ -92,36 +92,10 @@ char	*shlvl_new_value(t_envp *env)
 	return (new_shlvl);
 }
 
-/*
- * shlvl_check: Recursively call the program,
- * and updates SHLVL accoridngly.
- *
- * @str: user prompt.
- * @env: list of environment variables.
- */
-
-void	shlvl_check(char *str, t_envp **env, t_shell *sh)
+void	increment_shlvl(t_envp **env)
 {
-	char	**args;
-	char	**envp;
 	char	*new_shlvl;
-	int		pid;
 
 	new_shlvl = shlvl_new_value(*env);
 	change_env_value(env, "SHLVL", new_shlvl);
-	args = ft_split(str, " \t");
-	if (!args)
-		return (perror("Malloc"));
-	envp = copy_env_to_arr(*env);
-	signal(SIGINT, SIG_IGN);
-	pid = fork();
-	if (pid == 0)
-	{
-		execve("./minishell", &args[1], envp);
-		perror("execve");
-		exit(EXIT_FAILURE);
-	}
-	else
-		waitpid(pid, &sh->exit_status, 0);
-	sh->exit_status = WEXITSTATUS(sh->exit_status);
 }

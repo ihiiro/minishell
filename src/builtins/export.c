@@ -64,7 +64,8 @@ static int	is_valid_identifier(char *input, int *join_string)
 	*join_string = (str[ft_strlen(str) - 1] == '+');
 	err = !(ft_isalpha(str[0]) || str[0] == '_');
 	while (str[++i])
-		if (!character_valid(str[i], i == ft_strlen(str) - 1, *join_string))
+		if (!character_valid(str[i], i == ft_strlen(str) - 1,
+				*join_string, input))
 			err = 1;
 	if (err)
 		ft_printf(2, "Error: export: '%s' is not a valid identifier\n", str);

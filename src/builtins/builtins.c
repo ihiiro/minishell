@@ -31,7 +31,7 @@ void	builtins_exe(char *cmd, t_ast *node, t_shell *sh)
 	else if (!ft_strcmp(cmd, "unset"))
 		sh->exit_status = unset_(&sh->env, ++node->token->args);
 	else if (!ft_strcmp(cmd, "exit"))
-		exit_(node->token->args, &sh->env, sh->exit_status);
+		sh->exit_status = exit_(node->token->args, sh->exit_status);
 	builtins_(cmd, ++node->token->args, sh);
 }
 

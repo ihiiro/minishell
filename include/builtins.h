@@ -23,9 +23,9 @@ void	change_pwds(t_envp **env, char *pwd, char home);
 void	shlvl_check(char *str, t_envp **env, t_shell *sh);
 void	init_envp(char *envp[], t_envp **en);
 void	add_empty(t_envp **env, char *var);
-void	exit_(char **strs, t_envp **env, int last_exit_stat);
 void	print_export_vars(t_envp *head);
 
+int		exit_(char **strs, int last_exit_stat);
 int		export_(t_envp *env, char **args);
 int		unset_(t_envp **env, char **args);
 int		cd_(char **args, t_envp **env);

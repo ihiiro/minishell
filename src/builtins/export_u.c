@@ -41,11 +41,12 @@ void	add_empty(t_envp **env, char *var)
 		addnode(env, var, NULL);
 }
 
-int	character_valid(char c, int is_last, int join_string)
+int	character_valid(char c, int is_last, int join_string, char *input)
 {
 	if (ft_isalnum(c) || c == '_')
 		return (1);
-	if (c == '+' && is_last && join_string)
+	if (c == '+' && is_last && join_string
+		&& input[first_occur(input, '=') - 1] == '+')
 		return (1);
 	return (0);
 }

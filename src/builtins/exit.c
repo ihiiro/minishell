@@ -41,6 +41,13 @@ void	check_arg(char *arg, short *status)
 	*status = ft_atoi(arg) & 0xFF;
 }
 
+void	exit_now(int exit_status)
+{
+	gc_malloc(0, 0);
+	printf("exit\n");
+	exit(exit_status);
+}
+
 /*
  * exit_: exits the shell with optional exit status.
  *
@@ -48,24 +55,19 @@ void	check_arg(char *arg, short *status)
  * @env: linked list containing environment variables.
  */
 
-void	exit_(char **strs, t_envp **env, int last_exit_stat)
+int	exit_(char **strs, int last_exit_stat)
 {
 	short	exit_status;
 
-	(void)env;
 	if (!strs)
-	{
-		gc_malloc(0, 0);
-		printf("exit\n");
-		exit(last_exit_stat);
-	}
+		exit_now(last_exit_stat);
 	if (strs[1])
 	{
 		check_arg(strs[1], &exit_status);
 		if (strs[2])
 		{
 			printf("exit\nminishell: exit: too many arguments\n");
-			return ;
+			return (1);
 		}
 	}
 	exit_status = 0;
@@ -73,7 +75,6 @@ void	exit_(char **strs, t_envp **env, int last_exit_stat)
 		check_arg(strs[1], &exit_status);
 	else
 		exit_status = last_exit_stat;
-	gc_malloc(0, 0);
-	printf("exit\n");
-	exit(exit_status);
+	exit_now(exit_status);
+	return (0);
 }
