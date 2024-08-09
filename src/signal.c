@@ -34,6 +34,8 @@ void	disable_echo(void)
 {
 	struct termios	term;
 
+	if (!isatty(STDIN_FILENO))
+		return ;
 	if (tcgetattr(STDIN_FILENO, &term) == -1)
 	{
 		perror("tcgetattr");

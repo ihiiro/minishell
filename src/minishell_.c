@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
+#include <unistd.h>
 
 int	process_commands(t_shell *sh, char *str)
 {
@@ -66,6 +67,8 @@ int	main(int argc, char *argv[], char *env[])
 
 	(void)argc;
 	(void)argv;
+	if (isatty(STDIN_FILENO))
+		printf("connected to a terminal\n");
 	str = NULL;
 	sh.stdin_copy = -1;
 	sh.heredoc_trap = 0;
